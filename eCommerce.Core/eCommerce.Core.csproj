@@ -39,6 +39,15 @@
     <Reference Include="Autofac.Integration.Mvc">
       <HintPath>..\packages\Autofac.Mvc3.2.6.1.841\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="C5">
+      <HintPath>..\packages\Quartz.2.0.1\lib\net40\C5.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\packages\Common.Logging.2.0.0\lib\2.0\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Quartz">
+      <HintPath>..\packages\Quartz.2.0.1\lib\net40\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -77,6 +86,7 @@
     <Compile Include="Infrastructure\IoC\LifeStyle.cs" />
     <Compile Include="Infrastructure\IoC\Web\AutofacLifetimeScopeHttpModule.cs" />
     <Compile Include="Infrastructure\IRoute.cs" />
+    <Compile Include="Infrastructure\JobService\JobHandler.cs" />
     <Compile Include="Infrastructure\RouteBase.cs" />
     <Compile Include="Infrastructure\WebsiteRoute.cs" />
     <Compile Include="IRegistrar.cs" />
@@ -86,7 +96,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\eCommerce.Exception\eCommerce.Exception.csproj">
+      <Project>{0aaf2806-72c7-4212-8023-8843c2cd0de4}</Project>
+      <Name>eCommerce.Exception</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

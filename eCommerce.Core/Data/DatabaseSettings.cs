@@ -18,7 +18,7 @@ namespace eCommerce.Core.Data
         /// <summary>
         /// Database setting items
         /// </summary>
-        public IDictionary<string, string> Items
+        public IDictionary<string, string> UnknownItems
         {
             get;
             private set;
@@ -52,7 +52,7 @@ namespace eCommerce.Core.Data
 
         public DatabaseSettings()
         {
-            Items = new Dictionary<string, string>();
+            UnknownItems = new Dictionary<string, string>();
         }
 
         public bool IsValid()

@@ -117,12 +117,12 @@ namespace eCommerce.Core.Configuration
             }
         }
 
-        [ConfigurationProperty("separator", IsRequired = false, DefaultValue = ":")]
-        public string Separator
+        [ConfigurationProperty("separator", IsRequired = false, DefaultValue = ':')]
+        public char Separator
         {
             get
             {
-                return (string)this["separator"];
+                return (char)this["separator"];
             }
             set
             {

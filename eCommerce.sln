@@ -15,12 +15,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6A05FD55
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Core.Tests", "eCommerce.Core.Tests\eCommerce.Core.Tests.csproj", "{CC6F4003-9649-48A2-A291-91AB2187D30B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Exception", "eCommerce.Exception\eCommerce.Exception.csproj", "{0AAF2806-72C7-4212-8023-8843C2CD0DE4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AAF2806-72C7-4212-8023-8843C2CD0DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AAF2806-72C7-4212-8023-8843C2CD0DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AAF2806-72C7-4212-8023-8843C2CD0DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AAF2806-72C7-4212-8023-8843C2CD0DE4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5895A87C-27F7-4E7A-B159-36E7F88E493B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5895A87C-27F7-4E7A-B159-36E7F88E493B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5895A87C-27F7-4E7A-B159-36E7F88E493B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -42,6 +48,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0AAF2806-72C7-4212-8023-8843C2CD0DE4} = {67035B1E-EB72-419C-BE61-5B1EE45B0554}
 		{5895A87C-27F7-4E7A-B159-36E7F88E493B} = {67035B1E-EB72-419C-BE61-5B1EE45B0554}
 		{86A63571-0095-4532-A3DA-16D0B740A608} = {4DA9743F-6DFA-4402-AF32-5CD665C43A14}
 		{8AA01AA2-16B6-4BC4-A9B3-C86F73226932} = {4DA9743F-6DFA-4402-AF32-5CD665C43A14}

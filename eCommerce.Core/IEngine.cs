@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core.Configuration;
 using eCommerce.Core.Infrastructure;
+using eCommerce.Core.Infrastructure.JobService;
 
 namespace eCommerce.Core
 {
@@ -23,6 +24,7 @@ namespace eCommerce.Core
             EventBroker broker, 
             IContainerConfig containerConfig, 
             Config config);
+        JobHandler JobService { get; }
     }
 
     /// <summary>
@@ -74,10 +76,17 @@ namespace eCommerce.Core
             this.containerConfig.Init(this, containerManager, broker, config);
 
             //TO-DO
+            Run();
         }
 
         protected virtual void Run()
         {
+        }
+
+
+        public JobHandler JobService
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

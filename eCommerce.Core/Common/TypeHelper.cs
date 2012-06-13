@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -46,6 +48,34 @@ namespace eCommerce.Core.Common
             {
                 callback(item);
             }
+        }
+    }
+
+    public static class EnumHelper
+    {
+        public static string Name(this Enum value)
+        {
+            return Enum.GetName(value.GetType(), value);
+        }
+
+        public static string GetDescription(this Enum value)
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
+            string desc = value.ToString();
+
+            FieldInfo info = value.GetType().GetField(desc);
+            var attrs = (DescriptionAttribute[])info.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            if (attrs != null && attrs.Length > 0)
+            {
+                desc = attrs[0].Description;
+            }
+
+            return desc;
         }
     }
 }
