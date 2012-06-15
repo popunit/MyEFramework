@@ -8,12 +8,20 @@ namespace eCommerce.Core.Data
 {
     public class DatabaseSettingHelper
     {
-        private static bool? databaseIsInstalled;
-        //public static bool DatabaseIsInstalled()
-        //{
-        //    if (databaseIsInstalled.HasValue)
-        //    { 
-        //    }
-        //}
+        private static bool? findDatabaseSettings;
+        public static bool FindDatabaseSettings
+        {
+            get
+            {
+                if (!findDatabaseSettings.HasValue)
+                {
+                    var datasettingsManager = new DatabaseSettingsManager();
+                    var settings = datasettingsManager.LoadSettings();
+                    findDatabaseSettings =
+                        settings != null && !String.IsNullOrEmpty(settings.DataConnectionString);
+                }
+                return findDatabaseSettings.Value;
+            }
+        }
     }
 }

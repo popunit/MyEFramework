@@ -88,6 +88,7 @@
     <Compile Include="Infrastructure\IRoute.cs" />
     <Compile Include="Infrastructure\JobService\JobHandler.cs" />
     <Compile Include="Infrastructure\RouteBase.cs" />
+    <Compile Include="Infrastructure\RouteHelper.cs" />
     <Compile Include="Infrastructure\WebsiteRoute.cs" />
     <Compile Include="IRegistrar.cs" />
     <Compile Include="ITask.cs" />

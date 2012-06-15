@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core.Configuration;
+using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.JobService;
 
@@ -16,8 +17,8 @@ namespace eCommerce.Core
     /// <remarks>focus on container manager and corresponding configuration</remarks>
     public interface IEngine
     {
-        IContainerManager Manager { get; }
-        T Resolve<T>() where T : class;
+        IContainerManager ContainerManager { get; }
+        T Resolve<T>(string key) where T : class;
         T[] ResolveAll<T>() where T : class;
         void Init(
             IContainerManager containerManager, 
@@ -33,12 +34,12 @@ namespace eCommerce.Core
     /// <remarks>[Component]</remarks>
     public abstract class EngineBase : IEngine
     {
-        protected IContainerManager manager;
+        protected IContainerManager containerManager;
         protected IContainerConfig containerConfig;
 
-        public IContainerManager Manager
+        public IContainerManager ContainerManager
         {
-            get { return this.manager; }
+            get { return this.containerManager; }
         }
 
         public IContainerConfig ContainerConfiguration
@@ -46,14 +47,14 @@ namespace eCommerce.Core
             get { return this.containerConfig; }
         }
 
-        public T Resolve<T>() where T : class
+        public T Resolve<T>(string key) where T : class
         {
-            throw new NotImplementedException();
+            return containerManager.Resolve<T>(key);
         }
 
         public T[] ResolveAll<T>() where T : class
         {
-            throw new NotImplementedException();
+            return containerManager.ResolveAll<T>();
         }
 
         public void Init(IContainerManager containerManager, IContainerConfig containerConfig)
@@ -71,18 +72,25 @@ namespace eCommerce.Core
 
         public void Init(IContainerManager containerManager, EventBroker broker, IContainerConfig containerConfig, Config config)
         {
-            this.manager = containerManager;
+            this.containerManager = containerManager;
             this.containerConfig = containerConfig;
             this.containerConfig.Init(this, containerManager, broker, config);
 
-            //TO-DO
-            Run();
+            if (DatabaseSettingHelper.FindDatabaseSettings)
+            {
+                RunTasks();
+            }
+            else
+            {
+                // TO-DO
+            }
         }
 
-        protected virtual void Run()
+        protected virtual void RunTasks()
         {
+            var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
+            RouteHelper.RoutingToExecute<ITask>(routing, i => i.Execute());
         }
-
 
         public JobHandler JobService
         {

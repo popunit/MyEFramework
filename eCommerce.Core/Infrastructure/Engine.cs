@@ -10,11 +10,11 @@ namespace eCommerce.Core.Infrastructure
     /// Core Engine
     /// </summary>
     /// <remarks>[Component]</remarks>
-    public sealed class Engine : EngineBase
+    public class Engine : EngineBase
     {
-        protected override void Run()
+        protected override void RunTasks()
         {
-            base.Run();
+            base.RunTasks();
         }
     }
 }

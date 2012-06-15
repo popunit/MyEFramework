@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Core
 {
-    public interface ITask
+    public interface ITask : IOrderable
     {
         void Execute();
-        int Order { get; }
     }
 }

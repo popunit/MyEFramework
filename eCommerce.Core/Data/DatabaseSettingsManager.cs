@@ -22,7 +22,11 @@ namespace eCommerce.Core.Data
     public class DatabaseSettingsManager
     {
         protected readonly char Separator = ConfigHelper.ReadonlySection.DatabaseSetting.Separator;
-        protected readonly string FileName = ConfigHelper.ReadonlySection.DatabaseSetting.AssociatedFile;
+
+        /// <summary>
+        /// virtual path
+        /// </summary>
+        protected readonly string FilePath = ConfigHelper.ReadonlySection.DatabaseSetting.AssociatedFile;
 
         protected virtual string MapToPhysicalPath(string virtualPath)
         {
@@ -85,6 +89,48 @@ namespace eCommerce.Core.Data
             }
 
             return settings;
+        }
+
+        protected virtual string ToFormatedString(DatabaseSettings settings)
+        {
+            if (settings == null)
+                return "";
+
+            return string.Format("DataProvider: {0}{2}DataConnectionString: {1}{2}",
+                                 settings.DataProvider,
+                                 settings.DataConnectionString,
+                                 Environment.NewLine
+                );
+        }
+
+        public virtual DatabaseSettings LoadSettings()
+        {
+            string filePath = MapToPhysicalPath(FilePath);
+            if (File.Exists(filePath))
+            {
+                string text = File.ReadAllText(filePath);
+                return ParseSettings(text);
+            }
+            else
+                return new DatabaseSettings();
+        }
+
+        public virtual void SaveSettings(DatabaseSettings settings)
+        {
+            if (settings == null)
+                throw new ArgumentNullException("settings");
+
+            string filePath = MapToPhysicalPath(FilePath);
+            if (!File.Exists(filePath))
+            {
+                using (File.Create(filePath))
+                {
+                    //we use 'using' to close the file after it's created
+                }
+            }
+
+            var text = ToFormatedString(settings);
+            File.WriteAllText(filePath, text);
         }
     }
 }

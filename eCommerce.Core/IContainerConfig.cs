@@ -35,18 +35,12 @@ namespace eCommerce.Core
             containerManager.UpdateContainer(build =>
             {
                 var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-                var types = routing.FindType<IRegistrar>();
-                var instances = new List<IRegistrar>();
-                types.ForEach(t => 
-                {
-                    instances.Add((IRegistrar)Activator.CreateInstance(t));
-                });
-
-                // register object in order
-                instances.OrderBy(t => t.Order).ForEach(i => i.Register(build, routing));
+                RouteHelper.RoutingToExecute<IRegistrar>(routing, i => i.Register(build, routing));
             });
 
             // TO-DO
         }
+
+        
     }
 }

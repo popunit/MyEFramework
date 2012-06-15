@@ -7,14 +7,18 @@ using eCommerce.Core.Infrastructure;
 
 namespace eCommerce.Core
 {
+    public interface IOrderable
+    {
+        int Order { get; }
+    }
+
     /// <summary>
     /// Registrar for traget type
     /// </summary>
     /// <typeparam name="T">IoC type</typeparam>
-    public interface IRegistrar
+    public interface IRegistrar : IOrderable
     {
         void Register(dynamic builder, IRoute route);
-        int Order { get; }
     }
 
     public abstract class RegistrarBase<T> : IRegistrar
