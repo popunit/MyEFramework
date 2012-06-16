@@ -91,6 +91,7 @@
     <Compile Include="Infrastructure\RouteHelper.cs" />
     <Compile Include="Infrastructure\WebsiteRoute.cs" />
     <Compile Include="IRegistrar.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="ITask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
