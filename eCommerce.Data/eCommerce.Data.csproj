@@ -45,9 +45,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommerceDbContext.cs" />
     <Compile Include="Common\StringFormatType.cs" />
+    <Compile Include="Common\TypeHelper.cs" />
+    <Compile Include="DataProvider\MSSQLServerDataProvider.cs" />
     <Compile Include="Domain\Users\Entities\User.cs" />
     <Compile Include="Domain\Users\PasswordKit.cs" />
+    <Compile Include="EfDataProviderBase.cs" />
+    <Compile Include="IDatabase.cs" />
     <Compile Include="Mappings\Users\UserMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

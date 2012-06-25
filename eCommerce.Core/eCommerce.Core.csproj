@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Common\FileHelper.cs" />
     <Compile Include="Common\ReflectionUtility.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\TypeHelper.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="ICacheManager.cs" />
     <Compile Include="IContainerConfig.cs" />
     <Compile Include="IContainerManager.cs" />
+    <Compile Include="IDataProvider.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="Infrastructure\AppDomainRoute.cs" />
     <Compile Include="Infrastructure\Engine.cs" />

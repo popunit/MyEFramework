@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace eCommerce.Core
 {
     public abstract class EntityBase
-    { 
+    {
+        public virtual int Id { get; set; }
     }
 
     /// <summary>
