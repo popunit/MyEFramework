@@ -17,7 +17,7 @@ namespace eCommerce.Core
     /// <typeparam name="T"></typeparam>
     public interface IRepository<T> where T : EntityBase
     {
-        T GetById(object id);
+        T GetByKeys(params object[] keys);
         void Insert(T entity);
         void Update(T entity);
         void Delete(T entity);

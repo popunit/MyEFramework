@@ -79,9 +79,11 @@
     <Compile Include="IContainerConfig.cs" />
     <Compile Include="IContainerManager.cs" />
     <Compile Include="IDataProvider.cs" />
+    <Compile Include="IDataProviderManager.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="Infrastructure\AppDomainRoute.cs" />
     <Compile Include="Infrastructure\Engine.cs" />
+    <Compile Include="Infrastructure\EngineContext.cs" />
     <Compile Include="Infrastructure\EventBroker.cs" />
     <Compile Include="Infrastructure\IoC\AutofacContainerManager.cs" />
     <Compile Include="Infrastructure\IoC\IoCExtension.cs" />
@@ -89,6 +91,10 @@
     <Compile Include="Infrastructure\IoC\Web\AutofacLifetimeScopeHttpModule.cs" />
     <Compile Include="Infrastructure\IRoute.cs" />
     <Compile Include="Infrastructure\JobService\JobHandler.cs" />
+    <Compile Include="Infrastructure\NoAOP\AspectF.cs" />
+    <Compile Include="Infrastructure\NoAOP\ICache.cs" />
+    <Compile Include="Infrastructure\NoAOP\ILogger.cs" />
+    <Compile Include="Infrastructure\NoAOP\Logger.cs" />
     <Compile Include="Infrastructure\RouteBase.cs" />
     <Compile Include="Infrastructure\RouteHelper.cs" />
     <Compile Include="Infrastructure\WebsiteRoute.cs" />
@@ -105,6 +111,9 @@
       <Project>{0aaf2806-72c7-4212-8023-8843c2cd0de4}</Project>
       <Name>eCommerce.Exception</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Infrastructure\NoAOP\note.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

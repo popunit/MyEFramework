@@ -41,12 +41,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Autofac.Mvc3.2.6.1.841\lib\NET40\Autofac.Integration.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.0.12054\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,6 +66,7 @@
     <Compile Include="Data\DatabaseSettingsTests.cs" />
     <Compile Include="Infrastructure\EngineTest.cs" />
     <Compile Include="Infrastructure\IoC\AutofacContainerManagerTest.cs" />
+    <Compile Include="Infrastructure\NoAOP\AspectFTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -70,6 +77,10 @@
     <ProjectReference Include="..\eCommerce.Core\eCommerce.Core.csproj">
       <Project>{5895a87c-27f7-4e7a-b159-36e7f88e493b}</Project>
       <Name>eCommerce.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Exception\eCommerce.Exception.csproj">
+      <Project>{0aaf2806-72c7-4212-8023-8843c2cd0de4}</Project>
+      <Name>eCommerce.Exception</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

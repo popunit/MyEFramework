@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core.Common;
+using eCommerce.Exception;
 
 namespace eCommerce.Core.Infrastructure
 {
@@ -23,6 +24,35 @@ namespace eCommerce.Core.Infrastructure
 
             // register object in order
             instances.OrderBy(t => t.Order).ForEach(i => executing(i));
+        }
+
+        internal static void FindException<T>(
+            IRoute routing,
+            System.Exception ex) where T : IHandler
+        {
+            // TO-DO: should cache here because here will be performed multi times.
+            var types = routing.FindType<T>();
+            var instances = new List<T>();
+            foreach (var t in types)
+            {
+                Type arg;
+                if (t.IsGenericType)
+                    arg = t.GetGenericArguments()[0];
+                else
+                    arg = t.BaseType.GetGenericArguments()[0];
+                if (arg == ex.GetType())
+                {
+                    instances.Add((T)Activator.CreateInstance(t));
+                    break;
+                }
+            }
+
+            if (instances.Count == 0)
+                throw new System.Exception(
+                    string.Format("Can not find the Exception type {0} registered", ex.GetType().Name),
+                    ex);
+            else
+                instances[0].Handle(ex);
         }
     }
 }

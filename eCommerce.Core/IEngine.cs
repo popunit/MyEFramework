@@ -21,9 +21,9 @@ namespace eCommerce.Core
         T Resolve<T>(string key) where T : class;
         T[] ResolveAll<T>() where T : class;
         void Init(
-            IContainerManager containerManager, 
-            EventBroker broker, 
-            IContainerConfig containerConfig, 
+            IContainerManager containerManager,
+            //EventBroker broker,
+            IContainerConfig containerConfig,
             Config config);
         JobHandler JobService { get; }
     }
@@ -57,24 +57,24 @@ namespace eCommerce.Core
             return containerManager.ResolveAll<T>();
         }
 
-        public void Init(IContainerManager containerManager, IContainerConfig containerConfig)
-        {
-            Init(containerManager, EventBroker.Current, containerConfig);
-        }
+        //public void Init(IContainerManager containerManager, IContainerConfig containerConfig)
+        //{
+        //    Init(containerManager, EventBroker.Current, containerConfig);
+        //}
 
-        public void Init(IContainerManager containerManager, EventBroker broker, IContainerConfig containerConfig)
+        public void Init(IContainerManager containerManager, IContainerConfig containerConfig)
         {
             var config = ConfigHelper.ReadonlySection;
 
-            Init(containerManager, broker, containerConfig, config);
+            Init(containerManager, containerConfig, config);
             
         }
 
-        public void Init(IContainerManager containerManager, EventBroker broker, IContainerConfig containerConfig, Config config)
+        public void Init(IContainerManager containerManager, IContainerConfig containerConfig, Config config)
         {
             this.containerManager = containerManager;
             this.containerConfig = containerConfig;
-            this.containerConfig.Init(this, containerManager, broker, config);
+            this.containerConfig.Init(this, containerManager, EventBroker.Current, config);
 
             if (DatabaseSettingHelper.FindDatabaseSettings)
             {
