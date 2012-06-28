@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core;
+using eCommerce.Data.Common;
 
 namespace eCommerce.Data.Domain.Users.Entities
 {
@@ -18,5 +19,13 @@ namespace eCommerce.Data.Domain.Users.Entities
         public string UserName { get; set; }
         public PasswordKit PasswordKit { get; set; }
         public string Email { get; set; }
+    }
+
+    public sealed class MissingUser : User
+    { 
+    }
+
+    internal class UserEmptyMap : EmptyEntityMap<User, MissingUser>
+    { 
     }
 }

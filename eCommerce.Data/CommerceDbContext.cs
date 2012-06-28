@@ -9,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using eCommerce.Core;
 using eCommerce.Core.Common;
 using eCommerce.Data.Common;
@@ -17,18 +18,45 @@ namespace eCommerce.Data
 {
     public class CommerceDbContext : DbContext, IDatabase
     {
+        // TO-DO: should cache in shared
+        private readonly static Dictionary<Type, dynamic> dic = new Dictionary<Type,dynamic>();
+
         static CommerceDbContext()
-		{
+        {
             Database.SetInitializer<CommerceDbContext>(null);
-		}
+
+            // TO-DO: Move to function method
+            Type t = typeof(CommerceDbContext);
+            var types = Assembly.GetAssembly(t).GetTypes();
+            types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
+                type.IsInherit(typeof(EntityBase)))
+                .ForEach(type =>
+                {
+                    Mapper.CreateMap(type, type);
+                });
+
+            var filers = types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
+                type.IsInherit(typeof(IEmptyEntityMap)));
+            foreach (var type in filers)
+            {
+                var argTypes = type.BaseType.GetGenericArguments();
+                if (argTypes.Count() != 2)
+                    continue;
+                else
+                {
+                    dynamic instance = Activator.CreateInstance(type);
+                    dic.Add(argTypes[0], instance.Get());
+                }
+            }
+        }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Type t = typeof(CommerceDbContext);
             Assembly.GetAssembly(t)
                 .GetTypes()
-                .Where(type => !String.IsNullOrEmpty(type.Namespace))
-                .Where(type => type.IsInherit(typeof(EntityTypeConfiguration<>)))
+                .Where(type => !String.IsNullOrEmpty(type.Namespace) && 
+                    type.IsInherit(typeof(EntityTypeConfiguration<>)))
                 .ForEach(type => 
                 {
                     dynamic instance = Activator.CreateInstance(type);
@@ -123,6 +151,22 @@ namespace eCommerce.Data
                 //entity is already loaded.
                 return alreadyAttached;
             }
+        }
+
+        public EntityState GetEntityState<TEntity>(TEntity entity) where TEntity : EntityBase, new()
+        {
+            return this.Entry<TEntity>(entity).State;
+        }
+
+        public void SetEntityState<TEntity>(TEntity entity, EntityState state) where TEntity : EntityBase, new()
+        {
+            this.Entry<TEntity>(entity).State = state;
+        }
+
+
+        public TEntity GetEmptyEntity<TEntity>() where TEntity : EntityBase, new()
+        {
+            return (TEntity)dic[typeof(TEntity)];
         }
     }
 }

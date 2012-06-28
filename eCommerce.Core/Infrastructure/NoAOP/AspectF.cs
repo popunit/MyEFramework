@@ -398,7 +398,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         /// <returns></returns>
         /// <remarks>Added by Patrick Yu</remarks>
         [DebuggerStepThrough]
-        public static AspectF HandleException(this AspectF aspect, Type exceptionType)
+        public static AspectF HandleException(this AspectF aspect, Type exceptionType, bool anyCatch = false)
         {
             return aspect.Combine((work) =>
             {
@@ -409,7 +409,29 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 catch (System.Exception x)
                 {
                     var routing = EngineContext.Current.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-                    RouteHelper.FindException<IHandler>(routing, x);
+                    RouteHelper.FindExceptionToHandle(routing, exceptionType, x, !anyCatch);
+                }
+            });
+        }
+
+        /// <summary>
+        /// Added by Patrick Yu
+        /// </summary>
+        /// <param name="aspect"></param>
+        /// <returns></returns>
+        [DebuggerStepThrough]
+        public static AspectF HandleException(this AspectF aspect)
+        {
+            return aspect.Combine((work) =>
+            {
+                try
+                {
+                    work();
+                }
+                catch (System.Exception x)
+                {
+                    var routing = EngineContext.Current.Resolve<IRoute>(typeof(WebsiteRoute).Name);
+                    RouteHelper.FindExceptionToHandle(routing, null, x);
                 }
             });
         }

@@ -26,14 +26,21 @@ namespace eCommerce.Core.Infrastructure
             instances.OrderBy(t => t.Order).ForEach(i => executing(i));
         }
 
-        internal static void FindException<T>(
+        internal static void FindExceptionToHandle(
             IRoute routing,
-            System.Exception ex) where T : IHandler
+            Type targetExceptionType,
+            System.Exception ex,
+            bool throwIfNotFound = false)
         {
             // TO-DO: should cache here because here will be performed multi times.
-            var types = routing.FindType<T>();
-            var instances = new List<T>();
-            foreach (var t in types)
+            var types = routing.FindType<IHandler>();
+            var instances = new List<IHandler>();
+            IEnumerable<Type> filters;
+            if (targetExceptionType == null)
+                filters = types.Where(t => t == targetExceptionType);
+            else
+                filters = types;
+            foreach (var t in filters)
             {
                 Type arg;
                 if (t.IsGenericType)
@@ -42,12 +49,12 @@ namespace eCommerce.Core.Infrastructure
                     arg = t.BaseType.GetGenericArguments()[0];
                 if (arg == ex.GetType())
                 {
-                    instances.Add((T)Activator.CreateInstance(t));
+                    instances.Add((IHandler)Activator.CreateInstance(t));
                     break;
                 }
             }
 
-            if (instances.Count == 0)
+            if (instances.Count == 0 && throwIfNotFound)
                 throw new System.Exception(
                     string.Format("Can not find the Exception type {0} registered", ex.GetType().Name),
                     ex);
