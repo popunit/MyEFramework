@@ -18,7 +18,7 @@ namespace eCommerce.Core
     public interface IEngine
     {
         IContainerManager ContainerManager { get; }
-        T Resolve<T>(string key) where T : class;
+        T Resolve<T>(string key = "") where T : class;
         T[] ResolveAll<T>() where T : class;
         void Init(
             IContainerManager containerManager,
@@ -47,7 +47,7 @@ namespace eCommerce.Core
             get { return this.containerConfig; }
         }
 
-        public T Resolve<T>(string key) where T : class
+        public T Resolve<T>(string key = "") where T : class
         {
             return containerManager.Resolve<T>(key);
         }

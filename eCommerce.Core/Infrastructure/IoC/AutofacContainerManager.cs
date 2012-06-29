@@ -107,13 +107,20 @@ namespace eCommerce.Core.Infrastructure.IoC
             });
         }
 
-        public override T Resolve<T>(string key)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key">
+        /// if key is null, will get the default one from container even though
+        /// there are more than one configuration item for the type
+        /// </param>
+        /// <returns></returns>
+        public override T Resolve<T>(string key = "")
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                return null;
-            }
             var con = GetContainer();
+            if (String.IsNullOrEmpty(key))
+                return con.Resolve<T>();
             return con.ResolveKeyed<T>(key);
         }
 

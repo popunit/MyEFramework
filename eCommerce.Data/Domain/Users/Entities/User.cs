@@ -25,7 +25,11 @@ namespace eCommerce.Data.Domain.Users.Entities
     { 
     }
 
-    internal class UserEmptyMap : EmptyEntityMap<User, MissingUser>
-    { 
+    internal class EmptyUserMap : EmptyEntityMap<User>
+    {
+        public override User Get()
+        {
+            return new MissingUser();
+        }
     }
 }

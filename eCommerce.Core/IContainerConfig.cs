@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using eCommerce.Core.Configuration;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Common;
+using eCommerce.Core.Data;
 
 namespace eCommerce.Core
 {
@@ -30,8 +31,13 @@ namespace eCommerce.Core
             containerManager.AddComponentInstance<IEngine>(engine, engine.GetType().Name);
             containerManager.AddComponentInstance<EventBroker>(broker, broker.GetType().Name);
             containerManager.AddComponentInstance<ContainerConfigBase>(this, this.GetType().Name);
+
+            // register type
             containerManager.AddComponent<IRoute, WebsiteRoute>(typeof(WebsiteRoute).Name);
+            // TO-DO: Check if I register this time multi times (should not)
+            containerManager.AddComponent<DatabaseSettings>(typeof(DatabaseSettings).Name);
            
+            // register IRegistrar
             containerManager.UpdateContainer(build =>
             {
                 var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);

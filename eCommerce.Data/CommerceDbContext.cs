@@ -35,19 +35,17 @@ namespace eCommerce.Data
                     Mapper.CreateMap(type, type);
                 });
 
-            var filers = types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                type.IsInherit(typeof(IEmptyEntityMap)));
-            foreach (var type in filers)
-            {
-                var argTypes = type.BaseType.GetGenericArguments();
-                if (argTypes.Count() != 2)
-                    continue;
-                else
+            types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
+                type.IsInherit(typeof(EmptyEntityMap<>))).
+                ForEach(type =>
                 {
+                    //var argTypes = type.BaseType.GetGenericArguments();
                     dynamic instance = Activator.CreateInstance(type);
-                    dic.Add(argTypes[0], instance.Get());
-                }
-            }
+                    if (instance.IsValid() == true)
+                    {
+                        dic.Add(instance.EntityType, instance.Get());
+                    }
+                });
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

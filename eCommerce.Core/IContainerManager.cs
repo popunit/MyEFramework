@@ -23,7 +23,7 @@ namespace eCommerce.Core
         void AddComponentInstance(object instance, string key, LifeStyle lifeStyle = LifeStyle.Singleton);
         void AddComponentWithParameters<TFrom, TTo>(string key, IDictionary<string, string> options, LifeStyle lifeStyle = LifeStyle.Singleton);
         void AddComponentWithParameters(Type tFrom, Type tTo, string key, IDictionary<string, string> options, LifeStyle lifeStyle = LifeStyle.Singleton);
-        TService Resolve<TService>(string key) where TService : class;
+        TService Resolve<TService>(string key = "") where TService : class; // allow to get object without key
         object Resolve(Type type);
         TService[] ResolveAll<TService>();
         TService ResolveUnregistered<TService>() where TService : class;
@@ -42,7 +42,7 @@ namespace eCommerce.Core
         public abstract void AddComponentInstance(object instance, string key, LifeStyle lifeStyle = LifeStyle.Singleton);
         public abstract void AddComponentWithParameters<TFrom, TTo>(string key, IDictionary<string, string> options, LifeStyle lifeStyle = LifeStyle.Singleton);
         public abstract void AddComponentWithParameters(Type tFrom, Type tTo, string key, IDictionary<string, string> options, LifeStyle lifeStyle = LifeStyle.Singleton);
-        public abstract TService Resolve<TService>(string key) where TService : class;
+        public abstract TService Resolve<TService>(string key = "") where TService : class;
         public abstract object Resolve(Type type);
         public abstract TService[] ResolveAll<TService>();
         public abstract TService ResolveUnregistered<TService>() where TService : class;

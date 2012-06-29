@@ -12,7 +12,7 @@ namespace eCommerce.Data
     /// <summary>
     /// Data Provider based on Entity Framework
     /// </summary>
-    public abstract class EfDataProviderBase : IDataProvider
+    public abstract class EfDataProviderBase : IEfDataProvider
     {
         public abstract IDbConnectionFactory GetFactory();
         public abstract void SetDatabaseInitializer();

@@ -4,19 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core;
+using eCommerce.Core.Common;
 
 namespace eCommerce.Data.Common
 {
-    internal interface IEmptyEntityMap
-    { }
-
-    internal abstract class EmptyEntityMap<T, K> : IEmptyEntityMap
+    internal abstract class EmptyEntityMap<T>
         where T : EntityBase
-        where K : T, new()
     {
-        public K Get()
+        private readonly Type entityType = typeof(T);
+        public Type EntityType
         {
-            return new K();
+            get { return entityType; }
+        }
+        public abstract T Get();
+        public bool IsValid()
+        {
+            Type t = Get().GetType();
+            if (t == typeof(T) || !t.IsInherit(typeof(T)))
+                return false;
+            return true;
         }
     }
 }
