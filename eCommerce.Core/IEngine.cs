@@ -19,6 +19,7 @@ namespace eCommerce.Core
     {
         IContainerManager ContainerManager { get; }
         T Resolve<T>(string key = "") where T : class;
+        object Resolve(Type type);
         T[] ResolveAll<T>() where T : class;
         void Init(
             IContainerManager containerManager,
@@ -95,6 +96,12 @@ namespace eCommerce.Core
         public JobHandler JobService
         {
             get { throw new NotImplementedException(); }
+        }
+
+
+        public object Resolve(Type type)
+        {
+            return containerManager.Resolve(type);
         }
     }
 }

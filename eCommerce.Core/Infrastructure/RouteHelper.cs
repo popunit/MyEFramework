@@ -47,17 +47,28 @@ namespace eCommerce.Core.Infrastructure
                     arg = t.GetGenericArguments()[0];
                 else
                     arg = t.BaseType.GetGenericArguments()[0];
-                if (arg == ex.GetType())
+
+                object obj;
+                try
+                { obj = Convert.ChangeType(ex, arg); }
+                catch
+                { obj = null; }
+                if (null != obj)
                 {
                     instances.Add((IHandler)Activator.CreateInstance(t));
                     break;
                 }
             }
 
-            if (instances.Count == 0 && throwIfNotFound)
-                throw new System.Exception(
-                    string.Format("Can not find the Exception type {0} registered", ex.GetType().Name),
-                    ex);
+            if (instances.Count == 0)
+            {
+                if (throwIfNotFound)
+                {
+                    throw new System.Exception(
+                        string.Format("Can not find the Exception type {0} registered", ex.GetType().Name),
+                        ex);
+                }
+            }
             else
                 instances[0].Handle(ex);
         }

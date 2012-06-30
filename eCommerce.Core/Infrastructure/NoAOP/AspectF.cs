@@ -6,6 +6,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections;
 using eCommerce.Exception;
+using System.ComponentModel;
 
 namespace eCommerce.Core.Infrastructure.NoAOP
 {
@@ -415,10 +416,80 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         }
 
         /// <summary>
-        /// Added by Patrick Yu
+        /// 
+        /// </summary>
+        /// <param name="aspect"></param>
+        /// <param name="exceptionType"></param>
+        /// <param name="handleAction"></param>
+        /// <returns></returns>
+        /// <remarks>Added by Patrick Yu</remarks>
+        [DebuggerStepThrough]
+        public static AspectF HandleException(this AspectF aspect, Type exceptionType, Action<object> handleAction)
+        {
+            return aspect.Combine((work) =>
+            {
+                try
+                {
+                    work();
+                }
+                catch (System.Exception x)
+                {
+                    object ex;
+                    try 
+                    { ex = Convert.ChangeType(x, exceptionType); }
+                    catch
+                    { ex = null; }
+                    if (null != ex)
+                    {
+                        handleAction(ex);
+                    }
+                    else
+                    {
+                        throw x;
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="aspect"></param>
+        /// <param name="handleAction"></param>
+        /// <returns></returns>
+        /// <remarks>Added by Patrick Yu</remarks>
+        [DebuggerStepThrough]
+        public static AspectF HandleException<T>(this AspectF aspect, Action<T> handleAction)
+            where T : System.Exception
+        {
+            return aspect.Combine((work) =>
+            {
+                try
+                {
+                    work();
+                }
+                catch (System.Exception x)
+                {
+                    var ex = x as T;
+                    if (null != ex)
+                    {
+                        handleAction(ex);
+                    }
+                    else
+                    {
+                        throw x;
+                    }
+                }
+            });
+        }
+
+        /// <summary>
+        /// 
         /// </summary>
         /// <param name="aspect"></param>
         /// <returns></returns>
+        /// <remarks>Added by Patrick Yu</remarks>
         [DebuggerStepThrough]
         public static AspectF HandleException(this AspectF aspect)
         {

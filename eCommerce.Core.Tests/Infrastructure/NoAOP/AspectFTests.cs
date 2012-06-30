@@ -9,6 +9,7 @@ using eCommerce.Core.Configuration;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.IoC;
 using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Exception;
 using NUnit.Framework;
 
 namespace eCommerce.Core.Tests.Infrastructure.NoAOP
@@ -31,6 +32,33 @@ namespace eCommerce.Core.Tests.Infrastructure.NoAOP
                 AspectF.Define.HandleException(typeof(DbEntityValidationException)).Do(() =>
                 {
                     throw new DbEntityValidationException();
+                });
+            });
+        }
+
+        [Test]
+        public void Can_Catch_Exception_ReturnValue()
+        {
+            bool isException = true;
+            var obj = AspectF.Define.HandleException().Return(() => 
+            {
+                if (isException)
+                    throw new System.Exception();
+                return new object();
+            });
+        }
+
+        [Test]
+        public void Can_Catch_SubException_Custom()
+        {
+            Assert.Throws<System.Exception>(() =>
+            {
+                bool isException = true;
+                var obj = AspectF.Define.HandleException<System.Exception>((ex) => { throw new System.Exception(); }).Return(() =>
+                {
+                    if (isException)
+                        throw new CommonException();
+                    return 0;
                 });
             });
         }

@@ -1,0 +1,12 @@
+﻿Filter
+	Authorization:
+		Built-in: AuthorizeAttribute[IAuthorizationFilter]
+
+	Action:
+		Built-in: ActionFilterAttribute[IActionFilter]
+
+	Result:
+		Built-in: ActionFilterAttribute[IResultFilter]
+
+	Exception:
+		Built-in: HandleErrorAttribute[IExceptionFilter]
