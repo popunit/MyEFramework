@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -9,6 +10,11 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Autofac;
+using eCommerce.Core.Configuration;
+using eCommerce.Core.Data;
+using eCommerce.Core.Infrastructure;
+using eCommerce.Core.Infrastructure.IoC;
 
 namespace eCommerce.Web
 {
@@ -44,7 +50,14 @@ namespace eCommerce.Web
             AreaRegistration.RegisterAllAreas();
 
             // Use LocalDB for Entity Framework by default
-            Database.DefaultConnectionFactory = new SqlConnectionFactory("Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
+            //Database.DefaultConnectionFactory = new SqlConnectionFactory("Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
+
+            // TO-DO: ContainerManager and ContainerConfig will be injected, autofac dll will be removed
+            Autofac.IContainer builder = (new ContainerBuilder()).Build();
+            EngineContext.Initialize(new AutofacContainerManager(builder), new ContainerConfig(), false);
+
+            bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
+ 
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
