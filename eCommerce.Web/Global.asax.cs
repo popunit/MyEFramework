@@ -15,6 +15,7 @@ using eCommerce.Core.Configuration;
 using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.IoC;
+using eCommerce.Web.Framework.Mvc.DependencyResolver;
 
 namespace eCommerce.Web
 {
@@ -56,8 +57,14 @@ namespace eCommerce.Web
             Autofac.IContainer builder = (new ContainerBuilder()).Build();
             EngineContext.Initialize(new AutofacContainerManager(builder), new ContainerConfig(), false);
 
+            // Set dependencyresolver
+            DependencyResolver.SetResolver(new WebDependencyResolver());
+
             bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
- 
+            if (dbInstalled)
+            {
+                // TO-DO
+            }
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
