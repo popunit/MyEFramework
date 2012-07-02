@@ -42,10 +42,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Mvc\DefaultKnownTypeAttribute.cs" />
     <Compile Include="Mvc\DependencyResolver\WebDependencyResolver.cs" />
+    <Compile Include="Mvc\EnableAttribute.cs" />
     <Compile Include="Mvc\Files\FileExtension.cs" />
     <Compile Include="Mvc\ModelBinder\ValueProviderForUpdateModel.cs" />
     <Compile Include="Mvc\ModelBinder\WebModelBinder.cs" />
+    <Compile Include="Mvc\ModelBinder\WebModelBinderProvider.cs" />
+    <Compile Include="Mvc\WebModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

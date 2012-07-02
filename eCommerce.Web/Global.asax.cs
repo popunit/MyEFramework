@@ -16,6 +16,7 @@ using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.IoC;
 using eCommerce.Web.Framework.Mvc.DependencyResolver;
+using eCommerce.Web.Framework.Mvc.ModelBinder;
 
 namespace eCommerce.Web
 {
@@ -59,6 +60,9 @@ namespace eCommerce.Web
 
             // Set dependencyresolver
             DependencyResolver.SetResolver(new WebDependencyResolver());
+
+            // Binding model
+            ModelBinderProviders.BinderProviders.Add(new WebModelBinderProvider());
 
             bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
             if (dbInstalled)

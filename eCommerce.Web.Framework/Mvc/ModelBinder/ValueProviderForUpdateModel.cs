@@ -18,7 +18,7 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
         RequestFiles,
     }
 
-    public static class BuiltInValueProvider
+    public static class BuiltInValueProviderForUpdateModel
     {
         public static IValueProvider CreateDefaultValueProvider(
             this Controller controller, 
@@ -44,6 +44,7 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
     /// DateTime value provider for update model
     /// </summary>
     /// <typeparam name="TModel"></typeparam>
+    /// <remarks>Cannot be registered for entire application</remarks>
     public class DateTimeValueProvider<TModel> : IValueProvider
     {
         private TModel model;

@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Common\DataBuilder.cs" />
     <Compile Include="Common\FileHelper.cs" />
     <Compile Include="Common\ReflectionUtility.cs" />
     <Compile Include="Common\Singleton.cs" />
@@ -118,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Infrastructure\NoAOP\note.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\Attributes\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
