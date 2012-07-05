@@ -106,6 +106,7 @@
     <Compile Include="IRegistrar.cs" />
     <Compile Include="IRepository.cs" />
     <Compile Include="ITask.cs" />
+    <Compile Include="WorkContextBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

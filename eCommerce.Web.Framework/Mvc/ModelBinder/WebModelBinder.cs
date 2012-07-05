@@ -20,8 +20,6 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
 
         protected override object CreateModel(ControllerContext controllerContext, ModelBindingContext bindingContext, Type modelType)
         {
-            /// MyBaseClass and MyDerievedClass are hardcoded.
-            /// We can use reflection to read the assembly and get concrete types of any base type
             if (modelType.Equals(typeof(WebModelBase)))
             {
                 var attribute = typeof(WebModelBase).GetCustomAttributes(false).Where(t => t.GetType() == typeof(DefaultKnownTypeAttribute)).FirstOrDefault() as DefaultKnownTypeAttribute;

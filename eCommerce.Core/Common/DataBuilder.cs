@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Core.Common
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>using Automapper instead</remarks>
     public class DataBuilder
     {
         public static Action<T, TValue> Set<T, TValue>(string property)
