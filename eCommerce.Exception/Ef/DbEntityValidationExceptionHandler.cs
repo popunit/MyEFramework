@@ -17,7 +17,7 @@ namespace eCommerce.Exception.Ef
                 foreach (var validationError in validationErrors.ValidationErrors)
                     msg += string.Format("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage) + Environment.NewLine;
 
-            var fail = new System.Exception(msg, exception);
+            var fail = new CommonException(msg, exception);
             throw fail;
         }
     }

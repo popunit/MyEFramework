@@ -104,7 +104,7 @@ namespace eCommerce.Core.Configuration
 
     public class DatabaseSettingElement : ConfigurationElement
     {
-        [ConfigurationProperty("associatedfile", IsRequired = false, DefaultValue = "dbsettings.txt")]
+        [ConfigurationProperty("associatedfile", IsRequired = false, DefaultValue = "~/dbsettings.txt")]
         public string AssociatedFile
         {
             get

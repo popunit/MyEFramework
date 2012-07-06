@@ -9,6 +9,7 @@ using System.Web.Hosting;
 using eCommerce.Core.Configuration;
 using eCommerce.Exception;
 using eCommerce.Core.Common;
+using eCommerce.Core.Infrastructure.NoAOP;
 
 namespace eCommerce.Core.Data
 {
@@ -30,17 +31,26 @@ namespace eCommerce.Core.Data
 
         protected virtual string MapToPhysicalPath(string virtualPath)
         {
-            // check if the website is hosted or not
-            if (HostingEnvironment.IsHosted)
+            return AspectF.Define.MustBeNonNull(virtualPath).
+                HandleException<ArgumentException>(
+                ex => { throw new CommonException(string.Format("The file {0} is not existed!", virtualPath), ex); }).
+                Return<string>(() =>
             {
-                return HostingEnvironment.MapPath(virtualPath);
-            }
-            else
-            {
-                string baseDirectory = AppDomain.CurrentDomain.BaseDirectory; // get application current running directory
-                string relativePath = virtualPath.Replace("~/", "").TrimStart('/').Replace('/', '\\');
-                return Path.Combine(baseDirectory, relativePath);
-            }
+                // check if the website is hosted or not
+                if (HostingEnvironment.IsHosted)
+                {
+                    if (!Path.IsPathRooted(virtualPath))
+                        return HostingEnvironment.MapPath(virtualPath);
+                    else
+                        return virtualPath;
+                }
+                else
+                {
+                    string baseDirectory = AppDomain.CurrentDomain.BaseDirectory; // get application current running directory
+                    string relativePath = virtualPath.Replace("~/", "").TrimStart('/').Replace('/', '\\');
+                    return Path.Combine(baseDirectory, relativePath);
+                }
+            });
         }
 
         /// <summary>

@@ -54,10 +54,6 @@ namespace eCommerce.Web
             // Use LocalDB for Entity Framework by default
             //Database.DefaultConnectionFactory = new SqlConnectionFactory("Data Source=(localdb)\v11.0; Integrated Security=True; MultipleActiveResultSets=True");
 
-            // TO-DO: ContainerManager and ContainerConfig will be injected, autofac dll will be removed
-            Autofac.IContainer builder = (new ContainerBuilder()).Build();
-            EngineContext.Initialize(new AutofacContainerManager(builder), new ContainerConfig(), false);
-
             // Set dependencyresolver
             DependencyResolver.SetResolver(new WebDependencyResolver());
 
