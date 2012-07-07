@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace eCommerce.Core.Common
 {
@@ -78,4 +81,43 @@ namespace eCommerce.Core.Common
             return desc;
         }
     }
+
+    /// <summary>
+    /// Store temp data throughout request
+    /// </summary>
+    public class RequstTempData
+    {
+        // TO-DO: Check how many items do it have in multi threads
+        private static ThreadLocal<RequstTempData> __inc = new ThreadLocal<RequstTempData>();
+
+        public RequstTempData()
+        {
+            try
+            {
+                DataBag = new ExpandoObject();
+                __inc.Value = this;
+            }
+            catch
+            {
+                throw new System.Exception("Unknown exception");
+            }
+        }
+
+        public dynamic DataBag
+        {
+            get;
+            set;
+        }
+
+        public static RequstTempData Local
+        {
+            get { return __inc.Value; }
+        }
+
+        //public void Dispose()
+        //{
+        //    __inc.Dispose();
+        //    GC.SuppressFinalize(this);
+        //}
+    } 
 }

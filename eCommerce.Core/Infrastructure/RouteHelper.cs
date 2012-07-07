@@ -26,6 +26,22 @@ namespace eCommerce.Core.Infrastructure
             instances.OrderBy(t => t.Order).ForEach(i => executing(i));
         }
 
+        public static void RoutingToType<T>(
+            IRoute routing,
+            Action<Type> executing)
+        {
+            //var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
+            var types = routing.FindType<T>();
+            //var instances = new List<T>();
+            //types.ForEach(t =>
+            //{
+            //    instances.Add((T)Activator.CreateInstance(t));
+            //});
+
+            // register object in order
+            types.ForEach(t => executing(t));
+        }
+
         internal static void FindExceptionToHandle(
             IRoute routing,
             Type targetExceptionType,

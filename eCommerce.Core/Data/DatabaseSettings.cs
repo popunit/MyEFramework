@@ -4,13 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Core.Configuration;
 
 namespace eCommerce.Core.Data
 {
     /// <summary>
     /// Database settings
     /// </summary>
-    public class DatabaseSettings : INotifyPropertyChanged
+    public class DatabaseSettings : INotifyPropertyChanged, ISettings
     {
         private string dataProvider;
         private string dataConnectionString;

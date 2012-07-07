@@ -10,7 +10,7 @@ using eCommerce.Core.Configuration;
 
 namespace eCommerce.Core.Infrastructure
 {
-    internal class WebsiteRoute : AppDomainRoute
+    public class WebsiteRoute : AppDomainRoute
     {
         private bool ensureBinFolderAssembliesLoaded = true;
         private bool binFolderAssembliesLoaded = false;

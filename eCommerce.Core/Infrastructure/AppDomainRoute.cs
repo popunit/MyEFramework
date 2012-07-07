@@ -12,7 +12,7 @@ namespace eCommerce.Core.Infrastructure
     /// 
     /// </summary>
     /// <remarks>[Built-in Component]</remarks>
-    internal class AppDomainRoute : RouteBase
+    public class AppDomainRoute : RouteBase
     {
         private IEnumerable<string> extraAssemblyNames;
 

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Autofac;
+using eCommerce.Core.Common;
 
 namespace eCommerce.Core.Infrastructure.IoC.Web
 {
@@ -15,6 +16,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
     {
         private static readonly object tag = "httpRequest"; // it is fixed, required by autofac MVC pre-request instance
 
+
         private static ILifetimeScope lifetimeScope
         {
             get
@@ -24,6 +26,18 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
             set 
             {
                 HttpContext.Current.Items[typeof(ILifetimeScope)] = value;
+            }
+        }
+
+        private static RequstTempData tempData
+        {
+            get
+            {
+                return HttpContext.Current.Items[typeof(RequstTempData)] as RequstTempData;
+            }
+            set
+            {
+                HttpContext.Current.Items[typeof(RequstTempData)] = value;
             }
         }
 
@@ -46,6 +60,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
 
         public void Init(HttpApplication context)
         {
+            tempData = new RequstTempData();
             context.EndRequest += (o, e) => 
             {
                 if (lifetimeScope != null)
