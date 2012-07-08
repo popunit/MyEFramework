@@ -15,7 +15,7 @@ using eCommerce.Core.Configuration;
 using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.IoC;
-using eCommerce.Web.Framework.Mvc.DependencyResolver;
+using eCommerce.Web.Framework.Mvc.DependencyResolvers;
 using eCommerce.Web.Framework.Mvc.ModelBinder;
 
 namespace eCommerce.Web

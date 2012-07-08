@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using eCommerce.Core.Infrastructure;
+using eCommerce.Core;
 
 namespace eCommerce.Web.Framework.Mvc.View
 {
@@ -26,6 +28,8 @@ namespace eCommerce.Web.Framework.Mvc.View
         public override ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache)
         {
             return base.FindView(controllerContext, viewName, masterName, useCache);
+            //var mobileDeviceChecker = DependencyResolver.Current.GetService<IMobileDeviceCheck>();
+
         }
 
         /// <summary>

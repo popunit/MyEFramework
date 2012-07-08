@@ -81,7 +81,7 @@
     <Compile Include="Data\DatabaseSettings.cs" />
     <Compile Include="Data\DatabaseSettingHelper.cs" />
     <Compile Include="Data\DatabaseSettingsManager.cs" />
-    <Compile Include="Data\StoreInformationSettings.cs" />
+    <Compile Include="Data\StoreStateSettings.cs" />
     <Compile Include="Enums\WorkType.cs" />
     <Compile Include="ICacheManager.cs" />
     <Compile Include="IContainerConfig.cs" />

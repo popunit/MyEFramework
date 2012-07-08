@@ -15,5 +15,11 @@ namespace eCommerce.Data.Domain.Users
         /// Enum supported by EF: http://blogs.msdn.com/b/efdesign/archive/2011/06/29/enumeration-support-in-entity-framework.aspx
         /// </summary>
         public StringFormatType PasswordFormatType { get; set; }
+
+        public PasswordKit()
+        {
+            // default set the clear text for password
+            this.PasswordFormatType = StringFormatType.ClearText;
+        }
     }
 }

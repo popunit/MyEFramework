@@ -17,6 +17,10 @@ namespace eCommerce.Web.Injection
     {
         public static void Run()
         {
+            // initialize MiniProfiler
+            // http://www.cnblogs.com/shanyou/archive/2012/04/03/2430977.html
+            StackExchange.Profiling.MiniProfilerEF.Initialize();
+
             Autofac.IContainer builder = (new ContainerBuilder()).Build();
             EngineContext.Initialize(new AutofacContainerManager(builder), new ContainerConfig(), false);
 

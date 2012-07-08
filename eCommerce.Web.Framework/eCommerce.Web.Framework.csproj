@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mvc\DefaultKnownTypeAttribute.cs" />
-    <Compile Include="Mvc\DependencyResolver\WebDependencyResolver.cs" />
+    <Compile Include="Mvc\DependencyResolvers\WebDependencyResolver.cs" />
     <Compile Include="Mvc\EnableAttribute.cs" />
     <Compile Include="Mvc\Files\FileExtension.cs" />
     <Compile Include="Mvc\Filters\ResultFilters\ThemedViewResultFilter.cs" />

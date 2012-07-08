@@ -55,11 +55,13 @@
     <Compile Include="DataProvider\MSSQLServerCeDataProvider.cs" />
     <Compile Include="DataProvider\MSSQLServerDataProvider.cs" />
     <Compile Include="Domain\Users\Entities\User.cs" />
+    <Compile Include="Domain\Users\Entities\UserCharacteristic.cs" />
     <Compile Include="Domain\Users\PasswordKit.cs" />
     <Compile Include="EfDataProviderBase.cs" />
     <Compile Include="EfDataProviderStartUpTask.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEfDataProvider.cs" />
+    <Compile Include="Mappings\Users\UserCharacteristicMap.cs" />
     <Compile Include="Mappings\Users\UserMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EfRepository.cs" />

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.NoAOP;
 
-namespace eCommerce.Web.Framework.Mvc.DependencyResolver
+namespace eCommerce.Web.Framework.Mvc.DependencyResolvers
 {
     /// <summary>
     /// When the MVC Framework needs to create an instance of a class, it calls the static methods of the

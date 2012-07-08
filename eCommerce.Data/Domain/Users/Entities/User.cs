@@ -12,13 +12,17 @@ namespace eCommerce.Data.Domain.Users.Entities
     {
         public User()
         {
- 
+            this.UserGuid = new Guid();
+            PasswordKit = new PasswordKit();
         }
 
-        public Guid UserId { get; set; }
+        public Guid UserGuid { get; set; }
         public string UserName { get; set; }
         public PasswordKit PasswordKit { get; set; }
         public string Email { get; set; }
+
+        // Navigation properties : Nullable
+        public virtual ICollection<UserCharacteristic> UserCharacteristics { get; protected set; }
     }
 
     public sealed class MissingUser : User

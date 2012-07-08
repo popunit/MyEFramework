@@ -11,5 +11,6 @@ namespace eCommerce.Core
     {
         bool IsMobileDevice(HttpContextBase httpContext);
         bool IsMobileDeviceSupported();
+        bool MobileDeviceUsingIsClosed();
     }
 }
