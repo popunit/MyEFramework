@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -51,6 +52,25 @@ namespace eCommerce.Core.Common
             {
                 callback(item);
             }
+        }
+
+        public static string[] Trims(this IEnumerable<string> collections)
+        {
+            string[] items = collections.ToArray();
+            Array.ForEach(items, item => item.Trim());
+            return items;
+        }
+
+        public static TypeConverter GetTypeConverter(this Type type)
+        {
+            if (type == typeof(List<int>))
+                return new GenericListTypeConverter<int>();
+            if (type == typeof(List<decimal>))
+                return new GenericListTypeConverter<decimal>();
+            if (type == typeof(List<string>))
+                return new GenericListTypeConverter<string>();
+
+            return TypeDescriptor.GetConverter(type);
         }
     }
 
@@ -119,5 +139,80 @@ namespace eCommerce.Core.Common
         //    __inc.Dispose();
         //    GC.SuppressFinalize(this);
         //}
-    } 
+    }
+
+    public class GenericListTypeConverter<T> : TypeConverter
+    {
+        protected readonly TypeConverter typeConverter;
+
+        public GenericListTypeConverter()
+        {
+            typeConverter = TypeDescriptor.GetConverter(typeof(T));
+            if (typeConverter == null)
+                throw new InvalidOperationException("No type converter exists for type " + typeof(T).FullName);
+        }
+
+        protected virtual string[] GetStringArray(string input)
+        {
+            if (!String.IsNullOrEmpty(input))
+            {
+                string[] lines = input.Split(',');
+                return lines.Trims();
+            }
+            else
+                return new string[0];
+        }
+
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            if (sourceType == typeof(string))
+            {
+                string[] items = this.GetStringArray(sourceType.ToString());
+                return items.Count() > 0;
+            }
+
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
+        {
+            if (value is string)
+            {
+                string[] items = GetStringArray((string)value);
+                var list = new List<T>();
+                items.ForEach(item => 
+                {
+                    object obj = typeConverter.ConvertFromInvariantString(item);
+                    if (null != obj)
+                        list.Add((T)obj);
+                });
+
+                return list;
+            }
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string))
+            {
+                string line = string.Empty;
+                var list = value as IEnumerable<T>;
+                if (null != list)
+                {
+                    list.ForEach(item => 
+                    {
+                        var str = Convert.ToString(item, CultureInfo.InvariantCulture);
+                        line += str;
+                        line += ",";
+                    });
+                    line.Trim(','); // remove the last comma
+                }
+
+                return line;
+            }
+
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
 }

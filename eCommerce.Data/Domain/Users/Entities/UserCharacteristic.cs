@@ -11,7 +11,7 @@ namespace eCommerce.Data.Domain.Users.Entities
     public partial class UserCharacteristic : EntityBase
     {
         // Foreign key (to User.Id)
-        public string UserId { get; set; }
+        public int UserId { get; set; }
         public string Key { get; set; }
         public string Value { get; set; }
 

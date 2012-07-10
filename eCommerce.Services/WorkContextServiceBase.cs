@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core;
-using eCommerce.Data.Domain.Users.Entities;
+using eCommerce.Services.WcfClient.Entities;
 
 namespace eCommerce.Services
 {

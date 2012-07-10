@@ -6,15 +6,16 @@ using System.Threading.Tasks;
 using System.Web;
 using eCommerce.Core;
 using eCommerce.Core.Data;
+using eCommerce.Services.Users;
 
 namespace eCommerce.Services
 {
     public class MobileDeviceCheck : IMobileDeviceCheck
     {
         private readonly StoreStateSettings storeStateSettings;
-        private readonly WorkContextBase workContext;
+        private readonly WorkContextServiceBase workContext;
 
-        public MobileDeviceCheck(StoreStateSettings settings, WorkContextBase context)
+        public MobileDeviceCheck(StoreStateSettings settings, WorkContextServiceBase context)
         {
             this.storeStateSettings = settings;
             this.workContext = context;
@@ -32,9 +33,9 @@ namespace eCommerce.Services
             return storeStateSettings.MobileDevicesSupported;
         }
 
-        public bool MobileDeviceUsingIsClosed()
+        public bool MobileDeviceSupportedIsClosed()
         {
-            throw new NotImplementedException();
+            return workContext.CurrentUser.GetCharacteristic<bool>(CharacteristicResource.MobileDeviceSupportedIsClosed);
         }
     }
 }

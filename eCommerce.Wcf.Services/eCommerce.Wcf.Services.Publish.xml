@@ -1,0 +1,26 @@
+<publishData>
+  <publishTarget publishUrl="C:\My Resources\My Practice\MyGitStore_Note\Services\">
+    <file relUrl="Web.config" publishTime="07/09/2012 18:42:29" />
+    <file relUrl="bin/AutoMapper.xml" publishTime="06/28/2012 12:30:15" />
+    <file relUrl="bin/EntityFramework.dll" publishTime="06/16/2012 18:57:56" />
+    <file relUrl="bin/eCommerce.Data.dll" publishTime="07/08/2012 21:39:35" />
+    <file relUrl="bin/Quartz.dll" publishTime="06/12/2012 23:01:45" />
+    <file relUrl="bin/C5.dll" publishTime="06/12/2012 23:01:44" />
+    <file relUrl="bin/Autofac.dll" publishTime="06/30/2012 01:14:15" />
+    <file relUrl="bin/eCommerce.Wcf.Services.dll" publishTime="07/10/2012 12:18:05" />
+    <file relUrl="bin/eCommerce.Exception.pdb" publishTime="07/08/2012 21:39:32" />
+    <file relUrl="bin/EntityFramework.xml" publishTime="06/16/2012 18:57:56" />
+    <file relUrl="bin/Autofac.Integration.Mvc.dll" publishTime="06/30/2012 01:14:32" />
+    <file relUrl="bin/eCommerce.Core.pdb" publishTime="07/08/2012 21:39:33" />
+    <file relUrl="bin/eCommerce.Wcf.Services.dll.config" publishTime="07/09/2012 18:42:29" />
+    <file relUrl="bin/eCommerce.Data.pdb" publishTime="07/08/2012 21:39:35" />
+    <file relUrl="bin/eCommerce.Wcf.Services.pdb" publishTime="07/10/2012 12:18:05" />
+    <file relUrl="bin/Quartz.pdb" publishTime="06/12/2012 23:01:45" />
+    <file relUrl="bin/AutoMapper.dll" publishTime="06/28/2012 12:30:15" />
+    <file relUrl="bin/eCommerce.Exception.dll" publishTime="07/08/2012 21:39:32" />
+    <file relUrl="bin/Autofac.xml" publishTime="06/30/2012 01:14:15" />
+    <file relUrl="eCommerce.Wcf.Services.Users.UserExtension.svc" publishTime="07/10/2012 12:18:23" />
+    <file relUrl="bin/Quartz.xml" publishTime="06/12/2012 23:01:45" />
+    <file relUrl="bin/eCommerce.Core.dll" publishTime="07/08/2012 21:39:33" />
+  </publishTarget>
+</publishData>
