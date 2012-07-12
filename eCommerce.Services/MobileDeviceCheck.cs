@@ -37,5 +37,13 @@ namespace eCommerce.Services
         {
             return workContext.CurrentUser.GetCharacteristic<bool>(CharacteristicResource.MobileDeviceSupportedIsClosed);
         }
+
+
+        public bool MobileDeviceIsAvailable(HttpContextBase httpContext)
+        {
+            return IsMobileDevice(httpContext) &&
+                IsMobileDeviceSupported() &&
+                !MobileDeviceSupportedIsClosed();
+        }
     }
 }

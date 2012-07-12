@@ -18,5 +18,10 @@ namespace eCommerce.Core.Data
 
         // for test
         public bool EmulateMobileDevice { get; set; }
+
+        /// <summary>
+        /// MiniProfile is an excellent 3rd-party lib, set the flag to enable MiniProfile in ASP.MVC views
+        /// </summary>
+        public bool EnableMiniProfile { get; set; }
     }
 }

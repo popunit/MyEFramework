@@ -251,6 +251,22 @@ namespace eCommerce.Core.Infrastructure.NoAOP
             });
         }
 
+        public static AspectF MustBeNonNullOrEmpty(this AspectF aspect, params string[] args)
+        {
+            return aspect.Combine((work) =>
+            {
+                for (int i = 0; i < args.Length; i++)
+                {
+                    string arg = args[i];
+                    if (String.IsNullOrEmpty(arg))
+                        throw new ArgumentException(
+                            string.Format("Parameter at index {0} is null or empty", i));
+                }
+
+                work();
+            });
+        }
+
         [DebuggerStepThrough]
         public static AspectF Until(this AspectF aspect, Func<bool> test)
         {
