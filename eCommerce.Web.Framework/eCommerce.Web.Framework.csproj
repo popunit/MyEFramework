@@ -46,6 +46,7 @@
     <Compile Include="Mvc\DependencyResolvers\WebDependencyResolver.cs" />
     <Compile Include="Mvc\EnableAttribute.cs" />
     <Compile Include="Mvc\Files\FileExtension.cs" />
+    <Compile Include="Mvc\Filters\ActionFilters\StoreLastVisitedPageAttribute.cs" />
     <Compile Include="Mvc\Filters\ResultFilters\ThemedViewResultFilter.cs" />
     <Compile Include="Mvc\ModelBinder\ValueProviderForUpdateModel.cs" />
     <Compile Include="Mvc\ModelBinder\WebModelBinder.cs" />
@@ -58,7 +59,6 @@
     <Compile Include="WebWorkContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mvc\Filters\ActionFilters\" />
     <Folder Include="Mvc\Filters\AuthorizationFilters\" />
   </ItemGroup>
   <ItemGroup>

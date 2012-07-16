@@ -1,0 +1,29 @@
+﻿@using eCommerce.Core.Data;
+@using StackExchange.Profiling;
+@{
+    var enableMiniProfiler = DependencyResolver.Current.GetService<StoreStateSettings>().EnableMiniProfile;
+}
+
+<!DOCTYPE html> @*HTML5*@
+<html dir="ltr"> @*TO-DO: should change direction dynamically*@
+    <head>
+        <title>@ViewBag.Title</title>
+        @if (enableMiniProfiler)
+        {
+            this.InitClientTimings();
+            MiniProfiler.RenderIncludes();
+        }
+
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+        <meta name="description" content="Description" /> @*TO-DO: should add description dynamically*@
+        <meta name="keywords" content="KeyWords" /> @*TO-DO: should add keywords dynamically*@
+
+        @*TO-DO: set css and javascript dynamically*@
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/css")" rel="stylesheet" type="text/css" />
+        <link href="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Content/themes/base/css")" rel="stylesheet" type="text/css" />
+        <script src="@System.Web.Optimization.BundleTable.Bundles.ResolveBundleUrl("~/Scripts/js")"></script>
+
+        @*TO-DO: Others*@
+    </head>
+</html>
