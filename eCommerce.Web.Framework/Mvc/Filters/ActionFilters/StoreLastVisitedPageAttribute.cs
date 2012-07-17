@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using eCommerce.Core.Data;
 using eCommerce.Web.Framework.Mvc.Extensions;
 
 namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
 {
-    [NotAllowChildController]
+    [NotAllowChildAction]
+    [HttpMethodFilter(DisableDelete = true, DisablePut = true, DisablePost = true)]
     public class StoreLastVisitedPageAttribute : FilterAttribute, IActionFilter
     {
         public virtual void OnActionExecuted(ActionExecutedContext filterContext)
@@ -22,7 +24,10 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
                 return;
             if (!filterContext.IsValid())
                 return;
+            //var settings = DependencyResolver.Current.GetService<UserSettings>();
             
+            // TO-DO: store last visited page
+            throw new NotImplementedException();
         }
     }
 }

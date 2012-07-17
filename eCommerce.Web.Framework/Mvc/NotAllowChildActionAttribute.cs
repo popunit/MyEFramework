@@ -8,7 +8,7 @@ namespace eCommerce.Web.Framework.Mvc
 {
     [AttributeUsage(AttributeTargets.Class,
         AllowMultiple = false, Inherited = false)]
-    public class NotAllowChildControllerAttribute : Attribute
+    public class NotAllowChildActionAttribute : Attribute
     {
     }
 }
