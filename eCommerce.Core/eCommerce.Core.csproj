@@ -69,6 +69,7 @@
     <Compile Include="Caching\NullCache.cs" />
     <Compile Include="Common\DataBuilder.cs" />
     <Compile Include="Common\FileHelper.cs" />
+    <Compile Include="Common\PropertyChangeManager.cs" />
     <Compile Include="Common\ReflectionUtility.cs" />
     <Compile Include="Common\Singleton.cs" />
     <Compile Include="Common\TypeHelper.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Data\DatabaseSettingHelper.cs" />
     <Compile Include="Data\DatabaseSettingsManager.cs" />
     <Compile Include="Data\StoreStateSettings.cs" />
+    <Compile Include="Data\UserSettings.cs" />
     <Compile Include="Enums\WorkType.cs" />
     <Compile Include="ICacheManager.cs" />
     <Compile Include="IContainerConfig.cs" />

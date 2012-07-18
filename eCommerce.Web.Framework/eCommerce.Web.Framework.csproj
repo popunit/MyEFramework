@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="IThemeContext.cs" />
     <Compile Include="Mvc\Controllers\ControllerBase.cs" />
+    <Compile Include="Mvc\Controllers\WebControllerActionInvoker.cs" />
     <Compile Include="Mvc\DefaultKnownTypeAttribute.cs" />
     <Compile Include="Mvc\DependencyResolvers\WebDependencyResolver.cs" />
     <Compile Include="Mvc\EnableAttribute.cs" />
@@ -50,11 +51,12 @@
     <Compile Include="Mvc\Files\FileExtension.cs" />
     <Compile Include="Mvc\Filters\ActionFilters\StoreLastVisitedPageAttribute.cs" />
     <Compile Include="Mvc\Filters\ResultFilters\ThemedViewResultFilter.cs" />
+    <Compile Include="Mvc\HttpMethodFilterAttribute.cs" />
     <Compile Include="Mvc\ModelBinder\ValueProviderForUpdateModel.cs" />
     <Compile Include="Mvc\ModelBinder\WebModelBinder.cs" />
     <Compile Include="Mvc\ModelBinder\WebModelBinderProvider.cs" />
     <Compile Include="Mvc\MvcHelper.cs" />
-    <Compile Include="Mvc\NotAllowChildControllerAttribute.cs" />
+    <Compile Include="Mvc\NotAllowChildActionAttribute.cs" />
     <Compile Include="Mvc\RouteData\RouteDataExtension.cs" />
     <Compile Include="Mvc\View\ThemeableVirtualPathProviderViewEngine.cs" />
     <Compile Include="Mvc\WebModelBase.cs" />

@@ -27,7 +27,7 @@ namespace eCommerce.Core.Tests.Infrastructure.NoAOP
         [Test]
         public void Can_Catch_Exception_Specified()
         {
-            Assert.Throws<System.Exception>(() => 
+            Assert.Throws<CommonException>(() => 
             {
                 AspectF.Define.HandleException(typeof(DbEntityValidationException)).Do(() =>
                 {

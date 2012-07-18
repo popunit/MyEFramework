@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="CommonException.cs" />
     <Compile Include="Ef\DbEntityValidationExceptionHandler.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
     <Compile Include="FCL\ArgumentExceptionHandler.cs" />
     <Compile Include="IErrorHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
