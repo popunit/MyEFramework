@@ -72,6 +72,14 @@ namespace eCommerce.Core.Common
 
             return TypeDescriptor.GetConverter(type);
         }
+
+        public static string ToSafeString(this object obj)
+        {
+            if (null != obj)
+                return obj.ToString();
+            else
+                return string.Empty;
+        }
     }
 
     public static class EnumHelper

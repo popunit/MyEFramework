@@ -10,6 +10,7 @@ namespace eCommerce.Core.Data
     /// <summary>
     /// Settings for specific user
     /// </summary>
+    /// <remarks>Move to WebWorkContext?</remarks>
     public class UserSettings : ISettings
     {
         public bool StoreLastVisitedPage { get; set; }

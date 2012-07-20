@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using eCommerce.Core;
 using eCommerce.Core.Data;
 using eCommerce.Web.Framework.Mvc.Extensions;
 
@@ -22,9 +23,13 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
         {
             if (!filterContext.DBIsInstalled())
                 return;
-            if (!filterContext.IsValid())
+            if (!filterContext.HasRequest())
                 return;
-            //var settings = DependencyResolver.Current.GetService<UserSettings>();
+            var httpHelper = DependencyResolver.Current.GetService<IHttpHelper>();
+            var requestUrl = httpHelper.GetCurrentRequestUrl(true);
+            if (!string.IsNullOrEmpty(requestUrl))
+            { 
+            }
             
             // TO-DO: store last visited page
             throw new NotImplementedException();

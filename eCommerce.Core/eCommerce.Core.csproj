@@ -91,6 +91,7 @@
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IDataProviderManager.cs" />
     <Compile Include="IEngine.cs" />
+    <Compile Include="IHttpHelper.cs" />
     <Compile Include="IMobileDeviceCheck.cs" />
     <Compile Include="Infrastructure\AppDomainRoute.cs" />
     <Compile Include="Infrastructure\Engine.cs" />

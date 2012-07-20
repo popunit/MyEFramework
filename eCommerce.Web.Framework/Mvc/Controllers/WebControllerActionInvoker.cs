@@ -27,24 +27,11 @@ namespace eCommerce.Web.Framework.Mvc.Controllers
         {
             FilterInfo info = base.GetFilters(controllerContext, actionDescriptor);
 
-            //// check not allow child action attribute
-            //if (controllerContext.IsChildAction)
-            //{
-            //    RemoveWhere(info.ActionFilters,
-            //        filter =>
-            //        {
-            //            var attributes = filter.GetType().GetCustomAttributes(typeof(NotAllowChildActionAttribute), false);
-            //            if (null == attributes || attributes.Length == 0)
-            //                return false;
-            //            else
-            //                return true;
-            //        });
-            //}
-
             // HttpMethodFilter
             RemoveWhere(info.ActionFilters,
                 filter =>
                 {
+                    // specify attribute here (consider removing?)
                     if (filter.GetType() == typeof(StoreLastVisitedPageAttribute))
                     {
                         var userSettings = DependencyResolver.Current.GetService<UserSettings>();

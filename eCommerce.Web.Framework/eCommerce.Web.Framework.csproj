@@ -51,6 +51,7 @@
     <Compile Include="Mvc\Files\FileExtension.cs" />
     <Compile Include="Mvc\Filters\ActionFilters\StoreLastVisitedPageAttribute.cs" />
     <Compile Include="Mvc\Filters\ResultFilters\ThemedViewResultFilter.cs" />
+    <Compile Include="Mvc\HttpHelper.cs" />
     <Compile Include="Mvc\HttpMethodFilterAttribute.cs" />
     <Compile Include="Mvc\ModelBinder\ValueProviderForUpdateModel.cs" />
     <Compile Include="Mvc\ModelBinder\WebModelBinder.cs" />

@@ -18,8 +18,16 @@ namespace eCommerce.Web.Framework.Mvc.Extensions
         public static bool IsValid(this ControllerContext controllerContext)
         {
             return null != controllerContext &&
-                null != controllerContext.HttpContext &&
-                null != controllerContext.HttpContext.Request;
+                null != controllerContext.HttpContext;
+        }
+
+        public static bool HasRequest(this ControllerContext controllerContext)
+        {
+            if (controllerContext.IsValid())
+                if (null != controllerContext.HttpContext.Request)
+                    return true;
+
+            return false;
         }
     }
 }

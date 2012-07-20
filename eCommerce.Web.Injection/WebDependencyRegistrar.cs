@@ -8,6 +8,7 @@ using Autofac;
 using Autofac.Integration.Mvc;
 using eCommerce.Core;
 using eCommerce.Services;
+using eCommerce.Web.Framework.Mvc;
 
 namespace eCommerce.Web.Injection
 {
@@ -21,6 +22,7 @@ namespace eCommerce.Web.Injection
         /// <remarks>HttpContext is always available here</remarks>
         public override void Register(ContainerBuilder builder, Core.Infrastructure.IRoute route)
         {
+            #region Http Context
             // register call back action (main for construction of type)
             // if httpcontext == null 
             // reason: 1.async request (hack)
@@ -28,9 +30,22 @@ namespace eCommerce.Web.Injection
             builder.Register(context =>
                 null != HttpContext.Current ?
                 (new HttpContextWrapper(HttpContext.Current) as HttpContextBase) :
-                MvcMocker.FakeHttpContext());
+                MvcMocker.FakeHttpContext()).As<HttpContextBase>().InstancePerHttpRequest();
 
-            builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest().Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
+            builder.Register(context => context.Resolve<HttpContextBase>().Request)
+                .As<HttpRequestBase>().InstancePerHttpRequest();
+            builder.Register(context => context.Resolve<HttpContextBase>().Response)
+                .As<HttpResponseBase>().InstancePerHttpRequest();
+            builder.Register(context => context.Resolve<HttpContextBase>().Server)
+                .As<HttpServerUtilityBase>().InstancePerHttpRequest();
+            builder.Register(context => context.Resolve<HttpContextBase>().Session)
+                .As<HttpSessionStateBase>().InstancePerHttpRequest();
+
+            #endregion
+
+            builder.RegisterType<HttpHelper>().As<IHttpHelper>().InstancePerHttpRequest();
+
+            builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
         }
 
         public override int Order
