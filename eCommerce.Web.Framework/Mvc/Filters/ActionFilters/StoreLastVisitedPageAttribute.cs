@@ -27,7 +27,7 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
                 return;
             var httpHelper = DependencyResolver.Current.GetService<IHttpHelper>();
             var requestUrl = httpHelper.GetCurrentRequestUrl(true);
-            if (!string.IsNullOrEmpty(requestUrl))
+            if (!string.IsNullOrEmpty(requestUrl)) // if has request url, store it
             { 
             }
             

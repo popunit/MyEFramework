@@ -25,10 +25,7 @@ namespace eCommerce.Core
         }
 
         //protected DatabaseSettings Settings { get; private set; }
-        public IDataProvider DataProvider()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IDataProvider DataProvider();
 
         public virtual DatabaseSettings Settings
         {

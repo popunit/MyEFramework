@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Core;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data;
 using eCommerce.Data.Domain.Users.Entities;
@@ -12,20 +13,16 @@ using eCommerce.Wcf.Services.Contracts.Users;
 namespace eCommerce.Wcf.Services.Users
 {
     /// <summary>
-    /// 
+    /// Supplement for User service
     /// </summary>
     /// <remarks>New Async pattern: http://blog.vuscode.com/malovicn/archive/2012/01/21/what-is-new-in-wcf-in-net-4-5-taskt-and-async.aspx</remarks>
     public class UserExtension : IUserExtension
     {
-        private CommerceDbContext context;
-        private EfRepository<User> repository;
+        private readonly IRepository<User> repository;
 
-        private void Init()
+        public UserExtension(IRepository<User> repository)
         {
-            if(null == context)
-                context = new CommerceDbContext();
-            if(null == repository)
-                repository = new EfRepository<User>(context);
+            this.repository = repository;
         }
 
         /// <summary>
@@ -39,7 +36,6 @@ namespace eCommerce.Wcf.Services.Users
         {
             return AspectF.Define.MustBeNonNull(userId).Return<string>(() => 
             {
-                this.Init();
                 var characteristic = repository.GetByKeys(userId).UserCharacteristics.FirstOrDefault(
                     uc => uc.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase));
                 if (null == characteristic)

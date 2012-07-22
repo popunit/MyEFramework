@@ -41,15 +41,15 @@ namespace eCommerce.Data.Repositories
                 });
         }
 
-        public void Insert(T entity)
+        public bool Insert(T entity)
         {
-            AspectF.Define.MustBeNonNull(entity).
-                HandleException(typeof(DbEntityValidationException)).
-                Do(() =>
+            return AspectF.Define.MustBeNonNull(entity).
+                HandleException(typeof(DbEntityValidationException))
+                .Return<bool>(() =>
                 {
                     var state = this.db.GetEntityState<T>(entity);
                     this.Store.Add(entity);
-                    this.db.SaveChanges();
+                    return this.db.SaveChanges() > 0; // not successful or no item needs to be saved
                 });
         }
 
@@ -59,11 +59,11 @@ namespace eCommerce.Data.Repositories
         /// <param name="entity"></param>
         /// <remarks>Reference to http://blogs.msdn.com/b/adonet/archive/2011/01/29/using-dbcontext-in-ef-feature-ctp5-part-4-add-attach-and-entity-states.aspx
         /// </remarks>
-        public void Update(T entity)
+        public bool Update(T entity)
         {
-            AspectF.Define.MustBeNonNull(entity).
+            return AspectF.Define.MustBeNonNull(entity).
                 HandleException(typeof(DbEntityValidationException)).
-                Do(() => 
+                Return<bool>(() => 
                 {
                     var state = this.db.GetEntityState<T>(entity);
                     if (state == EntityState.Detached)
@@ -81,7 +81,7 @@ namespace eCommerce.Data.Repositories
                         }
                     }
 
-                    this.db.SaveChanges();
+                    return this.db.SaveChanges() > 0; // not successful or no item needs to be saved
                 });
         }
 

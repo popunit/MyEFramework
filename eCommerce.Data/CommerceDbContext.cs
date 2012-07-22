@@ -48,6 +48,18 @@ namespace eCommerce.Data
                 });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nameOrConnectionString"></param>
+        /// <remarks>Use connection string as parameter if release, because there are multiple data providers
+        /// so that we can dynamically change background database. We only use name of connectionstring in web config
+        /// on debug period</remarks>
+        public CommerceDbContext(string nameOrConnectionString) : 
+            base(nameOrConnectionString)
+        { 
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Type t = typeof(CommerceDbContext);

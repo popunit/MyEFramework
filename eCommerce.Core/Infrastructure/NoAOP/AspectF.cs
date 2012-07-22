@@ -251,6 +251,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
             });
         }
 
+        [DebuggerStepThrough]
         public static AspectF MustBeNonNullOrEmpty(this AspectF aspect, params string[] args)
         {
             return aspect.Combine((work) =>
@@ -258,7 +259,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 for (int i = 0; i < args.Length; i++)
                 {
                     string arg = args[i];
-                    if (String.IsNullOrEmpty(arg))
+                    if (String.IsNullOrWhiteSpace(arg)) // to confirm if need whitespace in some situation
                         throw new ArgumentException(
                             string.Format("Parameter at index {0} is null or empty", i));
                 }

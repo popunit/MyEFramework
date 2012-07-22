@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using eCommerce.Core;
 using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;
+using eCommerce.Exception;
 
 namespace eCommerce.Data
 {
@@ -18,7 +19,7 @@ namespace eCommerce.Data
             {
                 var provider = EngineContext.Current.Resolve<IEfDataProvider>();
                 if (null == provider)
-                    throw new Exception("Cannot find Data Provider");
+                    throw new CommonException("Cannot find Data Provider");
                 provider.SetDatabaseInitializer();
             }
         }
