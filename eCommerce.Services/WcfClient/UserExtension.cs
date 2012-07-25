@@ -149,50 +149,50 @@ namespace eCommerce.Services.WcfClient.Entities
         }
     }
 }
-namespace eCommerce.Services.WcfClient.Core
-{
-    using System.Runtime.Serialization;
-    using eCommerce.Services.WcfClient.Entities;
+//namespace eCommerce.Services.WcfClient.Core
+//{
+//    using System.Runtime.Serialization;
+//    using eCommerce.Services.WcfClient.Entities;
     
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="EntityBase", Namespace="http://schemas.datacontract.org/2004/07/eCommerce.Core")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(User))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UserCharacteristic))]
-    public partial class EntityBase : object, System.Runtime.Serialization.IExtensibleDataObject
-    {
+//    [System.Diagnostics.DebuggerStepThroughAttribute()]
+//    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+//    [System.Runtime.Serialization.DataContractAttribute(Name="EntityBase", Namespace="http://schemas.datacontract.org/2004/07/eCommerce.Core")]
+//    [System.Runtime.Serialization.KnownTypeAttribute(typeof(User))]
+//    [System.Runtime.Serialization.KnownTypeAttribute(typeof(UserCharacteristic))]
+//    public partial class EntityBase : object, System.Runtime.Serialization.IExtensibleDataObject
+//    {
         
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+//        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
-        private int IdField;
+//        private int IdField;
         
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData
-        {
-            get
-            {
-                return this.extensionDataField;
-            }
-            set
-            {
-                this.extensionDataField = value;
-            }
-        }
+//        public System.Runtime.Serialization.ExtensionDataObject ExtensionData
+//        {
+//            get
+//            {
+//                return this.extensionDataField;
+//            }
+//            set
+//            {
+//                this.extensionDataField = value;
+//            }
+//        }
         
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Id
-        {
-            get
-            {
-                return this.IdField;
-            }
-            set
-            {
-                this.IdField = value;
-            }
-        }
-    }
-}
+//        [System.Runtime.Serialization.DataMemberAttribute()]
+//        public int Id
+//        {
+//            get
+//            {
+//                return this.IdField;
+//            }
+//            set
+//            {
+//                this.IdField = value;
+//            }
+//        }
+//    }
+//}
 namespace eCommerce.Services.WcfClient.Users
 {
     using System.Runtime.Serialization;

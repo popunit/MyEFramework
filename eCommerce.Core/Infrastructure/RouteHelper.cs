@@ -30,15 +30,16 @@ namespace eCommerce.Core.Infrastructure
             IRoute routing,
             Action<Type> executing)
         {
-            //var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
             var types = routing.FindType<T>();
-            //var instances = new List<T>();
-            //types.ForEach(t =>
-            //{
-            //    instances.Add((T)Activator.CreateInstance(t));
-            //});
+            types.ForEach(t => executing(t));
+        }
 
-            // register object in order
+        public static void RoutingToGenericType(
+            IRoute routing, 
+            Type genericType, 
+            Action<Type> executing)
+        {
+            var types = routing.FindType(genericType); // IsGenericTypeDefinition?
             types.ForEach(t => executing(t));
         }
 

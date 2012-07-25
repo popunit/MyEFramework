@@ -56,6 +56,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.IO" />
+    <Reference Include="System.Reactive.Core, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive.Linq, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Reactive.Providers, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -85,6 +88,11 @@
     <Compile Include="Data\StoreStateSettings.cs" />
     <Compile Include="Data\UserSettings.cs" />
     <Compile Include="Enums\WorkType.cs" />
+    <Compile Include="Events\EntityEvent.cs" />
+    <Compile Include="Events\EntityEventExtension.cs" />
+    <Compile Include="Events\IEntityEvent.cs" />
+    <Compile Include="Events\IObserverService.cs" />
+    <Compile Include="Events\ISubscriber.cs" />
     <Compile Include="ICacheManager.cs" />
     <Compile Include="IContainerConfig.cs" />
     <Compile Include="IContainerManager.cs" />
@@ -130,7 +138,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Attributes\" />
-    <Folder Include="Events\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

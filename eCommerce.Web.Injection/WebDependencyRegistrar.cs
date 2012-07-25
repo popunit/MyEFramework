@@ -1,13 +1,19 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Autofac;
 using Autofac.Integration.Mvc;
 using eCommerce.Core;
+using eCommerce.Core.Events;
+using eCommerce.Core.Infrastructure;
 using eCommerce.Services;
+using eCommerce.Services.WcfClient.Entities;
 using eCommerce.Web.Framework.Mvc;
 
 namespace eCommerce.Web.Injection
@@ -20,7 +26,7 @@ namespace eCommerce.Web.Injection
         /// <param name="builder"></param>
         /// <param name="route"></param>
         /// <remarks>HttpContext is always available here</remarks>
-        public override void Register(ContainerBuilder builder, Core.Infrastructure.IRoute route)
+        public override void Register(ContainerBuilder builder, IRoute route)
         {
             #region Http Context
             // register call back action (main for construction of type)
@@ -46,6 +52,21 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<HttpHelper>().As<IHttpHelper>().InstancePerHttpRequest();
 
             builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
+
+            // register subscribers
+            RouteHelper.RoutingToGenericType(
+                route,
+                typeof(ISubscriber<>),
+                i => 
+                {
+                    builder.RegisterType(i).As(i.FindInterfaces((type, criteria) =>
+                    {
+                        var isMatch = ((Type)criteria).IsAssignableFrom(type.GetGenericTypeDefinition());  // check?
+                        return isMatch;
+                    }, typeof(ISubscriber<>))).InstancePerHttpRequest(); // InstancePerLifetimeScope();
+                });
+
+            builder.RegisterType<ObserverService>().As<IObserverService>().InstancePerDependency(); // get new every time
         }
 
         public override int Order
