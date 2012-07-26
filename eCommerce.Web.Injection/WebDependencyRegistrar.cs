@@ -14,6 +14,7 @@ using eCommerce.Core.Events;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Services;
 using eCommerce.Services.WcfClient.Entities;
+using eCommerce.Web.Framework;
 using eCommerce.Web.Framework.Mvc;
 
 namespace eCommerce.Web.Injection
@@ -53,6 +54,9 @@ namespace eCommerce.Web.Injection
 
             builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
 
+            builder.RegisterType<WebWorkContext>().As<WorkContextServiceBase>().InstancePerHttpRequest();
+
+            #region Events
             // register subscribers
             RouteHelper.RoutingToGenericType(
                 route,
@@ -67,6 +71,8 @@ namespace eCommerce.Web.Injection
                 });
 
             builder.RegisterType<ObserverService>().As<IObserverService>().InstancePerDependency(); // get new every time
+
+            #endregion
         }
 
         public override int Order

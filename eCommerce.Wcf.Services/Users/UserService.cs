@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Integration.Wcf;
 using eCommerce.Core;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data;
@@ -15,13 +17,13 @@ namespace eCommerce.Wcf.Services.Users
     {
         private readonly IRepository<User> userRepository;
         private readonly IRepository<UserCharacteristic> userCharacteristicRepository;
+        private readonly ILifetimeScope container;
 
-        public UserService(
-            IRepository<User> repository,
-            IRepository<UserCharacteristic> userCharacteristicRepository)
+        public UserService()
         {
-            this.userRepository = repository;
-            this.userCharacteristicRepository = userCharacteristicRepository;
+            container = AutofacHostFactory.Container;
+            this.userRepository = container.Resolve<IRepository<User>>();
+            this.userCharacteristicRepository = container.Resolve<IRepository<UserCharacteristic>>();
         }
 
         /// <summary>

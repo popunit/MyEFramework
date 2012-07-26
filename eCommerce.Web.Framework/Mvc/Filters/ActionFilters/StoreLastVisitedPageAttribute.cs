@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using eCommerce.Core;
 using eCommerce.Core.Data;
+using eCommerce.Services;
 using eCommerce.Web.Framework.Mvc.Extensions;
+using eCommerce.Services.Users;
 
 namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
 {
@@ -16,9 +18,13 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
     {
         public virtual void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            throw new NotImplementedException();
+            // doing nothing
         }
 
+        /// <summary>
+        /// Save current visited page url to store for using in future
+        /// </summary>
+        /// <param name="filterContext"></param>
         public virtual void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!filterContext.DBIsInstalled())
@@ -28,7 +34,12 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
             var httpHelper = DependencyResolver.Current.GetService<IHttpHelper>();
             var requestUrl = httpHelper.GetCurrentRequestUrl(true);
             if (!string.IsNullOrEmpty(requestUrl)) // if has request url, store it
-            { 
+            {
+                var context = DependencyResolver.Current.GetService<WorkContextServiceBase>();
+                var storedUrl = context.CurrentUser.GetCharacteristic<string>(UserCharacteristicResource.LastVisitedPage);
+                if (requestUrl != storedUrl)
+                { 
+                }
             }
             
             // TO-DO: store last visited page

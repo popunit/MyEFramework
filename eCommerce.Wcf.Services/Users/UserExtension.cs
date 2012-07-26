@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Integration.Wcf;
 using eCommerce.Core;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data;
@@ -19,10 +21,12 @@ namespace eCommerce.Wcf.Services.Users
     public class UserExtension : IUserExtension
     {
         private readonly IRepository<User> repository;
+        private readonly ILifetimeScope container;
 
-        public UserExtension(IRepository<User> repository)
+        public UserExtension()
         {
-            this.repository = repository;
+            container = AutofacHostFactory.Container;
+            this.repository = container.Resolve<IRepository<User>>();
         }
 
         /// <summary>
