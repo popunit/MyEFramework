@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Data.DatabaseInitializers;
 
 namespace eCommerce.Data.DataProvider
 {
@@ -21,8 +22,9 @@ namespace eCommerce.Data.DataProvider
 
         public override void SetDatabaseInitializer()
         {
-            // TO-DO
-            //Database.SetInitializer
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<CommerceDbContext>());
+            Database.SetInitializer(new CreateDatabaseIfNotExists<CommerceDbContext>());
+            Database.SetInitializer(new CreateTablesIfNotExist<CommerceDbContext>());
         }
     }
 }

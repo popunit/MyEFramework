@@ -8,7 +8,15 @@ using eCommerce.Core.Common;
 
 namespace eCommerce.Data.Common
 {
-    internal abstract class EmptyEntityMap<T>
+    internal interface IEmptyEntityMap<T>
+        where T : EntityBase
+    {
+        Type EntityType { get; }
+        T Get();
+        bool IsValid();
+    }
+
+    internal abstract class EmptyEntityMap<T> : IEmptyEntityMap<T>
         where T : EntityBase
     {
         private readonly Type entityType = typeof(T);

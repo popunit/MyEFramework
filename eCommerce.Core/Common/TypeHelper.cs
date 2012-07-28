@@ -14,18 +14,27 @@ namespace eCommerce.Core.Common
 {
     public static class TypeHelper
     {
-        public static bool IsInherit(this Type child, Type parent)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="childConcreted">Type not abstract</param>
+        /// <param name="parentInterface">Type is interface</param>
+        /// <returns></returns>
+        public static bool IsInherit(this Type childConcreted, Type parentInterface)
         {
             try
             {
-                if (parent.IsAssignableFrom(child))
+                if (parentInterface.IsAssignableFrom(childConcreted) && parentInterface != childConcreted)
                     return true;
 
+                if (childConcreted.IsAbstract)
+                    return false;
+
                 // IsAssignableFrom doesn't work for generic type
-                if (parent.IsGenericTypeDefinition)
+                if (parentInterface.IsGenericTypeDefinition)
                 {
-                    var genericTypeDefinition = parent.GetGenericTypeDefinition();
-                    foreach (var implementedInterface in child.FindInterfaces((objType, objCriteria) => true, null))
+                    var genericTypeDefinition = parentInterface.GetGenericTypeDefinition();
+                    foreach (var implementedInterface in childConcreted.FindInterfaces((objType, objCriteria) => true, null))
                     {
                         if (!implementedInterface.IsGenericType)
                             continue;

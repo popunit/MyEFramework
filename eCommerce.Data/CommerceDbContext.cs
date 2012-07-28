@@ -23,7 +23,7 @@ namespace eCommerce.Data
 
         static CommerceDbContext()
         {
-            Database.SetInitializer<CommerceDbContext>(null);
+            //Database.SetInitializer<CommerceDbContext>(null);
 
             // TO-DO: Move to function method
             Type t = typeof(CommerceDbContext);
@@ -36,7 +36,7 @@ namespace eCommerce.Data
                 });
 
             types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                type.IsInherit(typeof(EmptyEntityMap<>))).
+                type.IsInherit(typeof(IEmptyEntityMap<>))).
                 ForEach(type =>
                 {
                     //var argTypes = type.BaseType.GetGenericArguments();

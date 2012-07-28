@@ -10,7 +10,7 @@ namespace eCommerce.Core.Infrastructure
 {
     public static class RouteHelper
     {
-        internal static void RoutingToExecute<T>(
+        public static void RoutingToExecute<T>(
             IRoute routing,
             Action<T> executing) where T : IOrderable
         {
