@@ -22,8 +22,6 @@ namespace eCommerce.Data.DataProvider
 
         public override void SetDatabaseInitializer()
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<CommerceDbContext>());
-            Database.SetInitializer(new CreateDatabaseIfNotExists<CommerceDbContext>());
             Database.SetInitializer(new CreateTablesIfNotExist<CommerceDbContext>());
         }
     }

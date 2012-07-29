@@ -21,8 +21,9 @@ namespace eCommerce.Data.Mappings.Users
             #endregion
 
             #region Table Colume Settings
-            this.Property(user => user.UserName).HasMaxLength(50);
+            this.Property(user => user.UserName).HasMaxLength(50).IsRequired();
             this.Property(user => user.Email).HasMaxLength(255);
+            this.Property(user => user.PasswordKit.Password).HasMaxLength(255).HasColumnName("Password").IsRequired();
             #endregion
         }
     }

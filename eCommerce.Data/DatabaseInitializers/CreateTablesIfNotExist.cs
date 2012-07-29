@@ -14,7 +14,7 @@ namespace eCommerce.Data.DatabaseInitializers
     /// </summary>
     /// <typeparam name="TContext"></typeparam>
     /// <remarks>implement IDatabaseInitializer interface</remarks>
-    public class CreateTablesIfNotExist<TContext> : IDatabaseInitializer<TContext> 
+    public class CreateTablesIfNotExist<TContext> : IDatabaseInitializer<TContext>
         where TContext : DbContext
     {
         /// <summary>
@@ -26,36 +26,20 @@ namespace eCommerce.Data.DatabaseInitializers
         /// </remarks>
         public void InitializeDatabase(TContext context)
         {
-            // check if database exists
-            var hasExisted = context.Database.Exists();
-            if (hasExisted)
+            try
             {
-                var existedTableNames = context.Database.SqlQuery<string>(DbConstants.Query_Table_Names);
-
-                if (null != existedTableNames && existedTableNames.Count() > 0) // check if there are tables existed
+                if (context.Database.Exists())
                 {
-                    using (TransactionScope scope =
-                        new TransactionScope(TransactionScopeOption.Suppress))
-                    {
-                        try
-                        {
-                            // force to create table and run IDatabaseInitializer multiple times
-                            // http://social.msdn.microsoft.com/Forums/en/adodotnetentityframework/thread/e753187a-c86a-4952-802d-6ab46ee55a8d
-                            //context.Database.Initialize(true); 
-                            var dbCreationScript = ((IObjectContextAdapter)context).ObjectContext.CreateDatabaseScript();
-                            context.Database.ExecuteSqlCommand(dbCreationScript);
-
-                            //Seed(context);
-                            context.SaveChanges();
-                            scope.Complete();
-                        }
-                        catch
-                        {
-                            throw;
-                        }
-                    }
+                    if (!context.Database.CompatibleWithModel(false))
+                        context.Database.Delete(); // TO-DO: for debug, if release, should not delete directly
                 }
+                context.Database.CreateIfNotExists();
             }
+            catch
+            {
+                throw;
+            }
+
         }
     }
 }

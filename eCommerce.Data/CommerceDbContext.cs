@@ -63,15 +63,26 @@ namespace eCommerce.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Type t = typeof(CommerceDbContext);
-            Assembly.GetAssembly(t)
-                .GetTypes()
-                .Where(type => !String.IsNullOrEmpty(type.Namespace) && 
-                    type.IsInherit(typeof(EntityTypeConfiguration<>)))
-                .ForEach(type => 
+            Type[] types = Assembly.GetAssembly(t).GetTypes();
+            var entityTypeConfigurationTypes = new List<Type>();
+            types.Where(type => type.IsInherit(typeof(EntityBase))).ForEach(type =>
+            {
+                entityTypeConfigurationTypes.Add(typeof(EntityTypeConfiguration<>).MakeGenericType(type));
+            });
+
+            // TO-DO: to improve the performance
+            entityTypeConfigurationTypes.ForEach(configType =>
+            {
+                types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
+                    type.IsInherit(configType))
+                .ForEach(type =>
                 {
                     dynamic instance = Activator.CreateInstance(type);
                     modelBuilder.Configurations.Add(instance);
                 });
+            });
+            
+
             base.OnModelCreating(modelBuilder);
         }
 
