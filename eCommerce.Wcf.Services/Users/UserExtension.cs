@@ -36,7 +36,7 @@ namespace eCommerce.Wcf.Services.Users
         /// <returns></returns>
         /// <remarks></remarks>
         //public UserCharacteristic GetCharacteristic(int userId, string key)
-        public string GetCharacteristicValue(int userId, string key)
+        public string GetCharacteristicValue(long userId, string key)
         {
             return AspectF.Define.MustBeNonNull(userId).Return<string>(() => 
             {

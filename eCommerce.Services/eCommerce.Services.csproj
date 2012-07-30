@@ -58,8 +58,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UserCharacteristicResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Users\IUserService.cs" />
     <Compile Include="Users\UserExtensionFunc.cs" />
+    <Compile Include="Users\UserService.cs" />
     <Compile Include="WcfClient\UserExtension.cs" />
+    <Compile Include="WcfClient\UserService.cs" />
     <Compile Include="WorkContextServiceBase.cs" />
   </ItemGroup>
   <ItemGroup>

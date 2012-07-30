@@ -34,11 +34,13 @@ namespace eCommerce.Wcf.Services.Users
         /// <param name="value"></param>
         /// <returns></returns>
         /// <remarks>TO-DO: I'd like to build the operation as async</remarks>
-        public bool UpdateUserCharacteristic(string userId, string key, string value)
+        public bool SaveUserCharacteristic(long userId, string key, string value)
         {
-            return AspectF.Define.MustBeNonNullOrEmpty(userId, key, value).Return<bool>(()=>
+            return AspectF.Define.MustBeNonNullOrEmpty(key, value).Return<bool>(()=>
             {
                 var user = userRepository.GetByKeys(userId);
+                if (null == user) // user cannot be null
+                    return false;
                 var characteristic = user.UserCharacteristics.FirstOrDefault(
                     uc => uc.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase));
                 if (null != characteristic) // update

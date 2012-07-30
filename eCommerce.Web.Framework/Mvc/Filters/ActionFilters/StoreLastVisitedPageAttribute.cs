@@ -36,14 +36,14 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
             if (!string.IsNullOrEmpty(requestUrl)) // if has request url, store it
             {
                 var context = DependencyResolver.Current.GetService<WorkContextServiceBase>();
+                var userService = DependencyResolver.Current.GetService<IUserService>();
+
                 var storedUrl = context.CurrentUser.GetCharacteristic<string>(UserCharacteristicResource.LastVisitedPage);
                 if (requestUrl != storedUrl)
-                { 
+                {
+                    userService.SaveUserCharacteristic(context.CurrentUser.Id, UserCharacteristicResource.LastVisitedPage, requestUrl); // update stored url
                 }
             }
-            
-            // TO-DO: store last visited page
-            throw new NotImplementedException();
         }
     }
 }

@@ -25,7 +25,7 @@ namespace eCommerce.Services.WcfClient.Entities
         
         private User UserField;
         
-        private int UserIdField;
+        private long UserIdField;
         
         private string ValueField;
         
@@ -56,7 +56,7 @@ namespace eCommerce.Services.WcfClient.Entities
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int UserId
+        public long UserId
         {
             get
             {
@@ -278,10 +278,10 @@ public interface IUserExtension
 {
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserExtension/GetCharacteristicValue", ReplyAction="http://tempuri.org/IUserExtension/GetCharacteristicValueResponse")]
-    string GetCharacteristicValue(int userId, string key);
+    string GetCharacteristicValue(long userId, string key);
     
     [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserExtension/GetCharacteristicValue", ReplyAction="http://tempuri.org/IUserExtension/GetCharacteristicValueResponse")]
-    System.Threading.Tasks.Task<string> GetCharacteristicValueAsync(int userId, string key);
+    System.Threading.Tasks.Task<string> GetCharacteristicValueAsync(long userId, string key);
 }
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -318,12 +318,12 @@ public partial class UserExtensionClient : System.ServiceModel.ClientBase<IUserE
     {
     }
     
-    public string GetCharacteristicValue(int userId, string key)
+    public string GetCharacteristicValue(long userId, string key)
     {
         return base.Channel.GetCharacteristicValue(userId, key);
     }
     
-    public System.Threading.Tasks.Task<string> GetCharacteristicValueAsync(int userId, string key)
+    public System.Threading.Tasks.Task<string> GetCharacteristicValueAsync(long userId, string key)
     {
         return base.Channel.GetCharacteristicValueAsync(userId, key);
     }

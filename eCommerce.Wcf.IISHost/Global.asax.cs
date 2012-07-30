@@ -64,17 +64,6 @@ namespace eCommerce.Wcf.IISHost
 
             var container = builder.Build();
             AutofacHostFactory.Container = container;
-
-            //// Register by core
-            //if (DatabaseSettingHelper.FindDatabaseSettings)
-            //{
-            //    // run tasks
-            //    var routing = container.Resolve<IRoute>();
-            //    RouteHelper.RoutingToExecute<ITask>(routing, i => i.Execute());
-            //}
-
-            var test = container.Resolve<IDatabase>() as CommerceDbContext;
-            test.Database.Initialize(true);
         }
 
         protected void Session_Start(object sender, EventArgs e)

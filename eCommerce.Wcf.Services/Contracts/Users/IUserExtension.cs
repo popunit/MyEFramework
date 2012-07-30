@@ -12,6 +12,6 @@ namespace eCommerce.Wcf.Services.Contracts.Users
     public interface IUserExtension
     {
         [OperationContract]
-        string GetCharacteristicValue(int userId, string key);
+        string GetCharacteristicValue(long userId, string key);
     }
 }
