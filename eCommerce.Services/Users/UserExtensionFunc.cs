@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using eCommerce.Services.WcfClient.Entities;
 using eCommerce.Core.Common;
 using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Core.Infrastructure;
+using eCommerce.Core.Data;
 
 namespace eCommerce.Services.Users
 {
@@ -35,5 +37,17 @@ namespace eCommerce.Services.Users
             });
         }
 
+        /// <summary>
+        /// Get user name or email according to user settings
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public static string GetUserNameOrEmail(this User user)
+        {
+            if (null == user)
+                return null;
+            var userSettings = EngineContext.Current.Resolve<UserSettings>();
+            return userSettings.ProvideUserEmail ? user.Email : user.UserName;
+        }
     }
 }

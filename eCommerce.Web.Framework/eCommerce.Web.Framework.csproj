@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IThemeContext.cs" />
+    <Compile Include="Mvc\Authentication\FormsAuthenticationService.cs" />
     <Compile Include="Mvc\Controllers\ControllerBase.cs" />
     <Compile Include="Mvc\Controllers\WebControllerActionInvoker.cs" />
     <Compile Include="Mvc\DefaultKnownTypeAttribute.cs" />

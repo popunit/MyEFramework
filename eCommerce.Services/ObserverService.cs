@@ -15,7 +15,7 @@ namespace eCommerce.Services
     {
         public IObservable<ISubscriber<T>> GetSubscriptionCenter<T>() where T : class
         {
-            var subscribers = EngineContext.Current.ResolveAll<ISubscriber<T>>();
+            var subscribers = EngineContext.Current.ResolveAll<ISubscriber<T>>();  // cannot use DependencyResolver because this project doesn't reference to mvc lib
             return Observable.Create<ISubscriber<T>>(observer =>
             {
                 foreach (var subscriber in subscribers)
