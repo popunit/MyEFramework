@@ -59,6 +59,30 @@ namespace eCommerce.Wcf.Services.Users
             });
         }
 
+        public User GetUserByName(string userName)
+        {
+            return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() => 
+            {
+                //return userRepository.Table.Where(u => u.UserName == userName)
+                //    .OrderBy(u => u.Id).FirstOrDefault();
+                return (from u in userRepository.Table
+                        where u.UserName == userName
+                        orderby u.Id
+                        select u).FirstOrDefault();
+            });
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() => 
+            {
+                return (from u in userRepository.Table
+                        where u.Email == email
+                        orderby u.Id
+                        select u).FirstOrDefault();
+            });
+        }
+
         private bool UpdateUserCharacteristic(UserCharacteristic userCharacteristic)
         {
             return AspectF.Define.MustBeNonNull(userCharacteristic).Return<bool>(()=>

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Services.WcfClient;
 using eCommerce.Services.WcfClient.Entities;
 
 namespace eCommerce.Services.Users
@@ -21,6 +22,17 @@ namespace eCommerce.Services.Users
                 }
                 return isSucceed;
             });
+        }
+
+
+        public User GetUserByName(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUserByEmail(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }

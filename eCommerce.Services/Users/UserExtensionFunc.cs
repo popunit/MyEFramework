@@ -8,6 +8,7 @@ using eCommerce.Core.Common;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Data;
+using eCommerce.Services.WcfClient;
 
 namespace eCommerce.Services.Users
 {

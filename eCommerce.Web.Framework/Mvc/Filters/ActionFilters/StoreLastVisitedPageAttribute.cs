@@ -41,7 +41,7 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
                 var storedUrl = context.CurrentUser.GetCharacteristic<string>(UserCharacteristicResource.LastVisitedPage);
                 if (requestUrl != storedUrl)
                 {
-                    userService.SaveUserCharacteristic(context.CurrentUser.Id, UserCharacteristicResource.LastVisitedPage, requestUrl); // update stored url
+                    userService.SaveUserCharacteristic(context.CurrentUser, UserCharacteristicResource.LastVisitedPage, requestUrl); // update stored url
                 }
             }
         }

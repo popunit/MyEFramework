@@ -8,61 +8,94 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-
-
-[System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-[System.ServiceModel.ServiceContractAttribute(ConfigurationName="IUserService")]
-public interface IUserService
+namespace eCommerce.Services.WcfClient
 {
-    
-    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/SaveUserCharacteristic", ReplyAction="http://tempuri.org/IUserService/SaveUserCharacteristicResponse")]
-    bool SaveUserCharacteristic(long userId, string key, string value);
-    
-    [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/SaveUserCharacteristic", ReplyAction="http://tempuri.org/IUserService/SaveUserCharacteristicResponse")]
-    System.Threading.Tasks.Task<bool> SaveUserCharacteristicAsync(long userId, string key, string value);
-}
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName = "IUserService")]
+    public interface IUserService
+    {
 
-[System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-public interface IUserServiceChannel : IUserService, System.ServiceModel.IClientChannel
-{
-}
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/SaveUserCharacteristic", ReplyAction = "http://tempuri.org/IUserService/SaveUserCharacteristicResponse")]
+        bool SaveUserCharacteristic(long userId, string key, string value);
 
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-public partial class UserServiceClient : System.ServiceModel.ClientBase<IUserService>, IUserService
-{
-    
-    public UserServiceClient()
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/SaveUserCharacteristic", ReplyAction = "http://tempuri.org/IUserService/SaveUserCharacteristicResponse")]
+        System.Threading.Tasks.Task<bool> SaveUserCharacteristicAsync(long userId, string key, string value);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByName", ReplyAction = "http://tempuri.org/IUserService/GetUserByNameResponse")]
+        eCommerce.Services.WcfClient.Entities.User GetUserByName(string userName);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByName", ReplyAction = "http://tempuri.org/IUserService/GetUserByNameResponse")]
+        System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByNameAsync(string userName);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByEmail", ReplyAction = "http://tempuri.org/IUserService/GetUserByEmailResponse")]
+        eCommerce.Services.WcfClient.Entities.User GetUserByEmail(string email);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByEmail", ReplyAction = "http://tempuri.org/IUserService/GetUserByEmailResponse")]
+        System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByEmailAsync(string email);
+    }
+
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public interface IUserServiceChannel : IUserService, System.ServiceModel.IClientChannel
     {
     }
-    
-    public UserServiceClient(string endpointConfigurationName) : 
+
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UserServiceClient : System.ServiceModel.ClientBase<IUserService>, IUserService
+    {
+
+        public UserServiceClient()
+        {
+        }
+
+        public UserServiceClient(string endpointConfigurationName) :
             base(endpointConfigurationName)
-    {
-    }
-    
-    public UserServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        {
+        }
+
+        public UserServiceClient(string endpointConfigurationName, string remoteAddress) :
             base(endpointConfigurationName, remoteAddress)
-    {
-    }
-    
-    public UserServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        {
+        }
+
+        public UserServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) :
             base(endpointConfigurationName, remoteAddress)
-    {
-    }
-    
-    public UserServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        {
+        }
+
+        public UserServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) :
             base(binding, remoteAddress)
-    {
-    }
-    
-    public bool SaveUserCharacteristic(long userId, string key, string value)
-    {
-        return base.Channel.SaveUserCharacteristic(userId, key, value);
-    }
-    
-    public System.Threading.Tasks.Task<bool> SaveUserCharacteristicAsync(long userId, string key, string value)
-    {
-        return base.Channel.SaveUserCharacteristicAsync(userId, key, value);
+        {
+        }
+
+        public bool SaveUserCharacteristic(long userId, string key, string value)
+        {
+            return base.Channel.SaveUserCharacteristic(userId, key, value);
+        }
+
+        public System.Threading.Tasks.Task<bool> SaveUserCharacteristicAsync(long userId, string key, string value)
+        {
+            return base.Channel.SaveUserCharacteristicAsync(userId, key, value);
+        }
+
+        public eCommerce.Services.WcfClient.Entities.User GetUserByName(string userName)
+        {
+            return base.Channel.GetUserByName(userName);
+        }
+
+        public System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByNameAsync(string userName)
+        {
+            return base.Channel.GetUserByNameAsync(userName);
+        }
+
+        public eCommerce.Services.WcfClient.Entities.User GetUserByEmail(string email)
+        {
+            return base.Channel.GetUserByEmail(email);
+        }
+
+        public System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByEmailAsync(string email)
+        {
+            return base.Channel.GetUserByEmailAsync(email);
+        }
     }
 }

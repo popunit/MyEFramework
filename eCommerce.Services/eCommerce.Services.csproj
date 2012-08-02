@@ -62,6 +62,10 @@
     <Compile Include="Users\IUserService.cs" />
     <Compile Include="Users\UserExtensionFunc.cs" />
     <Compile Include="Users\UserService.cs" />
+    <Compile Include="WcfClient\DataTypes\PasswordKit.cs" />
+    <Compile Include="WcfClient\DataTypes\StringFormatType.cs" />
+    <Compile Include="WcfClient\Entities\User.cs" />
+    <Compile Include="WcfClient\Entities\UserCharacteristic.cs" />
     <Compile Include="WcfClient\UserExtension.cs" />
     <Compile Include="WcfClient\UserService.cs" />
     <Compile Include="WorkContextServiceBase.cs" />

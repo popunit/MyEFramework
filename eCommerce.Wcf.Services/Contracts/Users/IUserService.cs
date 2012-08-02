@@ -23,5 +23,11 @@ namespace eCommerce.Wcf.Services.Contracts.Users
         /// <returns></returns>
         [OperationContract]
         bool SaveUserCharacteristic(long userId, string key, string value);
+
+        [OperationContract]
+        User GetUserByName(string userName);
+
+        [OperationContract]
+        User GetUserByEmail(string email);
     }
 }
