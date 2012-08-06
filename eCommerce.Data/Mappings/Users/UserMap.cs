@@ -25,6 +25,10 @@ namespace eCommerce.Data.Mappings.Users
             this.Property(user => user.Email).HasMaxLength(255);
             this.Property(user => user.PasswordKit.Password).HasMaxLength(255).HasColumnName("Password").IsRequired();
             #endregion
+
+            #region Table Relationships
+            this.HasMany(u => u.UserRoles).WithMany().Map(t => t.ToTable("User_UserRole_View")); // many to many, join tables (user and userrole)
+            #endregion
         }
     }
 }

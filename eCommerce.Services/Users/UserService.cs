@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Core.Data;
+using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Services.WcfClient;
 using eCommerce.Services.WcfClient.Entities;
@@ -27,12 +29,32 @@ namespace eCommerce.Services.Users
 
         public User GetUserByName(string userName)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
+            {
+                using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                {
+                    return proxy.GetUserByName(userName);
+                }
+            });
         }
 
         public User GetUserByEmail(string email)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() =>
+            {
+                using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                {
+                    return proxy.GetUserByEmail(email);
+                }
+            });
+        }
+
+        public User GetUserByNameOrEmail(string userNameOrEmail)
+        {
+            var userSettings = EngineContext.Current.Resolve<UserSettings>();
+            return userSettings.ProvideUserEmail ?
+                GetUserByEmail(userNameOrEmail) :
+                GetUserByName(userNameOrEmail);
         }
     }
 }

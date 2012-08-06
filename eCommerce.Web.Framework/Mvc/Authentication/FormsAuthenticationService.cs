@@ -87,6 +87,9 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
                 !(httpContext.User.Identity is FormsIdentity))      // identity is not forms identity (user other authentication mechanism)
                 return null;
 
+            var identity = httpContext.User.Identity as FormsIdentity;
+            var user = GetAuthenticatedUserFromTicket(identity.Ticket);
+
             throw new NotImplementedException();
         }
 
@@ -94,14 +97,14 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
         {
             if (null == ticket)
                 throw new ArgumentNullException("ticket");
+
             if (string.IsNullOrWhiteSpace(ticket.UserData))
             {
                 return null;
             }
             else
             {
-                // TO-DO get user
-                throw new NotImplementedException();
+                return userService.GetUserByNameOrEmail(ticket.UserData);
             }
         }
     }

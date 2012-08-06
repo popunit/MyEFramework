@@ -75,5 +75,8 @@ namespace eCommerce.Services.WcfClient.Entities
                 this.UserNameField = value;
             }
         }
+
+        [DataMember]
+        public bool Actived { get; set; }
     }
 }

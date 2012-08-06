@@ -14,5 +14,7 @@ namespace eCommerce.Services.Users
         User GetUserByName(string userName);
 
         User GetUserByEmail(string email);
+
+        User GetUserByNameOrEmail(string userNameOrEmail);
     }
 }

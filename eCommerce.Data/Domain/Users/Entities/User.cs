@@ -21,8 +21,17 @@ namespace eCommerce.Data.Domain.Users.Entities
         public PasswordKit PasswordKit { get; set; }
         public string Email { get; set; }
 
+        // user status
+        public bool Actived { get; set; } // indicate if the user is actived or disabled
+        public bool Deleted { get; set; } // indicate if the user is deleted
+
         // Navigation properties : Nullable
+        // one to many
         public virtual ICollection<UserCharacteristic> UserCharacteristics { get; protected set; }
+
+        // Navigation properties : Nullable
+        // many to many
+        public virtual ICollection<UserRole> UserRoles { get; protected set; }
     }
 
     public sealed class MissingUser : User
