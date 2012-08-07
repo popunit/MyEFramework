@@ -50,5 +50,27 @@ namespace eCommerce.Services.Users
             var userSettings = EngineContext.Current.Resolve<UserSettings>();
             return userSettings.ProvideUserEmail ? user.Email : user.UserName;
         }
+
+        public static bool HasRole(this User user, string systemRoleName, bool includingDisabledRole = false)
+        {
+            return AspectF.Define.MustBeNonNull(user).MustBeNonNullOrEmpty(systemRoleName)
+                .Return<bool>(() =>
+            {
+                return user.UserRoles
+                    .Where(role => includingDisabledRole || role.Actived)
+                    .Where(role => role.SystemName == systemRoleName)
+                    .Count() > 0;
+            });
+        }
+
+        public static bool HasRegisteredRole(this User user, bool includingDisabledRole = false)
+        {
+            return HasRole(user, SystemUserRoleNameCollection.Registered, includingDisabledRole);
+        }
+
+        public static bool IsValid(this User user)
+        {
+            return user != null && !user.Deleted && user.Actived;
+        }
     }
 }

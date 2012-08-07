@@ -90,7 +90,9 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
             var identity = httpContext.User.Identity as FormsIdentity;
             var user = GetAuthenticatedUserFromTicket(identity.Ticket);
 
-            throw new NotImplementedException();
+            if (user.IsValid() && user.HasRegisteredRole())
+                targetUser = user;
+            return targetUser;
         }
 
         private User GetAuthenticatedUserFromTicket(FormsAuthenticationTicket ticket)

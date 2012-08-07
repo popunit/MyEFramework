@@ -27,11 +27,11 @@ namespace eCommerce.Data.Domain.Users.Entities
 
         // Navigation properties : Nullable
         // one to many
-        public virtual ICollection<UserCharacteristic> UserCharacteristics { get; protected set; }
+        public virtual ICollection<UserCharacteristic> UserCharacteristics { get; set; }
 
         // Navigation properties : Nullable
         // many to many
-        public virtual ICollection<UserRole> UserRoles { get; protected set; }
+        public virtual ICollection<UserRole> UserRoles { get; set; }
     }
 
     public sealed class MissingUser : User

@@ -13,16 +13,50 @@ namespace eCommerce.Services.WcfClient.Entities
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "User", Namespace = "http://schemas.datacontract.org/2004/07/eCommerce.Data.Domain.Users.Entities")]
-    public partial class User : EntityBase
+    public partial class User : eCommerce.Core.EntityBase
     {
+
+        private bool ActivedField;
+
+        private bool DeletedField;
 
         private string EmailField;
 
         private eCommerce.Services.WcfClient.DataTypes.PasswordKit PasswordKitField;
 
+        private UserCharacteristic[] UserCharacteristicsField;
+
         private System.Guid UserGuidField;
 
         private string UserNameField;
+
+        private UserRole[] UserRolesField;
+
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Actived
+        {
+            get
+            {
+                return this.ActivedField;
+            }
+            set
+            {
+                this.ActivedField = value;
+            }
+        }
+
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool Deleted
+        {
+            get
+            {
+                return this.DeletedField;
+            }
+            set
+            {
+                this.DeletedField = value;
+            }
+        }
 
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string Email
@@ -47,6 +81,19 @@ namespace eCommerce.Services.WcfClient.Entities
             set
             {
                 this.PasswordKitField = value;
+            }
+        }
+
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UserCharacteristic[] UserCharacteristics
+        {
+            get
+            {
+                return this.UserCharacteristicsField;
+            }
+            set
+            {
+                this.UserCharacteristicsField = value;
             }
         }
 
@@ -76,7 +123,17 @@ namespace eCommerce.Services.WcfClient.Entities
             }
         }
 
-        [DataMember]
-        public bool Actived { get; set; }
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public UserRole[] UserRoles
+        {
+            get
+            {
+                return this.UserRolesField;
+            }
+            set
+            {
+                this.UserRolesField = value;
+            }
+        }
     }
 }
