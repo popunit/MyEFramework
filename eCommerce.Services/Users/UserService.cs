@@ -52,7 +52,7 @@ namespace eCommerce.Services.Users
         public User GetUserByNameOrEmail(string userNameOrEmail)
         {
             var userSettings = EngineContext.Current.Resolve<UserSettings>();
-            return userSettings.ProvideUserEmail ?
+            return userSettings.UsingUserEmail ?
                 GetUserByEmail(userNameOrEmail) :
                 GetUserByName(userNameOrEmail);
         }

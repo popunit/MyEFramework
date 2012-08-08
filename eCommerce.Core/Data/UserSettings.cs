@@ -9,7 +9,6 @@ namespace eCommerce.Core.Data
 {
     /// <summary>
     /// Settings for specific user
-    /// relationship with UserCharacteristic
     /// </summary>
     /// <remarks>Move to WebWorkContext?</remarks>
     public class UserSettings : ISettings
@@ -22,6 +21,6 @@ namespace eCommerce.Core.Data
         /// <summary>
         /// if true, use user email, if false, use user name
         /// </summary>
-        public bool ProvideUserEmail { get; set; }
+        public bool UsingUserEmail { get; set; }
     }
 }

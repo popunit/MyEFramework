@@ -48,7 +48,7 @@ namespace eCommerce.Services.Users
             if (null == user)
                 return null;
             var userSettings = EngineContext.Current.Resolve<UserSettings>();
-            return userSettings.ProvideUserEmail ? user.Email : user.UserName;
+            return userSettings.UsingUserEmail ? user.Email : user.UserName;
         }
 
         public static bool HasRole(this User user, string systemRoleName, bool includingDisabledRole = false)

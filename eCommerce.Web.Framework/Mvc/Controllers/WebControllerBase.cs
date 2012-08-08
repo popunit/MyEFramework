@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace eCommerce.Web.Framework.Mvc.Controllers
 {
-    public abstract class ControllerBase : Controller
+    public abstract class WebControllerBase : Controller
     {
         protected override IActionInvoker CreateActionInvoker()
         {

@@ -23,11 +23,21 @@ namespace eCommerce.Web.Framework.Mvc
         /// <param name="bindingContext"></param>
         public virtual void BindingModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         { 
+            // extra binding to model
         }
     }
 
     public class DefaultWebModel : WebModelBase
     { 
         // do nothing
+    }
+
+    /// <summary>
+    /// base model for entity object (like EntityBase)
+    /// </summary>
+    /// <remarks>Only for entity object</remarks>
+    public abstract class EntityModelBase : WebModelBase
+    {
+        public virtual long Id { get; set; }
     }
 }

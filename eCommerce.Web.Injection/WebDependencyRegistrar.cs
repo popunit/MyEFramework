@@ -16,6 +16,7 @@ using eCommerce.Services;
 using eCommerce.Services.WcfClient.Entities;
 using eCommerce.Web.Framework;
 using eCommerce.Web.Framework.Mvc;
+using eCommerce.Web.Framework.Mvc.UI.TitleParts;
 
 namespace eCommerce.Web.Injection
 {
@@ -55,6 +56,8 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
 
             builder.RegisterType<WebWorkContext>().As<WorkContextServiceBase>().InstancePerHttpRequest();
+
+            builder.RegisterType<ViewPageHeaderBuilder>().As<IViewPageHeaderBuilder>().InstancePerHttpRequest();
 
             #region Events
             // register subscribers
