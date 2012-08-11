@@ -12,8 +12,8 @@ namespace eCommerce.Web.Framework.Mvc.UI.TitleParts
     public interface IViewPageHeaderBuilder
     {
         #region Title part
-        void AppendPartialTitles(params string[] partialTitle);
-        void PrependPartialTitles(params string[] partialTitle);
+        void AppendPartialTitles(params string[] partialTitles);
+        void PrependPartialTitles(params string[] partialTitles);
         string GenerateTitle(bool hasDefaultTitle);
         #endregion
     }

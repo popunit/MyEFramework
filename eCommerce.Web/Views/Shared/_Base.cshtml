@@ -1,4 +1,5 @@
 ﻿@using eCommerce.Core.Data;
+@using eCommerce.Web.Framework.Mvc.UI;
 @using StackExchange.Profiling;
 @{
     var enableMiniProfiler = DependencyResolver.Current.GetService<StoreStateSettings>().EnableMiniProfile;
@@ -7,7 +8,7 @@
 <!DOCTYPE html> @*HTML5*@
 <html dir="ltr"> @*TO-DO: should change direction dynamically*@
     <head>
-        <title>@ViewBag.Title</title>
+        <title>@Html.Title()</title>
         @if (enableMiniProfiler)
         {
             this.InitClientTimings();

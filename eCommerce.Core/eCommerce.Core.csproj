@@ -81,7 +81,9 @@
     <Compile Include="Configuration\Config.cs" />
     <Compile Include="Configuration\ConfigHelper.cs" />
     <Compile Include="Configuration\ContainerConfig.cs" />
+    <Compile Include="Configuration\IConfigurationProvider.cs" />
     <Compile Include="Configuration\ISettings.cs" />
+    <Compile Include="Configuration\PageSettings.cs" />
     <Compile Include="Data\DatabaseSettings.cs" />
     <Compile Include="Data\DatabaseSettingHelper.cs" />
     <Compile Include="Data\DatabaseSettingsManager.cs" />

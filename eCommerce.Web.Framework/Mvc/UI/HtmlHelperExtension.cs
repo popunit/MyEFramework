@@ -8,7 +8,7 @@ using eCommerce.Web.Framework.Mvc.UI.TitleParts;
 
 namespace eCommerce.Web.Framework.Mvc.UI
 {
-    public class HtmlHelperExtension
+    public static class HtmlHelperExtension
     {
         public static void AppendPartialTitles(this HtmlHelper html, params string[] parts)
         {

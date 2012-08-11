@@ -34,10 +34,14 @@ namespace eCommerce.Core
 
             // register type
             containerManager.AddComponent<IRoute, WebsiteRoute>(typeof(WebsiteRoute).Name);
+
+            // register type: should remove in future (to use configuration provider to config and register)
             // TO-DO: Check if I register this time multi times (should not)
             containerManager.AddComponent<DatabaseSettings>(typeof(DatabaseSettings).Name); // to remove because data dll has been decoupled
-            // TO-DO: Check if register it before and figure out how to set it (should be registered in IRegistrar)
+            // TO-DO: Check if register it before and figure out how to set it
             containerManager.AddComponentInstance<StoreStateSettings>(new StoreStateSettings { EnableMiniProfile = true }, typeof(StoreStateSettings).Name);
+            // TO-DO: Check if register it before and figure out how to set it 
+            containerManager.AddComponentInstance<PageSettings>(new PageSettings { DefaultTitle = "HomePage" }, typeof(PageSettings).Name, Infrastructure.IoC.LifeStyle.Transient);
            
             // register IRegistrar
             containerManager.UpdateContainer(build =>

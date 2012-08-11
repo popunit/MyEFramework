@@ -32,11 +32,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive.Core, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive.Interfaces, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Reactive.Linq, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,7 +48,7 @@
   <ItemGroup>
     <Compile Include="IThemeContext.cs" />
     <Compile Include="Mvc\Authentication\FormsAuthenticationService.cs" />
-    <Compile Include="Mvc\Controllers\ControllerBase.cs" />
+    <Compile Include="Mvc\Controllers\WebControllerBase.cs" />
     <Compile Include="Mvc\Controllers\WebControllerActionInvoker.cs" />
     <Compile Include="Mvc\DefaultKnownTypeAttribute.cs" />
     <Compile Include="Mvc\DependencyResolvers\WebDependencyResolver.cs" />
@@ -63,6 +65,9 @@
     <Compile Include="Mvc\MvcHelper.cs" />
     <Compile Include="Mvc\NotAllowChildActionAttribute.cs" />
     <Compile Include="Mvc\RouteData\RouteDataExtension.cs" />
+    <Compile Include="Mvc\UI\HtmlHelperExtension.cs" />
+    <Compile Include="Mvc\UI\TitleParts\IViewPageHeaderBuilder.cs" />
+    <Compile Include="Mvc\UI\TitleParts\ViewPageHeaderBuilder.cs" />
     <Compile Include="Mvc\View\ThemeableVirtualPathProviderViewEngine.cs" />
     <Compile Include="Mvc\WebModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
