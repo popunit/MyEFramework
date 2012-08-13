@@ -48,12 +48,16 @@ namespace eCommerce.Web.Framework.Mvc.View
             return base.FindView(controllerContext, viewName, masterName, useCache);
         }
 
-        protected virtual ViewEngineResult FindView(ControllerContext controllerContext, string viewName, string masterName, bool useCache, WorkType workType)
+        protected virtual ViewEngineResult FindThemeView(ControllerContext controllerContext, string viewName, string masterName, bool useCache, WorkType workType)
         {
             return AspectF.Define.MustBeNonNull(controllerContext).MustBeNonNullOrEmpty(viewName).Return<ViewEngineResult>(() => 
             {
                 var theme = MvcHelper.GetCurrentTheme(workType);
                 var controllerName = controllerContext.GetControllerName();
+
+                string[] viewSearchedLocation;
+                string[] masterSearchedLocation;
+                string viewPath = this.GetPath(controllerContext, this.ViewLocationFormats, this.AreaViewLocationFormats, "ViewLocationFormats", viewName, controllerName, theme, "View", useCache, workType, out viewSearchedLocation);
 
                 // TO-DO
                 throw new NotImplementedException();
@@ -72,9 +76,54 @@ namespace eCommerce.Web.Framework.Mvc.View
             return base.FindPartialView(controllerContext, partialViewName, useCache);
         }
 
-        protected virtual string GetPath(ControllerContext controllerContext, string[] locations, string[] areaLocations, string locationsPropertyName, string name, string controllerName, string theme, string cacheKeyPrefix, bool useCache, WorkType workType, out string[] searchedLocations)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="controllerContext"></param>
+        /// <param name="locationFormats"></param>
+        /// <param name="areaLocationFormats"></param>
+        /// <param name="locationFormatsPropertyName"></param>
+        /// <param name="viewName"></param>
+        /// <param name="controllerName"></param>
+        /// <param name="theme"></param>
+        /// <param name="cacheKeyPrefix"></param>
+        /// <param name="useCache"></param>
+        /// <param name="workType"></param>
+        /// <param name="searchedLocations"></param>
+        /// <returns></returns>
+        protected virtual string GetPath(
+            ControllerContext controllerContext, 
+            string[] locationFormats, 
+            string[] areaLocationFormats, 
+            string locationFormatsPropertyName, 
+            string viewName, 
+            string controllerName, 
+            string theme, 
+            string cacheKeyPrefix, 
+            bool useCache, 
+            WorkType workType, 
+            out string[] searchedLocations)
         {
+            searchedLocations = null; // initialize searched locations
+
+            // if view name is empty, return empty
+            if (string.IsNullOrEmpty(viewName))
+                return string.Empty;
+
+            // get current area name
+            string areaName = this.GetCurrentAreaName(controllerContext.RouteData);
+
             throw new NotImplementedException("GetPath");
+        }
+
+        /// <summary>
+        /// Get current area name from route data
+        /// </summary>
+        /// <param name="routeData">route data</param>
+        /// <returns></returns>
+        protected virtual string GetCurrentAreaName(System.Web.Routing.RouteData routeData)
+        {
+            throw new NotImplementedException("GetCurrentAreaName");
         }
     }
 }

@@ -33,7 +33,7 @@ namespace eCommerce.Web.Controllers
         public ActionResult Login(bool isGuest = false)
         {
             // create new model without information to wait for customer to input
-            var model = new LoginModel 
+            var model = new LoginViewModel 
             {
                 IsLoginAsGuest = isGuest,
                 UsingUserEmail = userSettings.UsingUserEmail,

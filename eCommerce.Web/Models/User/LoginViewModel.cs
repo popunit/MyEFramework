@@ -6,7 +6,7 @@ using eCommerce.Web.Framework.Mvc;
 
 namespace eCommerce.Web.Models.User
 {
-    public class LoginModel : WebModelBase
+    public class LoginViewModel : WebModelBase
     {
         public bool IsLoginAsGuest { get; set; }
 
