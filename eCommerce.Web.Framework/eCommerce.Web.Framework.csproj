@@ -66,8 +66,10 @@
     <Compile Include="Mvc\NotAllowChildActionAttribute.cs" />
     <Compile Include="Mvc\RouteData\RouteDataExtension.cs" />
     <Compile Include="Mvc\UI\HtmlHelperExtension.cs" />
+    <Compile Include="Mvc\LocationSettings.cs" />
     <Compile Include="Mvc\UI\TitleParts\IViewPageHeaderBuilder.cs" />
     <Compile Include="Mvc\UI\TitleParts\ViewPageHeaderBuilder.cs" />
+    <Compile Include="Mvc\ViewLocation.cs" />
     <Compile Include="Mvc\View\ThemeableVirtualPathProviderViewEngine.cs" />
     <Compile Include="Mvc\WebModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

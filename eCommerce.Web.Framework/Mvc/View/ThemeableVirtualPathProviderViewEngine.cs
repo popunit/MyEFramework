@@ -13,6 +13,13 @@ using eCommerce.Web.Framework.Mvc.RouteData;
 
 namespace eCommerce.Web.Framework.Mvc.View
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>
+    /// ViewEngine is used to search view's locations
+    /// Implement IViewEngine, Find ViewEngineResult (includes IView and IViewEngine)
+    /// </remarks>
     public abstract class ThemeableVirtualPathProviderViewEngine : VirtualPathProviderViewEngine
     {
         // to change search location should override (properties):
@@ -112,6 +119,21 @@ namespace eCommerce.Web.Framework.Mvc.View
 
             // get current area name
             string areaName = this.GetCurrentAreaName(controllerContext.RouteData);
+
+            // handle admin area
+            if (!string.IsNullOrEmpty(areaName) && areaName.Equals("admin", StringComparison.InvariantCultureIgnoreCase))
+            {
+                // don't support mobile for admin
+                if (workType == WorkType.Mobile)
+                { 
+                    searchedLocations = new string[0]; // empty because program doesn't search any location
+                    return string.Empty;
+                }
+
+                var formats = areaLocationFormats.ToList();
+                formats.InsertRange(0, LocationSettings.AdminLocationFormat); // make sure admin location is the default searching location
+                areaLocationFormats = formats.ToArray();
+            }
 
             throw new NotImplementedException("GetPath");
         }

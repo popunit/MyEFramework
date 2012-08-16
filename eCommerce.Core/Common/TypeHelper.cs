@@ -98,6 +98,11 @@ namespace eCommerce.Core.Common
             return Enum.GetName(value.GetType(), value);
         }
 
+        public static T Index<T>(this Enum value) where T : struct
+        {
+            return (T)Enum.Parse(value.GetType(), Name(value));
+        }
+
         public static string GetDescription(this Enum value)
         {
             if (value == null)
