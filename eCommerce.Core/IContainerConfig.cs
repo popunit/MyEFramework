@@ -41,7 +41,7 @@ namespace eCommerce.Core
             // TO-DO: Check if register it before and figure out how to set it
             containerManager.AddComponentInstance<StoreStateSettings>(new StoreStateSettings { EnableMiniProfile = true }, typeof(StoreStateSettings).Name);
             // TO-DO: Check if register it before and figure out how to set it 
-            containerManager.AddComponentInstance<PageSettings>(new PageSettings { DefaultTitle = "HomePage" }, typeof(PageSettings).Name, Infrastructure.IoC.LifeStyle.Transient);
+            containerManager.AddComponentInstance<PageSettings>(new PageSettings { DefaultTitle = "HomePage" }, typeof(PageSettings).Name, Infrastructure.IoC.LifeStyle.Singleton);
            
             // register IRegistrar
             containerManager.UpdateContainer(build =>

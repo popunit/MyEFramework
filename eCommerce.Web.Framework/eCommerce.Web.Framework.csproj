@@ -70,6 +70,7 @@
     <Compile Include="Mvc\UI\TitleParts\IViewPageHeaderBuilder.cs" />
     <Compile Include="Mvc\UI\TitleParts\ViewPageHeaderBuilder.cs" />
     <Compile Include="Mvc\ViewLocation.cs" />
+    <Compile Include="Mvc\View\ThemeableRazorViewEngine.cs" />
     <Compile Include="Mvc\View\ThemeableVirtualPathProviderViewEngine.cs" />
     <Compile Include="Mvc\WebModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

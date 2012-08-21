@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace eCommerce.Web.Framework.Mvc.RouteData
 {
@@ -42,6 +43,42 @@ namespace eCommerce.Web.Framework.Mvc.RouteData
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routeData"></param>
+        /// <returns></returns>
+        /// <remarks>http://stackoverflow.com/questions/6862403/get-area-name-from-actionexecutingcontext</remarks>
+        public static string GetAreaName(this ControllerContext context)
+        {
+            if (null == context)
+                return string.Empty;
+
+            var routeData = context.RouteData;
+            object obj2;
+            if (routeData.DataTokens.TryGetValue("area", out obj2)) // get area from default route
+            {
+                return (obj2 as string);
+            }
+            return GetAreaName(routeData.Route);
+        }
+
+        public static string GetAreaName(RouteBase route)
+        {
+            // get area name from all the route including registered custom routes
+            var area = route as IRouteWithArea;
+            if (area != null)
+            {
+                return area.Area;
+            }
+            var route2 = route as Route;
+            if ((route2 != null) && (route2.DataTokens != null))
+            {
+                return (route2.DataTokens["area"] as string);
+            }
+            return null;
         }
     }
 }
