@@ -13,7 +13,7 @@ using eCommerce.Web.Framework.Mvc.RouteData;
 using System.Globalization;
 using System.Web.Routing;
 
-namespace eCommerce.Web.Framework.Mvc.View
+namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
 {
     /// <summary>
     /// 

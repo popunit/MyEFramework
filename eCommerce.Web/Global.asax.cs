@@ -17,6 +17,7 @@ using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.IoC;
 using eCommerce.Web.Framework.Mvc.DependencyResolvers;
 using eCommerce.Web.Framework.Mvc.ModelBinder;
+using eCommerce.Web.Framework.Mvc.View.ViewEngines;
 
 namespace eCommerce.Web
 {
@@ -63,7 +64,9 @@ namespace eCommerce.Web
             bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
             if (dbInstalled)
             {
-                // TO-DO
+                // Update view engines to new
+                ViewEngines.Engines.Clear();
+                ViewEngines.Engines.Add(new ThemeableRazorViewEngine());
             }
 
             RegisterGlobalFilters(GlobalFilters.Filters);
