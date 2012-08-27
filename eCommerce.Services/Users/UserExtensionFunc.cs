@@ -51,14 +51,21 @@ namespace eCommerce.Services.Users
             return userSettings.UsingUserEmail ? user.Email : user.UserName;
         }
 
-        public static bool HasRole(this User user, string systemRoleName, bool includingDisabledRole = false)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="systemRoleName"></param>
+        /// <param name="disabledRoleIsIncluded">whether disabled roles are included</param>
+        /// <returns></returns>
+        public static bool HasRole(this User user, string systemRoleName, bool disabledRoleIsIncluded = false)
         {
             return AspectF.Define.MustBeNonNull(user).MustBeNonNullOrEmpty(systemRoleName)
                 .Return<bool>(() =>
             {
                 return user.UserRoles
-                    .Where(role => includingDisabledRole || role.Actived)
-                    .Where(role => role.SystemName == systemRoleName)
+                    .Where(role => disabledRoleIsIncluded || role.Actived) // if disabled role is not included, role must be actived
+                    .Where(role => role.SystemName == systemRoleName) // equal to system name
                     .Count() > 0;
             });
         }

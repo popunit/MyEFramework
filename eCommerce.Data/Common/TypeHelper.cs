@@ -12,12 +12,12 @@ namespace eCommerce.Data.Common
 {
     public static class TypeHelper
     {
-        public static Type GetUnproxyType(this EntityBase entity)
+        public static Type GetProxyType(this EntityBase entity)
         {
             return entity.GetType();
         }
 
-        public static Type GetProxyType(this EntityBase entity)
+        public static Type GetUnproxyType(this EntityBase entity)
         {
             return ObjectContext.GetObjectType(entity.GetType());
         }
