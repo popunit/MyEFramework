@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CharacteristicResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Common\IGenericCharacteristicService.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
     <Compile Include="ObserverService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

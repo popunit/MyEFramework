@@ -70,6 +70,7 @@
     <Compile Include="DataProvider\EfDataProviderManager.cs" />
     <Compile Include="DataProvider\MSSQLServerCeDataProvider.cs" />
     <Compile Include="DataProvider\MSSQLServerDataProvider.cs" />
+    <Compile Include="Domain\Common\GenericCharacteristic.cs" />
     <Compile Include="Domain\Users\Entities\User.cs" />
     <Compile Include="Domain\Users\Entities\UserCharacteristic.cs" />
     <Compile Include="Domain\Users\Entities\UserRole.cs" />
