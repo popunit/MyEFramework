@@ -28,6 +28,11 @@ namespace eCommerce.Core.Caching
             return false;
         }
 
+        public void RemoveByPattern(string patternOfKeys)
+        {
+
+        }
+
         public void Flush()
         {
             // do nothing

@@ -7,7 +7,7 @@ using eCommerce.Services.WcfClient.Entities;
 
 namespace eCommerce.Services.Users
 {
-    public interface IUserService
+    public interface IUserDataService
     {
         bool SaveUserCharacteristic(User user, string key, string value);
 

@@ -74,6 +74,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\GenericCharacteristicService.cs" />
     <Compile Include="Contracts\Common\IGenericCharacteristicService.cs" />
     <Compile Include="Contracts\Users\IUserExtension.cs" />
     <Compile Include="Contracts\Users\IUserService.cs" />
@@ -97,6 +98,7 @@
       <Name>eCommerce.Data</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\WCF\Microsoft.VisualStudio.ServiceModel.targets" />
   <ProjectExtensions>

@@ -70,6 +70,7 @@
   <ItemGroup>
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Caching\PerRequestCacheManager.cs" />
     <Compile Include="Common\DataBuilder.cs" />
     <Compile Include="Common\FileHelper.cs" />
     <Compile Include="Common\PropertyChangeManager.cs" />

@@ -29,6 +29,9 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
             }
         }
 
+        /// <summary>
+        /// [TO-DO] Try to figure out how to use it and test the performance
+        /// </summary>
         private static RequstTempData tempData
         {
             get

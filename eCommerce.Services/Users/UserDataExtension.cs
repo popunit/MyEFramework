@@ -12,7 +12,7 @@ using eCommerce.Services.WcfClient;
 
 namespace eCommerce.Services.Users
 {
-    public static class UserExtensionFunc
+    public static class UserDataExtension
     {
         public static T GetCharacteristic<T>(this User user, string key)
         {

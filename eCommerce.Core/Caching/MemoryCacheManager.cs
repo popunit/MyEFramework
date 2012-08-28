@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace eCommerce.Core.Caching
@@ -51,6 +52,21 @@ namespace eCommerce.Core.Caching
             foreach (var item in Cache)
             {
                 this.Remove(item.Key);
+            }
+        }
+
+        public void RemoveByPattern(string patternOfKeys)
+        {
+            var regex = new Regex(patternOfKeys, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            var keysToRemove = new List<String>();
+
+            foreach (var item in Cache)
+                if (regex.IsMatch(item.Key))
+                    keysToRemove.Add(item.Key);
+
+            foreach (string key in keysToRemove)
+            {
+                Remove(key);
             }
         }
     }

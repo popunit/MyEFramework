@@ -18,7 +18,7 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
     public class FormsAuthenticationService : IAuthenticationService
     {
         private readonly HttpContextBase httpContext;
-        private readonly IUserService userService;
+        private readonly IUserDataService userService;
         private readonly UserSettings settings;
         private readonly TimeSpan expiration;
 
@@ -32,7 +32,7 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
         /// <param name="settings">user characteristic from Dependency resolver</param>
         public FormsAuthenticationService(
             HttpContextBase httpContext,
-            IUserService userService,
+            IUserDataService userService,
             UserSettings settings)
         {
             this.httpContext = httpContext;

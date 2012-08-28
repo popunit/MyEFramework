@@ -6,6 +6,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using Autofac;
 using Autofac.Integration.Wcf;
+using Autofac.Integration.Mvc;
 using eCommerce.Core;
 using eCommerce.Core.Configuration;
 using eCommerce.Core.Data;
@@ -14,6 +15,7 @@ using eCommerce.Data;
 using eCommerce.Data.DataProvider;
 using eCommerce.Data.Repositories;
 using eCommerce.Wcf.Services.Users;
+using eCommerce.Core.Caching;
 
 namespace eCommerce.Wcf.IISHost
 {
@@ -28,6 +30,27 @@ namespace eCommerce.Wcf.IISHost
         protected void Application_Start(object sender, EventArgs e)
         {
             var builder = new ContainerBuilder();
+
+            #region Http Context
+
+            builder.Register(context =>
+                new HttpContextWrapper(HttpContext.Current) as HttpContextBase);
+
+            builder.Register(context => context.Resolve<HttpContextBase>().Request)
+                .As<HttpRequestBase>().InstancePerHttpRequest();
+            builder.Register(context => context.Resolve<HttpContextBase>().Response)
+                .As<HttpResponseBase>().InstancePerHttpRequest();
+            builder.Register(context => context.Resolve<HttpContextBase>().Server)
+                .As<HttpServerUtilityBase>().InstancePerHttpRequest();
+            builder.Register(context => context.Resolve<HttpContextBase>().Session)
+                .As<HttpSessionStateBase>().InstancePerHttpRequest();
+
+            #endregion
+
+            //cache manager
+            builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().Named<ICacheManager>("static_cache_manager").SingleInstance();
+            // [TO-DO] InstancePerHttpRequest may not use here because there is not "request" sign
+            builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().Named<ICacheManager>("per_request_cache_manager").InstancePerHttpRequest();
 
             // The default ASP.NET and WCF integrations are set up so that InstancePerLifetimeScope() will attach a component to the current web request or service method call.
             // Register WCF services

@@ -24,7 +24,7 @@ namespace eCommerce.Core
         /// </summary>
         /// <param name="key"></param>
         /// <param name="data"></param>
-        /// <param name="cacheTime"></param>
+        /// <param name="cacheTime">it is useless in memory cache manager</param>
         /// <returns></returns>
         bool Set(string key, object data, int cacheTime);
 
@@ -41,6 +41,13 @@ namespace eCommerce.Core
         /// <param name="key"></param>
         /// <returns></returns>
         bool Remove(string key);
+
+        /// <summary>
+        /// Removes target data by pattern
+        /// </summary>
+        /// <param name="patternOfKeys">pattern of keys</param>
+        /// <remarks>I don't want to return bool type because the code cannot be rollback if one of item cannot be removed</remarks>
+        void RemoveByPattern(string patternOfKeys);
 
         /// <summary>
         /// Clear all the data

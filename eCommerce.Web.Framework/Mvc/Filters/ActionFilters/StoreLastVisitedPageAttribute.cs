@@ -36,7 +36,7 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
             if (!string.IsNullOrEmpty(requestUrl)) // if has request url, store it
             {
                 var context = DependencyResolver.Current.GetService<WorkContextServiceBase>();
-                var userService = DependencyResolver.Current.GetService<IUserService>();
+                var userService = DependencyResolver.Current.GetService<IUserDataService>();
 
                 var storedUrl = context.CurrentUser.GetCharacteristic<string>(UserCharacteristicResource.LastVisitedPage);
                 if (requestUrl != storedUrl)
