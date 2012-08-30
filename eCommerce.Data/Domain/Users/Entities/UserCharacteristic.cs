@@ -8,6 +8,9 @@ using eCommerce.Data.Common;
 
 namespace eCommerce.Data.Domain.Users.Entities
 {
+    /// <summary>
+    /// [TO-DO] Deprecated. Functions move to GenericCharacteristic
+    /// </summary>
     public partial class UserCharacteristic : EntityBase
     {
         // Foreign key (to User.Id)

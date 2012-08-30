@@ -54,7 +54,7 @@ namespace eCommerce.Core.Infrastructure.IoC
                 var types = new List<Type> { tFrom };
 
                 // check if the type is generic type
-                if (tFrom.IsGenericType)
+                if (tFrom.IsGenericType && tTo.IsGenericType)
                 {
                     var reg = currentBuild.RegisterGeneric(tTo).As(tFrom).PerLifeStyle(lifeStyle);
                     reg.Keyed(key, tFrom); // set key and type resolved

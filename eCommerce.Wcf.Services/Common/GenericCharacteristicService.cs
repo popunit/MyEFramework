@@ -25,27 +25,27 @@ namespace eCommerce.Wcf.Services.Common
             this.cacheManager = container.Resolve<ICacheManager>();
         }
 
-        public bool InsertCharacteristic(Data.Domain.Common.GenericCharacteristic characteristic)
+        public bool InsertCharacteristic(GenericCharacteristic characteristic)
         {
             throw new NotImplementedException();
         }
 
-        public Data.Domain.Common.GenericCharacteristic GetCharacteristicById(int characteristicId)
+        public GenericCharacteristic GetCharacteristicById(int characteristicId)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<Data.Domain.Common.GenericCharacteristic> GetCharacteristicForEntity(int entityId, string group)
+        public IEnumerable<GenericCharacteristic> GetCharacteristicForEntity(int entityId, string group)
         {
             throw new NotImplementedException();
         }
 
-        public bool UpdateCharacteristic(Data.Domain.Common.GenericCharacteristic characteristic)
+        public bool UpdateCharacteristic(GenericCharacteristic characteristic)
         {
             throw new NotImplementedException();
         }
 
-        public bool DeleteCharacteristic(Data.Domain.Common.GenericCharacteristic characteristic)
+        public bool DeleteCharacteristic(GenericCharacteristic characteristic)
         {
             throw new NotImplementedException();
         }

@@ -27,7 +27,7 @@ namespace eCommerce.Core
         public virtual void Init(IEngine engine, IContainerManager containerManager, EventBroker broker, Config configuration)
         {
             // register singleton instance
-            containerManager.AddComponentInstance<Config>(configuration, configuration.GetType().Name);
+            containerManager.AddComponentInstance<Config>(configuration, typeof(Config).Name);
             containerManager.AddComponentInstance<IEngine>(engine, engine.GetType().Name);
             containerManager.AddComponentInstance<EventBroker>(broker, broker.GetType().Name);
             containerManager.AddComponentInstance<ContainerConfigBase>(this, this.GetType().Name);

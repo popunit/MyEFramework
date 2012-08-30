@@ -17,6 +17,7 @@ using eCommerce.Services.WcfClient.Entities;
 using eCommerce.Web.Framework;
 using eCommerce.Web.Framework.Mvc;
 using eCommerce.Web.Framework.Mvc.UI.TitleParts;
+using eCommerce.Web.Framework.Subscribers;
 
 namespace eCommerce.Web.Injection
 {
@@ -74,6 +75,13 @@ namespace eCommerce.Web.Injection
                 });
 
             builder.RegisterType<ObserverService>().As<IObserverService>().InstancePerDependency(); // get new every time
+
+            //var test = builder.Build();
+            //User user = new User();
+            //test.Resolve<IObserverService>().GetSubscriptionCenter<EntityEvent<User>>().Subscribe(e =>
+            //{
+            //    e.Handle(user.Mark(EntityStatus.Update));
+            //});
 
             #endregion
         }
