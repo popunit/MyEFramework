@@ -24,6 +24,8 @@ namespace eCommerce.Data.Mappings.Users
             this.Property(user => user.UserName).HasMaxLength(50).IsRequired();
             this.Property(user => user.Email).HasMaxLength(255);
             this.Property(user => user.PasswordKit.Password).HasMaxLength(255).HasColumnName("Password").IsRequired();
+
+            //this.Ignore(user => user.PasswordKit.PasswordFormatType); // WCF Data Service doesn't support this ignore
             #endregion
 
             #region Table Relationships

@@ -30,14 +30,17 @@ namespace eCommerce.Data.DatabaseInitializers
             {
                 if (context.Database.Exists())
                 {
+                    // if host in IIS, should config IIS user permission to database. For sql server,
+                    // one approach is setting ApplicationPoolIdentity account into sql server security
+                    // and another approach is using LocalSystem directly for the app pool
                     if (!context.Database.CompatibleWithModel(false))
                         context.Database.Delete(); // TO-DO: for debug, if release, should not delete directly
                 }
                 context.Database.CreateIfNotExists();
             }
-            catch
+            catch(System.Exception e)
             {
-                throw;
+                throw e;
             }
 
         }
