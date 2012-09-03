@@ -13,11 +13,27 @@ using System.Web;
 using eCommerce.Data;
 using Autofac.Integration.Wcf;
 using Autofac;
+using eCommerce.Data.Common;
 
 namespace eCommerce.Wcf.DataServices
 {
-    public class DataService : DataService<CommerceDbContext>
+    public partial class DataService : DataService<CommerceDbContext>
     {
+        /// <summary>
+        /// For writing event log into AppFabric instead of default written logic
+        /// </summary>
+        private static readonly AppFabricDataServiceEventProvider appFabricEventProvider = 
+            new AppFabricDataServiceEventProvider();
+
+        public DataService()
+        {
+            ProcessingPipeline.ProcessingRequest += (o, args) => appFabricEventProvider.WriteInformationEvent(
+                "DataServiceRequest",
+                "Processing HTTP {0} request for URI {1}",
+                args.OperationContext.RequestMethod,
+                args.OperationContext.AbsoluteRequestUri);
+        }
+
         // This method is called only once to initialize service-wide policies.
         public static void InitializeService(DataServiceConfiguration config)
         {
@@ -32,7 +48,18 @@ namespace eCommerce.Wcf.DataServices
 
         protected override CommerceDbContext CreateDataSource()
         {
-            return AutofacHostFactory.Container.Resolve<IDatabase>() as CommerceDbContext;
+            var context = AutofacHostFactory.Container.Resolve<IDatabase>() as CommerceDbContext;
+            context.DisableProxyCreation(); // disable proxy creation
+            return context;
+        }
+
+        /// <summary>
+        /// Override Handle Exception
+        /// </summary>
+        /// <param name="args"></param>
+        protected override void HandleException(HandleExceptionArgs args)
+        {
+            appFabricEventProvider.WriteErrorEvent(args.Exception);
         }
     }
 }
