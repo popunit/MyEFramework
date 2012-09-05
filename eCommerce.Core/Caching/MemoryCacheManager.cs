@@ -20,12 +20,12 @@ namespace eCommerce.Core.Caching
             return (T)Cache[key];
         }
 
-        public bool Set(string key, object data, int cacheMinutes)
+        public bool Set(string key, object data, TimeSpan timeout)
         {
             if (null == data)
                 return false;
             var policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now + TimeSpan.FromMinutes(cacheMinutes);
+            policy.AbsoluteExpiration = DateTime.Now + timeout;
             return Cache.Add(new CacheItem(key, data), policy);
         }
 

@@ -24,9 +24,9 @@ namespace eCommerce.Core
         /// </summary>
         /// <param name="key"></param>
         /// <param name="data"></param>
-        /// <param name="cacheTime">it is useless in memory cache manager</param>
+        /// <param name="timeout"></param>
         /// <returns></returns>
-        bool Set(string key, object data, int cacheTime);
+        bool Set(string key, object data, TimeSpan timeout);
 
         /// <summary>
         /// Check if the current key has been stored

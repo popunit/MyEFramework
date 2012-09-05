@@ -42,7 +42,7 @@ namespace eCommerce.Core.Caching
             return (T)items[key];
         }
 
-        public bool Set(string key, object data, int cacheTime)
+        public bool Set(string key, object data, TimeSpan timeout)
         {
             var items = GetItems();
             if (items == null)

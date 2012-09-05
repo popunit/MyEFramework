@@ -13,7 +13,7 @@ namespace eCommerce.Core.Caching
             return default(T);
         }
 
-        public bool Set(string key, object data, int cacheTime)
+        public bool Set(string key, object data, TimeSpan timeout)
         {
             return false;
         }
