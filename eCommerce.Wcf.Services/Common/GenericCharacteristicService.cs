@@ -1,6 +1,10 @@
 ﻿using Autofac;
 using Autofac.Integration.Wcf;
 using eCommerce.Core;
+using eCommerce.Core.Caching;
+using eCommerce.Core.Common;
+using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Data.Common;
 using eCommerce.Data.Domain.Common;
 using eCommerce.Wcf.Services.Contracts.Common;
 using System;
@@ -13,6 +17,9 @@ namespace eCommerce.Wcf.Services.Common
 {
     public class GenericCharacteristicService : IGenericCharacteristicService
     {
+        private const string CACHE_KEY_PATTERN = "SERVICE.DATA.GENERICCHARACTERISTIC";
+        private const string CACHE_KEY_FORMAT = "SERVICE.DATA.GENERICCHARACTERISTIC.{0}_{1}";
+
         private readonly IRepository<GenericCharacteristic> genericCharacteristicRepository;
         private readonly ICacheManager cacheManager;
         private readonly ILifetimeScope container;
@@ -27,32 +34,112 @@ namespace eCommerce.Wcf.Services.Common
 
         public bool InsertCharacteristic(GenericCharacteristic characteristic)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() => 
+            {
+                bool succeed = genericCharacteristicRepository.Insert(characteristic);
+                if (succeed)
+                    cacheManager.RemoveByPattern(CACHE_KEY_PATTERN);
+
+                // event notification
+
+                return succeed;
+            });
         }
 
-        public GenericCharacteristic GetCharacteristicById(int characteristicId)
+        public GenericCharacteristic GetCharacteristicById(long characteristicId)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonDefault<long>(characteristicId).Return<GenericCharacteristic>(() => 
+            {
+                return genericCharacteristicRepository.GetByKeys(characteristicId);
+            });
         }
 
-        public IEnumerable<GenericCharacteristic> GetCharacteristicForEntity(int entityId, string group)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="entityId"></param>
+        /// <param name="chGroup"></param>
+        /// <returns>[TO-DO] Considering using Collection Data Contract to substitude</returns>
+        public IEnumerable<GenericCharacteristic> GetCharacteristicForEntity(long entityId, string chGroup)
         {
-            throw new NotImplementedException();
+            string key = string.Format(CACHE_KEY_FORMAT, entityId, chGroup);
+            return cacheManager.GetOrInsert(
+                key,
+                () => 
+                {
+                    var results = from ch in genericCharacteristicRepository.Table
+                                  where ch.EntityId == entityId &&
+                                  ch.Group == chGroup
+                                  select ch;
+                    return results;
+                });
         }
 
         public bool UpdateCharacteristic(GenericCharacteristic characteristic)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() => 
+            {
+                var succeed = genericCharacteristicRepository.Update(characteristic);
+                if (succeed)
+                    cacheManager.RemoveByPattern(CACHE_KEY_PATTERN);
+
+                // event notification
+
+                return succeed;
+            });
         }
 
         public bool DeleteCharacteristic(GenericCharacteristic characteristic)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() => 
+            {
+                var succeed = genericCharacteristicRepository.Delete(characteristic);
+                if (succeed)
+                    cacheManager.RemoveByPattern(CACHE_KEY_PATTERN);
+
+                // event notification
+
+                return succeed;
+            });
         }
 
-        public bool SaveCharacteristic(Core.EntityBase entity, string key, string value)
+        public bool SaveCharacteristic(EntityBase entity, string key, string value)
         {
-            throw new NotImplementedException();
+            return AspectF.Define.MustBeNonNull(entity).MustBeNonNullOrEmpty(key).Return<bool>(() => 
+            {
+                string group = entity.GetUnproxyType().Name; // real type name
+
+                var chs = GetCharacteristicForEntity(entity.Id, group);
+                var ch = chs.FirstOrDefault(gch => gch.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+
+                if (null != ch)
+                {
+                    if (string.IsNullOrWhiteSpace(value))
+                    {
+                        return DeleteCharacteristic(ch);
+                    }
+                    else
+                    {
+                        ch.Value = value;
+                        return UpdateCharacteristic(ch);
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrWhiteSpace(value))
+                    {
+                        ch = new GenericCharacteristic(); // create new characteristic
+                        ch.EntityId = entity.Id;
+                        ch.Key = key;
+                        ch.Value = value;
+                        ch.Group = group;
+
+                        return InsertCharacteristic(ch);
+                    }
+                }
+
+                return false; // no data to be saved
+            });
         }
     }
 }

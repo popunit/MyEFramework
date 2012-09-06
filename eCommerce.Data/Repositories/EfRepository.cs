@@ -85,14 +85,14 @@ namespace eCommerce.Data.Repositories
                 });
         }
 
-        public void Delete(T entity)
+        public bool Delete(T entity)
         {
-            AspectF.Define.MustBeNonNull(entity).
+            return AspectF.Define.MustBeNonNull(entity).
                 HandleException(typeof(DbEntityValidationException)).
-                Do(() => 
+                Return<bool>(() =>
                 {
                     this.Store.Remove(entity);
-                    this.db.SaveChanges();
+                    return this.db.SaveChanges() > 0; // not successful or no item needs to be deleted
                 });
         }
 

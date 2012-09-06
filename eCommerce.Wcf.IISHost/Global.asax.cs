@@ -16,6 +16,8 @@ using eCommerce.Data.DataProvider;
 using eCommerce.Data.Repositories;
 using eCommerce.Wcf.Services.Users;
 using eCommerce.Core.Caching;
+using eCommerce.Data.Domain.Common;
+using eCommerce.Wcf.Services.Common;
 
 namespace eCommerce.Wcf.IISHost
 {
@@ -33,17 +35,17 @@ namespace eCommerce.Wcf.IISHost
 
             #region Http Context
 
-            builder.Register(context =>
-                new HttpContextWrapper(HttpContext.Current) as HttpContextBase);
+            //builder.Register(context =>
+            //    new HttpContextWrapper(HttpContext.Current) as HttpContextBase);
 
-            builder.Register(context => context.Resolve<HttpContextBase>().Request)
-                .As<HttpRequestBase>().InstancePerHttpRequest();
-            builder.Register(context => context.Resolve<HttpContextBase>().Response)
-                .As<HttpResponseBase>().InstancePerHttpRequest();
-            builder.Register(context => context.Resolve<HttpContextBase>().Server)
-                .As<HttpServerUtilityBase>().InstancePerHttpRequest();
-            builder.Register(context => context.Resolve<HttpContextBase>().Session)
-                .As<HttpSessionStateBase>().InstancePerHttpRequest();
+            //builder.Register(context => context.Resolve<HttpContextBase>().Request)
+            //    .As<HttpRequestBase>().InstancePerHttpRequest();
+            //builder.Register(context => context.Resolve<HttpContextBase>().Response)
+            //    .As<HttpResponseBase>().InstancePerHttpRequest();
+            //builder.Register(context => context.Resolve<HttpContextBase>().Server)
+            //    .As<HttpServerUtilityBase>().InstancePerHttpRequest();
+            //builder.Register(context => context.Resolve<HttpContextBase>().Session)
+            //    .As<HttpSessionStateBase>().InstancePerHttpRequest();
 
             #endregion
 
@@ -52,10 +54,13 @@ namespace eCommerce.Wcf.IISHost
             // [TO-DO] InstancePerHttpRequest may not use here because there is not "request" sign
             builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().Named<ICacheManager>("per_request_cache_manager").InstancePerHttpRequest();
 
+            // Since WCF requests does not have an http context we can not use InstancePerHttpRequest(). Instead we can use InstancePerLifetimeScope() 
+            // which is resolvable for both WCF and http requests. Autofac Wiki says :
             // The default ASP.NET and WCF integrations are set up so that InstancePerLifetimeScope() will attach a component to the current web request or service method call.
             // Register WCF services
             builder.RegisterType<UserService>().InstancePerLifetimeScope();
             builder.RegisterType<UserExtension>().InstancePerLifetimeScope();
+            builder.RegisterType<GenericCharacteristicService>().InstancePerLifetimeScope();
 
             builder.RegisterType<Config>().InstancePerLifetimeScope();
             builder.RegisterType<WebsiteRoute>().As<IRoute>().InstancePerLifetimeScope();

@@ -17,10 +17,15 @@ namespace eCommerce.Core
     /// <typeparam name="T"></typeparam>
     public interface IRepository<T> where T : EntityBase
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="keys">Primary keys</param>
+        /// <returns></returns>
         T GetByKeys(params object[] keys);
         bool Insert(T entity);
         bool Update(T entity);
-        void Delete(T entity);
+        bool Delete(T entity);
         IQueryable<T> Table { get; }
     }
 }
