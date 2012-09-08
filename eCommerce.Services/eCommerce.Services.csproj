@@ -51,7 +51,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CharacteristicResource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Common\IGenericCharacteristicService.cs" />
+    <Compile Include="Common\GenericCharacteristicDataService.cs" />
+    <Compile Include="Common\IGenericCharacteristicDataService.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
     <Compile Include="ObserverService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,9 +71,11 @@
     <Compile Include="Users\UserDataService.cs" />
     <Compile Include="WcfClient\DataTypes\PasswordKit.cs" />
     <Compile Include="WcfClient\DataTypes\StringFormatType.cs" />
+    <Compile Include="WcfClient\Entities\GenericCharacteristic.cs" />
     <Compile Include="WcfClient\Entities\User.cs" />
     <Compile Include="WcfClient\Entities\UserCharacteristic.cs" />
     <Compile Include="WcfClient\Entities\UserRole.cs" />
+    <Compile Include="WcfClient\GenericCharacteristicService.cs" />
     <Compile Include="WcfClient\UserExtension.cs" />
     <Compile Include="WcfClient\UserService.cs" />
     <Compile Include="WorkContextServiceBase.cs" />
@@ -84,7 +87,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CharacteristicResource.resx">

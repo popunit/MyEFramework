@@ -14,6 +14,11 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
         // null: for all types, count == 0: for none of types, count > 0: for specific types
         private List<Type> supportedModelTypes;
 
+        /// <summary>
+        /// According to the model type, select proper model binder type
+        /// </summary>
+        /// <param name="modelType"></param>
+        /// <returns></returns>
         public IModelBinder GetBinder(Type modelType)
         {
             Type t = typeof(WebModelBinderProvider);

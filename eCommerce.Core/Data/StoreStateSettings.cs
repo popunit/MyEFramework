@@ -8,12 +8,19 @@ using eCommerce.Core.Enums;
 
 namespace eCommerce.Core.Data
 {
+    /// <summary>
+    /// Store (database, cookie etc) state settings
+    /// </summary>
     public class StoreStateSettings : ISettings
     {
         public string StoreName { get; set; }
         public string StoreUrl { get; set; }
         public bool StoreClosed { get; set; }
-        public Dictionary<WorkType, string> DefaultStoreTheme { get; set; }
+
+        /// <summary>
+        /// Default desktop theme
+        /// </summary>
+        public string DefaultStoredThemeForDesktop { get; set; }
         public bool MobileDevicesSupported { get; set; }
 
         // for test

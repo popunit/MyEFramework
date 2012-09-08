@@ -10,6 +10,7 @@ using eCommerce.Core.Configuration;
 using eCommerce.Exception;
 using eCommerce.Core.Common;
 using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Core.Common.Web;
 
 namespace eCommerce.Core.Data
 {
@@ -36,20 +37,7 @@ namespace eCommerce.Core.Data
                 ex => { throw new CommonException(string.Format("The file {0} is not existed!", virtualPath), ex); }).
                 Return<string>(() =>
             {
-                // check if the website is hosted or not
-                if (HostingEnvironment.IsHosted)
-                {
-                    if (!Path.IsPathRooted(virtualPath))
-                        return HostingEnvironment.MapPath(virtualPath);
-                    else
-                        return virtualPath;
-                }
-                else
-                {
-                    string baseDirectory = AppDomain.CurrentDomain.BaseDirectory; // get application current running directory
-                    string relativePath = virtualPath.Replace("~/", "").TrimStart('/').Replace('/', '\\');
-                    return Path.Combine(baseDirectory, relativePath);
-                }
+                return WebsiteHelper.MapPath(virtualPath);
             });
         }
 

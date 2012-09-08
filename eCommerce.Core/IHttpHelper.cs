@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Core
 {
+    /// <summary>
+    /// Helper for HTTP info
+    /// </summary>
     public interface IHttpHelper
     {
         /// <summary>

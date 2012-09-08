@@ -13,15 +13,11 @@ namespace eCommerce.Data.Domain.Common
     /// </summary>
     public partial class GenericCharacteristic : EntityBase
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <remarks>doesn't associate with specific type entities</remarks>
-        public long EntityId { get; set; }
+        public long EntityId { get; set; } // Domain Entity Id
+        public string Group { get; set; } // Domain Entity type, EntityId and Group can specify the unique entity 
 
         public string Key { get; set; }
         public string Value { get; set; }
-        public string Group { get; set; }
     }
 
     public sealed class MissingGenericCharacteristic : GenericCharacteristic
