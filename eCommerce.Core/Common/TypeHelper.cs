@@ -53,19 +53,73 @@ namespace eCommerce.Core.Common
             }
         }
 
-        public static void ForEach<T>(this IEnumerable<T> collections, Action<T> callback)
+        public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> callback)
         {
-            if (null == collections || null == callback)
+            if (null == enumeration || null == callback)
                 return;
-            foreach (var item in collections)
+            foreach (var item in enumeration)
             {
                 callback(item);
             }
         }
 
-        public static string[] Trims(this IEnumerable<string> collections)
+        /// <summary>
+        /// IEnumerable doesn't represent Collection type, so in actual we should not 
+        /// use add like a collection. Should use IList or ICollection instead.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> Add<T>(this IEnumerable<T> enumeration, T item)
         {
-            string[] items = collections.ToArray();
+            if (null == enumeration)
+                throw new NullReferenceException("Target Object cannot be null!");
+            foreach (var i in enumeration)
+                yield return i;
+            yield return item;
+        }
+
+        public static T GetItem<T>(this IList<T> list, Predicate<T> predicate)
+        {
+            //if (null == list)
+            //    throw new NullReferenceException("Target Object cannot be null!");
+
+            //T result = default(T);
+            //if (list.Count == 0)
+            //    return result;
+            
+            //for (var i = 0; i < list.Count; i++)
+            //{
+            //    var item = list[i];
+            //    if (predicate(item))
+            //    {
+            //        result = item;
+            //        break;
+            //    }
+            //}
+            //return result;
+
+            return list.SingleOrDefault(i => predicate(i));
+        }
+
+        /// <summary>
+        /// Predicate_T and Func_T_Bool have the same signiture but they still are different types. 
+        /// Moreover, the usage of predicate is narrower than that of Func. Only use Predicate when
+        /// we just need to do judgement.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="source"></param>
+        /// <returns></returns>
+        public static Predicate<T> ToPredicate<T>(this Func<T, bool> source)
+        {
+            Predicate<T> result = new Predicate<T>(source);
+            return result;
+        }   
+
+        public static string[] Trims(this IEnumerable<string> collection)
+        {
+            string[] items = collection.ToArray();
             Array.ForEach(items, item => item.Trim());
             return items;
         }

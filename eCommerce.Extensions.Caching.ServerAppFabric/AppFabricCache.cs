@@ -13,7 +13,7 @@ namespace eCommerce.Extensions.Caching.ServerAppFabric
     /// <summary>
     /// Server AppFabric Cache
     /// </summary>
-    public class AppFabricCache : ICacheManager
+    public class AppFabricCache : ICacheManager, IDisposable
     {
         private readonly DataCacheFactory factory;
         private readonly DataCache cache;
@@ -86,6 +86,11 @@ namespace eCommerce.Extensions.Caching.ServerAppFabric
         public void Flush()
         {
             cache.ClearRegion(regionName);
+        }
+
+        public void Dispose()
+        {
+            factory.Dispose();
         }
     }
 }
