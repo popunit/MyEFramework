@@ -9,8 +9,9 @@ using eCommerce.Core.Enums;
 namespace eCommerce.Core.Data
 {
     /// <summary>
-    /// Store (database, cookie etc) state settings
+    /// Store (database, cookie, theme etc) state settings and other settings for entire website
     /// </summary>
+    /// <remarks>Global Settings</remarks>
     public class StoreStateSettings : ISettings
     {
         public string StoreName { get; set; }
@@ -22,6 +23,7 @@ namespace eCommerce.Core.Data
         /// </summary>
         public string DefaultStoredThemeForDesktop { get; set; }
         public bool MobileDevicesSupported { get; set; }
+        public bool SelectThemeByUsersIsAllowed { get; set; }
 
         // for test
         public bool EmulateMobileDevice { get; set; }

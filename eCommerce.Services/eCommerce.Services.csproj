@@ -46,11 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\IAuthenticationService.cs" />
-    <Compile Include="CharacteristicResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>CharacteristicResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="Common\GenericCharacteristicDataService.cs" />
     <Compile Include="Common\IGenericCharacteristicDataService.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
@@ -92,10 +87,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="CharacteristicResource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CharacteristicResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="SystemUserRoleNameCollection.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SystemUserRoleNameCollection.Designer.cs</LastGenOutput>

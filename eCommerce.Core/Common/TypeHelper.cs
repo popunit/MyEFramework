@@ -136,12 +136,23 @@ namespace eCommerce.Core.Common
             return TypeDescriptor.GetConverter(type);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        /// <remarks>[TO-DO] object type is not correct sometimes</remarks>
         public static string ToSafeString(this object obj)
         {
             if (null != obj)
                 return obj.ToString();
             else
                 return string.Empty;
+        }
+
+        public static bool IsNull<T>(this T obj) where T : class
+        {
+            return null == obj;
         }
     }
 

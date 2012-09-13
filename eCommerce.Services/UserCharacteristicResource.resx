@@ -117,8 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DesktopThemeName" xml:space="preserve">
+    <value>DesktopThemeName</value>
+    <comment>Desktop theme name for specific users</comment>
+  </data>
   <data name="LastVisitedPage" xml:space="preserve">
     <value>LastVisitedPage</value>
-    <comment>Store page url for using later</comment>
+    <comment>Store url referred for specific users</comment>
+  </data>
+  <data name="MobileDeviceSupportedIsClosed" xml:space="preserve">
+    <value>MobileDeviceSupportedIsClosed</value>
+    <comment>Whether the mobile device is allowed for specifc users</comment>
   </data>
 </root>

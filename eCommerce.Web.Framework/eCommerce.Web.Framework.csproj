@@ -81,6 +81,7 @@
     <Compile Include="Subscribers\EntityModelSubscriber.cs" />
     <Compile Include="Subscribers\UserSubscriber.cs" />
     <Compile Include="Theme\ThemeProvider.cs" />
+    <Compile Include="Theme\ThemeProviderExtensions.cs" />
     <Compile Include="WebWorkContext.cs" />
   </ItemGroup>
   <ItemGroup>

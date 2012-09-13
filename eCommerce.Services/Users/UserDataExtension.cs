@@ -38,6 +38,23 @@ namespace eCommerce.Services.Users
             });
         }
 
+        public static string GetWorkingDesktopThemeName(this User user, string key)
+        {
+            string themeName = null;
+            if(user.IsNull())
+                return themeName;
+            var storeStateSettings = EngineContext.Current.Resolve<StoreStateSettings>();
+            if (!storeStateSettings.IsNull() && storeStateSettings.SelectThemeByUsersIsAllowed) // if user is allowed to select theme
+            {
+                themeName = user.GetCharacteristic<string>(UserCharacteristicResource.DesktopThemeName); 
+            }
+
+            if (string.IsNullOrEmpty(themeName)) // if theme is empty, set it by default theme
+                themeName = storeStateSettings.DefaultStoredThemeForDesktop;
+
+            return themeName;
+        }
+
         /// <summary>
         /// Get user name or email according to user settings
         /// </summary>

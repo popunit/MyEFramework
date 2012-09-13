@@ -35,7 +35,7 @@ namespace eCommerce.Services
 
         public bool MobileDeviceSupportedIsClosed()
         {
-            return workContext.CurrentUser.GetCharacteristic<bool>(CharacteristicResource.MobileDeviceSupportedIsClosed);
+            return workContext.CurrentUser.GetCharacteristic<bool>(UserCharacteristicResource.MobileDeviceSupportedIsClosed);
         }
 
 

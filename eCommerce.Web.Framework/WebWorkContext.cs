@@ -7,6 +7,11 @@ using eCommerce.Services;
 
 namespace eCommerce.Web.Framework
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>Web work context should not include Settings. Settings should be included into
+    /// StoreStateSettings</remarks>
     public class WebWorkContext : WorkContextServiceBase
     {
         protected override T GetData<T>(string name)
