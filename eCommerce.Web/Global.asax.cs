@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Web;
+﻿using eCommerce.Core.Data;
+using eCommerce.Core.Infrastructure;
+using eCommerce.Services.Common;
+using eCommerce.Web.Framework.Mvc.DependencyResolvers;
+using eCommerce.Web.Framework.Mvc.ModelBinder;
+using eCommerce.Web.Framework.Mvc.View.ViewEngines;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using Autofac;
-using eCommerce.Core.Configuration;
-using eCommerce.Core.Data;
-using eCommerce.Core.Infrastructure;
-using eCommerce.Core.Infrastructure.IoC;
-using eCommerce.Web.Framework.Mvc.DependencyResolvers;
-using eCommerce.Web.Framework.Mvc.ModelBinder;
-using eCommerce.Web.Framework.Mvc.View.ViewEngines;
 
 namespace eCommerce.Web
 {
@@ -61,7 +51,8 @@ namespace eCommerce.Web
             // Binding model
             ModelBinderProviders.BinderProviders.Add(new WebModelBinderProvider());
 
-            bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
+            //bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
+            bool dbInstalled = EngineContext.Current.Resolve<IDataInfoDataService>().DatabaseIsInstalled();
             if (dbInstalled)
             {
                 // Update view engines to new

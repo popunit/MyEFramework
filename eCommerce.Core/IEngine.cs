@@ -77,13 +77,14 @@ namespace eCommerce.Core
             this.containerConfig = containerConfig;
             this.containerConfig.Init(this, containerManager, EventBroker.Current, config);
 
+            // only true in database server, in web site, cannot find the database specified
             if (DatabaseSettingHelper.FindDatabaseSettings)
             {
                 RunTasks();
             }
             else
             {
-                // TO-DO
+                // TO-DO: run task not refer to database
             }
         }
 

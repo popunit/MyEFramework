@@ -59,8 +59,8 @@ namespace eCommerce.Wcf.IISHost
             // The default ASP.NET and WCF integrations are set up so that InstancePerLifetimeScope() will attach a component to the current web request or service method call.
             // Register WCF services
             builder.RegisterType<UserService>().InstancePerLifetimeScope();
-            //builder.RegisterType<UserExtension>().InstancePerLifetimeScope();
             builder.RegisterType<GenericCharacteristicService>().InstancePerLifetimeScope();
+            builder.RegisterType<DataInfoService>().InstancePerLifetimeScope();
 
             builder.RegisterType<Config>().InstancePerLifetimeScope();
             builder.RegisterType<WebsiteRoute>().As<IRoute>().InstancePerLifetimeScope();

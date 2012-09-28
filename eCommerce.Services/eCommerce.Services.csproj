@@ -46,7 +46,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\IAuthenticationService.cs" />
+    <Compile Include="Common\DataInfoDataService.cs" />
     <Compile Include="Common\GenericCharacteristicDataService.cs" />
+    <Compile Include="Common\IDataInfoDataService.cs" />
     <Compile Include="Common\IGenericCharacteristicDataService.cs" />
     <Compile Include="Extensions\GenericCharacteristicDataExtensions.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Users\IUserDataService.cs" />
     <Compile Include="Extensions\UserDataExtensions.cs" />
     <Compile Include="Users\UserDataService.cs" />
+    <Compile Include="WcfClient\DataInfoService.cs" />
     <Compile Include="WcfClient\DataTypes\PasswordKit.cs" />
     <Compile Include="WcfClient\DataTypes\StringFormatType.cs" />
     <Compile Include="WcfClient\Entities\GenericCharacteristic.cs" />

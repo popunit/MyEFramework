@@ -74,8 +74,10 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DataInfoService.cs" />
     <Compile Include="Common\GenericCharacteristicService.cs" />
     <Compile Include="Constants.cs" />
+    <Compile Include="Contracts\Common\IDataInfoService.cs" />
     <Compile Include="Contracts\Common\IGenericCharacteristicService.cs" />
     <Compile Include="Contracts\Users\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

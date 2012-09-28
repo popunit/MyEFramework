@@ -68,6 +68,7 @@ namespace eCommerce.Web.Injection
 
             builder.RegisterType<UserDataService>().As<IUserDataService>().InstancePerHttpRequest();
             builder.RegisterType<GenericCharacteristicDataService>().As<IGenericCharacteristicDataService>().InstancePerHttpRequest();
+            builder.RegisterType<DataInfoDataService>().As<IDataInfoDataService>().InstancePerHttpRequest();
 
             #region Events
             // register subscribers
