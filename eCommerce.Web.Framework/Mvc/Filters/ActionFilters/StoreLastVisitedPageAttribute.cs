@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
-using eCommerce.Core;
-using eCommerce.Core.Data;
+﻿using eCommerce.Core;
 using eCommerce.Services;
-using eCommerce.Web.Framework.Mvc.Extensions;
+using eCommerce.Services.Extensions;
 using eCommerce.Services.Users;
+using eCommerce.Web.Framework.Mvc.Extensions;
+using System.Web.Mvc;
 
 namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
 {
@@ -37,7 +32,7 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
             {
                 var context = DependencyResolver.Current.GetService<WorkContextServiceBase>();
                 var userService = DependencyResolver.Current.GetService<IUserDataService>();
-
+                
                 var storedUrl = context.CurrentUser.GetCharacteristic<string>(UserCharacteristicResource.LastVisitedPage);
                 if (requestUrl != storedUrl)
                 {

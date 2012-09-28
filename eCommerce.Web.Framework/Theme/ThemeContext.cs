@@ -3,12 +3,8 @@ using eCommerce.Core.Data;
 using eCommerce.Core.Enums;
 using eCommerce.Services;
 using eCommerce.Services.Common;
-using eCommerce.Services.Users;
-using System;
-using System.Collections.Generic;
+using eCommerce.Services.Extensions;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Web.Framework.Theme
 {
@@ -49,7 +45,15 @@ namespace eCommerce.Web.Framework.Theme
             {
                 case WorkType.Mobile:
                     {
-                        throw new NotImplementedException();
+                        if (!mobileThemeName.IsNull())
+                            return mobileThemeName;
+                        var themeName = storeStateSettings.DefaultStoredThemeForMobile;
+                        if (!themeProvider.ThemeConfigExists(themeName)) // if theme configuration doesn't exist, search all the desktop themes and select one among them
+                            themeName = themeProvider.GetThemeConfigurations()
+                                .Where(x => x.IsForMobile).FirstOrDefault().ThemeName; // only get the first theme matched, if there is no theme, should throw exception because shouldn't allow site without theme
+
+                        mobileThemeName = themeName;
+                        return themeName;
                     }
                 case WorkType.Desktop:
                 default:
@@ -59,7 +63,7 @@ namespace eCommerce.Web.Framework.Theme
                         var themeName = workContext.CurrentUser.GetWorkingDesktopThemeName(UserCharacteristicResource.DesktopThemeName);
                         if (!themeProvider.ThemeConfigExists(themeName)) // if theme configuration doesn't exist, search all the desktop themes and select one among them
                             themeName = themeProvider.GetThemeConfigurations()
-                                .Where(x => !x.IsForMobile).FirstOrDefault().ThemeName;
+                                .Where(x => !x.IsForMobile).FirstOrDefault().ThemeName; // only get the first theme matched, if there is no theme, should throw exception because shouldn't allow site without theme
 
                         desktopThemeName = themeName;
                         return themeName;
@@ -67,9 +71,27 @@ namespace eCommerce.Web.Framework.Theme
             }
         }
 
-        public bool SetTheme(WorkType type)
+        public bool SetTheme(string themeName, WorkType type = WorkType.Desktop)
         {
-            throw new NotImplementedException();
+            switch (type)
+            {
+                case WorkType.Mobile:
+                    {
+                        return false; // Cannot support set mobile theme by user so far.
+                    }
+                case WorkType.Desktop:
+                default:
+                    {
+                        if (!storeStateSettings.SelectThemeByUsersIsAllowed)
+                            return false;
+                        if (workContext.CurrentUser.IsNull())
+                            return false;
+                        bool succeed = genericCharacteristicService.SaveCharacteristic(workContext.CurrentUser, UserCharacteristicResource.DesktopThemeName, themeName);
+                        if(succeed)
+                            desktopThemeName = null; // clear
+                        return succeed;
+                    }
+            }   
         }
     }
 }

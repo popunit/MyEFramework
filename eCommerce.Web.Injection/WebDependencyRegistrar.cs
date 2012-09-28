@@ -18,6 +18,9 @@ using eCommerce.Web.Framework;
 using eCommerce.Web.Framework.Mvc;
 using eCommerce.Web.Framework.Mvc.UI.TitleParts;
 using eCommerce.Web.Framework.Subscribers;
+using eCommerce.Web.Framework.Theme;
+using eCommerce.Services.Users;
+using eCommerce.Services.Common;
 
 namespace eCommerce.Web.Injection
 {
@@ -59,6 +62,12 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<WebWorkContext>().As<WorkContextServiceBase>().InstancePerHttpRequest();
 
             builder.RegisterType<ViewPageHeaderBuilder>().As<IViewPageHeaderBuilder>().InstancePerHttpRequest();
+
+            builder.RegisterType<ThemeContext>().As<IThemeContext>().InstancePerHttpRequest();
+            builder.RegisterType<ThemeProvider>().As<IThemeProvider>().InstancePerHttpRequest();
+
+            builder.RegisterType<UserDataService>().As<IUserDataService>().InstancePerHttpRequest();
+            builder.RegisterType<GenericCharacteristicDataService>().As<IGenericCharacteristicDataService>().InstancePerHttpRequest();
 
             #region Events
             // register subscribers

@@ -26,10 +26,6 @@ namespace eCommerce.Data.Domain.Users.Entities
         public bool Deleted { get; set; } // indicate if the user is deleted
 
         // Navigation properties : Nullable
-        // one to many
-        public virtual ICollection<UserCharacteristic> UserCharacteristics { get; set; }
-
-        // Navigation properties : Nullable
         // many to many
         public virtual ICollection<UserRole> UserRoles { get; set; }
     }

@@ -59,7 +59,7 @@ namespace eCommerce.Wcf.IISHost
             // The default ASP.NET and WCF integrations are set up so that InstancePerLifetimeScope() will attach a component to the current web request or service method call.
             // Register WCF services
             builder.RegisterType<UserService>().InstancePerLifetimeScope();
-            builder.RegisterType<UserExtension>().InstancePerLifetimeScope();
+            //builder.RegisterType<UserExtension>().InstancePerLifetimeScope();
             builder.RegisterType<GenericCharacteristicService>().InstancePerLifetimeScope();
 
             builder.RegisterType<Config>().InstancePerLifetimeScope();
@@ -69,11 +69,11 @@ namespace eCommerce.Wcf.IISHost
             //builder.RegisterType<CommerceDbContext>().As<IDatabase>().InstancePerLifetimeScope();
             var dbSettingsManager = new DatabaseSettingsManager();
             var databaseSettings = dbSettingsManager.LoadSettings();
-            builder.Register(c => dbSettingsManager.LoadSettings()).As<DatabaseSettings>();
-            builder.Register(x => new EfDataProviderManager(x.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
+            builder.Register(context => dbSettingsManager.LoadSettings()).As<DatabaseSettings>();
+            builder.Register(context => new EfDataProviderManager(context.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
             // register for two types
-            builder.Register(x => (IEfDataProvider)x.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
-            builder.Register(x => (IEfDataProvider)x.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
+            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
+            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
 
             if (databaseSettings != null && databaseSettings.IsValid())
             {
@@ -81,11 +81,11 @@ namespace eCommerce.Wcf.IISHost
                 var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
                 dataProvider.Init();
 
-                builder.Register<IDatabase>(c => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerLifetimeScope();
+                builder.Register<IDatabase>(context => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerLifetimeScope();
             }
             else
             {
-                builder.Register<IDatabase>(c => new CommerceDbContext(dbSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
+                builder.Register<IDatabase>(context => new CommerceDbContext(dbSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
             }
 
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();

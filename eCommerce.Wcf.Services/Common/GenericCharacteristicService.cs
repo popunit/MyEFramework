@@ -17,9 +17,6 @@ namespace eCommerce.Wcf.Services.Common
 {
     public class GenericCharacteristicService : IGenericCharacteristicService
     {
-        private const string CACHE_KEY_PATTERN = "SERVICE.DATA.GENERICCHARACTERISTIC";
-        private const string CACHE_KEY_FORMAT = "SERVICE.DATA.GENERICCHARACTERISTIC.{0}_{1}";
-
         private readonly IRepository<GenericCharacteristic> genericCharacteristicRepository;
         private readonly ICacheManager cacheManager;
         private readonly ILifetimeScope container;
@@ -38,7 +35,7 @@ namespace eCommerce.Wcf.Services.Common
             {
                 bool succeed = genericCharacteristicRepository.Insert(characteristic);
                 if (succeed)
-                    cacheManager.RemoveByPattern(CACHE_KEY_PATTERN);
+                    cacheManager.RemoveByPattern(Constants.CACHE_GENERICCHARACTERISTIC_PATTERN);
 
                 // event notification
 
@@ -62,7 +59,7 @@ namespace eCommerce.Wcf.Services.Common
         /// <returns>[TO-DO] Considering using Collection Data Contract to substitude</returns>
         public IEnumerable<GenericCharacteristic> GetCharacteristicForEntity(long entityId, string chGroup)
         {
-            string key = string.Format(CACHE_KEY_FORMAT, entityId, chGroup);
+            string key = string.Format(Constants.CACHE_GENERICCHARACTERISTIC_FORMAT, entityId, chGroup);
             return cacheManager.GetOrInsert(
                 key,
                 () => 
@@ -81,7 +78,7 @@ namespace eCommerce.Wcf.Services.Common
             {
                 var succeed = genericCharacteristicRepository.Update(characteristic);
                 if (succeed)
-                    cacheManager.RemoveByPattern(CACHE_KEY_PATTERN);
+                    cacheManager.RemoveByPattern(Constants.CACHE_GENERICCHARACTERISTIC_PATTERN);
 
                 // event notification
 
@@ -95,7 +92,7 @@ namespace eCommerce.Wcf.Services.Common
             {
                 var succeed = genericCharacteristicRepository.Delete(characteristic);
                 if (succeed)
-                    cacheManager.RemoveByPattern(CACHE_KEY_PATTERN);
+                    cacheManager.RemoveByPattern(Constants.CACHE_GENERICCHARACTERISTIC_PATTERN);
 
                 // event notification
 

@@ -56,15 +56,26 @@ namespace eCommerce.Core.Common.Web
         /// <returns></returns>
         public static string MapPath(string path)
         {
+            // if path does not exist, return empty
+            if (string.IsNullOrWhiteSpace(path))
+                return string.Empty;
+
             // check if the website is hosted or not
             if (HostingEnvironment.IsHosted)
             {
                 // The IsPathRooted method returns true if the first character is a directory separator character such as "\", 
                 // or if the path starts with a drive letter and colon (:)
                 if (!Path.IsPathRooted(path))
+                {
                     return HostingEnvironment.MapPath(path);
+                }
                 else
+                {
+                    // relative path
+                    if(path.StartsWith("\\"))
+                        return HostingEnvironment.MapPath(path);
                     return path;
+                }
             }
             else
             {

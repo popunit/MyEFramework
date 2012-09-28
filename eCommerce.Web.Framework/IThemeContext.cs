@@ -13,6 +13,6 @@ namespace eCommerce.Web.Framework
     public interface IThemeContext
     {
         string GetCurrentTheme(WorkType type);
-        bool SetTheme(WorkType type);
+        bool SetTheme(string themeName, WorkType type = WorkType.Desktop);
     }
 }

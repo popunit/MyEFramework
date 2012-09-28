@@ -10,40 +10,40 @@ using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Data;
 using eCommerce.Services.WcfClient;
 
-namespace eCommerce.Services.Users
+namespace eCommerce.Services.Extensions
 {
-    public static class UserDataExtension
+    public static class UserDataExtensions
     {
-        public static T GetCharacteristic<T>(this User user, string key)
-        {
-            return AspectF.Define.MustBeNonNull(user)
-                .Return<T>(() =>
-            {
-                string characteristicValue;
-                using (UserExtensionClient proxy = new UserExtensionClient("BasicHttpBinding_IUserExtension"))
-                {
-                    characteristicValue = proxy.GetCharacteristicValue(user.Id, key);
-                }
+        //public static T GetCharacteristic<T>(this User user, string key)
+        //{
+        //    return AspectF.Define.MustBeNonNull(user)
+        //        .Return<T>(() =>
+        //    {
+        //        string characteristicValue;
+        //        using (UserExtensionClient proxy = new UserExtensionClient("BasicHttpBinding_IUserExtension"))
+        //        {
+        //            characteristicValue = proxy.GetCharacteristicValue(user.Id, key);
+        //        }
 
-                if (String.IsNullOrEmpty(characteristicValue))
-                {
-                    return default(T);
-                }
-                else
-                {
-                    if (typeof(T).GetTypeConverter().CanConvertFrom(typeof(string)))
-                        throw new Exception("Cannot get type converter");
-                    return (T)typeof(T).GetTypeConverter().ConvertFromInvariantString(characteristicValue);
-                }
-            });
-        }
+        //        if (String.IsNullOrEmpty(characteristicValue))
+        //        {
+        //            return default(T);
+        //        }
+        //        else
+        //        {
+        //            if (typeof(T).GetTypeConverter().CanConvertFrom(typeof(string)))
+        //                throw new Exception("Cannot get type converter");
+        //            return (T)typeof(T).GetTypeConverter().ConvertFromInvariantString(characteristicValue);
+        //        }
+        //    });
+        //}
 
         public static string GetWorkingDesktopThemeName(this User user, string key)
         {
             string themeName = null;
-            if(user.IsNull())
-                return themeName;
             var storeStateSettings = EngineContext.Current.Resolve<StoreStateSettings>();
+            if (user.IsNull())
+                return storeStateSettings.DefaultStoredThemeForDesktop; // if anonymous, return default
             if (!storeStateSettings.IsNull() && storeStateSettings.SelectThemeByUsersIsAllowed) // if user is allowed to select theme
             {
                 themeName = user.GetCharacteristic<string>(UserCharacteristicResource.DesktopThemeName); 

@@ -48,6 +48,7 @@
     <Compile Include="Authentication\IAuthenticationService.cs" />
     <Compile Include="Common\GenericCharacteristicDataService.cs" />
     <Compile Include="Common\IGenericCharacteristicDataService.cs" />
+    <Compile Include="Extensions\GenericCharacteristicDataExtensions.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
     <Compile Include="ObserverService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,16 +63,14 @@
       <DependentUpon>UserCharacteristicResource.resx</DependentUpon>
     </Compile>
     <Compile Include="Users\IUserDataService.cs" />
-    <Compile Include="Users\UserDataExtension.cs" />
+    <Compile Include="Extensions\UserDataExtensions.cs" />
     <Compile Include="Users\UserDataService.cs" />
     <Compile Include="WcfClient\DataTypes\PasswordKit.cs" />
     <Compile Include="WcfClient\DataTypes\StringFormatType.cs" />
     <Compile Include="WcfClient\Entities\GenericCharacteristic.cs" />
     <Compile Include="WcfClient\Entities\User.cs" />
-    <Compile Include="WcfClient\Entities\UserCharacteristic.cs" />
     <Compile Include="WcfClient\Entities\UserRole.cs" />
     <Compile Include="WcfClient\GenericCharacteristicService.cs" />
-    <Compile Include="WcfClient\UserExtension.cs" />
     <Compile Include="WcfClient\UserService.cs" />
     <Compile Include="WorkContextServiceBase.cs" />
   </ItemGroup>

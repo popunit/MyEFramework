@@ -21,13 +21,19 @@ namespace eCommerce.Wcf.Services.Contracts.Users
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        [OperationContract]
-        bool SaveUserCharacteristic(long userId, string key, string value);
+        //[OperationContract]
+        //bool SaveUserCharacteristic(long userId, string key, string value);
 
         [OperationContract]
         User GetUserByName(string userName);
 
         [OperationContract]
         User GetUserByEmail(string email);
+
+        [OperationContract]
+        bool AddUserRole(UserRole userRole);
+
+        [OperationContract]
+        bool UpdateCustomerRole(UserRole userRole);
     }
 }

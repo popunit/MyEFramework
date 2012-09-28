@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Autofac;
 using Autofac.Integration.Wcf;
 using eCommerce.Core;
+using eCommerce.Core.Common;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data;
 using eCommerce.Data.Domain.Users.Entities;
@@ -16,14 +17,18 @@ namespace eCommerce.Wcf.Services.Users
     public class UserService : IUserService
     {
         private readonly IRepository<User> userRepository;
-        private readonly IRepository<UserCharacteristic> userCharacteristicRepository;
+        private readonly IRepository<UserRole> userRoleRepository;
+        //private readonly IRepository<UserCharacteristic> userCharacteristicRepository;
         private readonly ILifetimeScope container;
+        private readonly ICacheManager cacheManager;
 
         public UserService()
         {
             container = AutofacHostFactory.Container;
             this.userRepository = container.Resolve<IRepository<User>>();
-            this.userCharacteristicRepository = container.Resolve<IRepository<UserCharacteristic>>();
+            this.userRoleRepository = container.Resolve<IRepository<UserRole>>();
+            //this.userCharacteristicRepository = container.Resolve<IRepository<UserCharacteristic>>();
+            this.cacheManager = container.Resolve<ICacheManager>();
         }
 
         /// <summary>
@@ -34,30 +39,30 @@ namespace eCommerce.Wcf.Services.Users
         /// <param name="value"></param>
         /// <returns></returns>
         /// <remarks>TO-DO: I'd like to build the operation as async</remarks>
-        public bool SaveUserCharacteristic(long userId, string key, string value)
-        {
-            return AspectF.Define.MustBeNonNullOrEmpty(key, value).Return<bool>(()=>
-            {
-                var user = userRepository.GetByKeys(userId);
-                if (null == user) // user cannot be null
-                    return false;
-                var characteristic = user.UserCharacteristics.FirstOrDefault(
-                    uc => uc.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase));
-                if (null != characteristic) // update
-                {
-                    characteristic.Value = value; // TO-DO: value should be check
-                    return UpdateUserCharacteristic(characteristic);
-                }
-                else // insert
-                {
-                    UserCharacteristic uc = new UserCharacteristic();
-                    uc.User = user;
-                    uc.Key = key;
-                    uc.Value = value;
-                    return InsertUserCharacteristic(uc);
-                }
-            });
-        }
+        //public bool SaveUserCharacteristic(long userId, string key, string value)
+        //{
+        //    return AspectF.Define.MustBeNonNullOrEmpty(key, value).Return<bool>(()=>
+        //    {
+        //        var user = userRepository.GetByKeys(userId);
+        //        if (null == user) // user cannot be null
+        //            return false;
+        //        var characteristic = user.UserCharacteristics.FirstOrDefault(
+        //            uc => uc.Key.Equals(key, StringComparison.InvariantCultureIgnoreCase));
+        //        if (null != characteristic) // update
+        //        {
+        //            characteristic.Value = value; // TO-DO: value should be check
+        //            return UpdateUserCharacteristic(characteristic);
+        //        }
+        //        else // insert
+        //        {
+        //            UserCharacteristic uc = new UserCharacteristic();
+        //            uc.User = user;
+        //            uc.Key = key;
+        //            uc.Value = value;
+        //            return InsertUserCharacteristic(uc);
+        //        }
+        //    });
+        //}
 
         public User GetUserByName(string userName)
         {
@@ -74,7 +79,7 @@ namespace eCommerce.Wcf.Services.Users
 
         public User GetUserByEmail(string email)
         {
-            return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() => 
+            return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() =>
             {
                 return (from u in userRepository.Table
                         where u.Email == email
@@ -83,22 +88,51 @@ namespace eCommerce.Wcf.Services.Users
             });
         }
 
-        private bool UpdateUserCharacteristic(UserCharacteristic userCharacteristic)
+        //private bool UpdateUserCharacteristic(UserCharacteristic userCharacteristic)
+        //{
+        //    return AspectF.Define.MustBeNonNull(userCharacteristic).Return<bool>(()=>
+        //    {
+        //        //TO-DO: EventEmit to send change notification
+        //        return this.userCharacteristicRepository.Update(userCharacteristic);
+        //    });
+        //}
+
+        //private bool InsertUserCharacteristic(UserCharacteristic userCharacteristic)
+        //{
+        //    return AspectF.Define.MustBeNonNull(userCharacteristic).Return<bool>(() =>
+        //    {
+        //        //TO-DO: EventEmit to send change notification
+        //        return this.userCharacteristicRepository.Insert(userCharacteristic);
+        //    });
+        //}
+
+
+        public bool AddUserRole(UserRole userRole)
         {
-            return AspectF.Define.MustBeNonNull(userCharacteristic).Return<bool>(()=>
-            {
-                //TO-DO: EventEmit to send change notification
-                return this.userCharacteristicRepository.Update(userCharacteristic);
-            });
+            return AspectF.Define.MustBeNonNull(userRole).Return<bool>(() =>
+                {
+                    bool succeed = userRoleRepository.Insert(userRole);
+                    if (succeed)
+                        cacheManager.RemoveByPattern(Constants.CACHE_USERROLE_PATTERN);
+
+                    // event notification
+
+                    return succeed;
+                });
         }
 
-        private bool InsertUserCharacteristic(UserCharacteristic userCharacteristic)
+        public bool UpdateCustomerRole(UserRole userRole)
         {
-            return AspectF.Define.MustBeNonNull(userCharacteristic).Return<bool>(() =>
-            {
-                //TO-DO: EventEmit to send change notification
-                return this.userCharacteristicRepository.Insert(userCharacteristic);
-            });
+            return AspectF.Define.MustBeNonNull(userRole).Return<bool>(() =>
+                {
+                    bool succeed = userRoleRepository.Update(userRole);
+                    if (succeed)
+                        cacheManager.RemoveByPattern(Constants.CACHE_USERROLE_PATTERN);
+
+                    // event notification
+
+                    return succeed;
+                });
         }
     }
 }

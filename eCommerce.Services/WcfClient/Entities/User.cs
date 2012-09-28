@@ -8,12 +8,13 @@ namespace eCommerce.Services.WcfClient.Entities
 {
     using System.Runtime.Serialization;
     using eCommerce.Core;
+    using eCommerce.Services.WcfClient.DataTypes;
 
 
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name = "User", Namespace = "http://schemas.datacontract.org/2004/07/eCommerce.Data.Domain.Users.Entities")]
-    public partial class User : eCommerce.Core.EntityBase
+    public partial class User : EntityBase
     {
 
         private bool ActivedField;
@@ -22,9 +23,7 @@ namespace eCommerce.Services.WcfClient.Entities
 
         private string EmailField;
 
-        private eCommerce.Services.WcfClient.DataTypes.PasswordKit PasswordKitField;
-
-        private UserCharacteristic[] UserCharacteristicsField;
+        private PasswordKit PasswordKitField;
 
         private System.Guid UserGuidField;
 
@@ -72,7 +71,7 @@ namespace eCommerce.Services.WcfClient.Entities
         }
 
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public eCommerce.Services.WcfClient.DataTypes.PasswordKit PasswordKit
+        public PasswordKit PasswordKit
         {
             get
             {
@@ -81,19 +80,6 @@ namespace eCommerce.Services.WcfClient.Entities
             set
             {
                 this.PasswordKitField = value;
-            }
-        }
-
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public UserCharacteristic[] UserCharacteristics
-        {
-            get
-            {
-                return this.UserCharacteristicsField;
-            }
-            set
-            {
-                this.UserCharacteristicsField = value;
             }
         }
 

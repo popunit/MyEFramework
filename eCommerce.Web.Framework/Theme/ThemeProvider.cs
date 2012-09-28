@@ -1,13 +1,9 @@
-﻿using eCommerce.Core;
-using eCommerce.Core.Common;
+﻿using eCommerce.Core.Common;
 using eCommerce.Core.Common.Web;
 using eCommerce.Core.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace eCommerce.Web.Framework.Theme
@@ -25,6 +21,7 @@ namespace eCommerce.Web.Framework.Theme
         {
             this.themeConfigurations = new List<ThemeConfig>(); // set empty
             this.themeConfigPath = WebsiteHelper.MapPath(config.Themes.BasePath); // if Themes.BasePath is not set, will return empty
+            LoadConfiguration(this.themeConfigPath);
         }
 
         /// <summary>

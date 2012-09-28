@@ -75,11 +75,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\GenericCharacteristicService.cs" />
+    <Compile Include="Constants.cs" />
     <Compile Include="Contracts\Common\IGenericCharacteristicService.cs" />
-    <Compile Include="Contracts\Users\IUserExtension.cs" />
     <Compile Include="Contracts\Users\IUserService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Users\UserExtension.cs" />
     <Compile Include="Users\UserService.cs" />
   </ItemGroup>
   <ItemGroup>

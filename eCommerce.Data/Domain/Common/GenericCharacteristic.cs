@@ -11,6 +11,7 @@ namespace eCommerce.Data.Domain.Common
     /// <summary>
     /// Generic characteristic, different from user characteristic
     /// </summary>
+    /// <remarks>Consider change the class name to EntityCharacteristic</remarks>
     public partial class GenericCharacteristic : EntityBase
     {
         public long EntityId { get; set; } // Domain Entity Id

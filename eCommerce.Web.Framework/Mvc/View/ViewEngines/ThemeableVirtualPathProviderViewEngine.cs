@@ -216,7 +216,7 @@ namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
             // the view name doesn't includes path
             if (!this.CheckIfRelativePath(viewName))
             {
-                return this.GetPathFromGeneralName(controllerContext, viewLocations, keyName, controllerName, areaName, theme, keyName, ref searchedLocations);
+                return this.GetPathFromGeneralName(controllerContext, viewLocations, viewName, controllerName, areaName, theme, keyName, ref searchedLocations);
             }
             else
             {

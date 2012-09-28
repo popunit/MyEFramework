@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using eCommerce.Core;
+﻿using eCommerce.Core;
 using eCommerce.Core.Data;
-using eCommerce.Services.Users;
+using eCommerce.Services.Extensions;
+using System.Web;
 
 namespace eCommerce.Services
 {

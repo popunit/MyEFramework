@@ -16,7 +16,7 @@ namespace eCommerce.Web.Framework.Theme
         {
             this.ThemeName = themeName;
             this.Path = path;
-            var node = doc.SelectSingleNode("Theme");
+            var node = doc.SelectSingleNode("theme");
             if (null != node)
             {
                 this.Node = node;

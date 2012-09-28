@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using eCommerce.Core.Data;
+using eCommerce.Services.Authentication;
+using eCommerce.Services.Extensions;
+using eCommerce.Services.Users;
+using eCommerce.Services.WcfClient.Entities;
+using System;
 using System.Web;
 using System.Web.Security;
-using eCommerce.Core.Data;
-using eCommerce.Services.Authentication;
-using eCommerce.Services.WcfClient.Entities;
-using eCommerce.Services.Users;
 
 namespace eCommerce.Web.Framework.Mvc.Authentication
 {
