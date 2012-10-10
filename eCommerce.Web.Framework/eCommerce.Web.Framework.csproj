@@ -67,10 +67,12 @@
     <Compile Include="Mvc\MvcHelper.cs" />
     <Compile Include="Mvc\NotAllowChildActionAttribute.cs" />
     <Compile Include="Mvc\RouteData\RouteDataExtension.cs" />
+    <Compile Include="Mvc\UI\CssParts\ViewPageCssBuilder.cs" />
     <Compile Include="Mvc\UI\HtmlHelperExtension.cs" />
     <Compile Include="Mvc\LocationSettings.cs" />
-    <Compile Include="Mvc\UI\TitleParts\IViewPageHeaderBuilder.cs" />
-    <Compile Include="Mvc\UI\TitleParts\ViewPageHeaderBuilder.cs" />
+    <Compile Include="IViewPageHeaderBuilder.cs" />
+    <Compile Include="Mvc\UI\TitleParts\ViewPageTitleBuilder.cs" />
+    <Compile Include="Mvc\UI\ViewPageHeaderBuilder.cs" />
     <Compile Include="Mvc\ViewLocation.cs" />
     <Compile Include="Theme\ThemeConfig.cs" />
     <Compile Include="Theme\ThemeContext.cs" />

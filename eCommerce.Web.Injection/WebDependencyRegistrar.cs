@@ -21,6 +21,8 @@ using eCommerce.Web.Framework.Subscribers;
 using eCommerce.Web.Framework.Theme;
 using eCommerce.Services.Users;
 using eCommerce.Services.Common;
+using eCommerce.Web.Framework.Mvc.UI;
+using eCommerce.Web.Framework.Mvc.UI.CssParts;
 
 namespace eCommerce.Web.Injection
 {
@@ -60,7 +62,9 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
 
             builder.RegisterType<WebWorkContext>().As<WorkContextServiceBase>().InstancePerHttpRequest();
-
+           
+            builder.RegisterType<ViewPageTitleBuilder>().As<IViewPageTitleBuilder>().InstancePerHttpRequest();
+            builder.RegisterType<ViewPageCssBuilder>().As<IViewPageCssBuilder>().InstancePerHttpRequest();
             builder.RegisterType<ViewPageHeaderBuilder>().As<IViewPageHeaderBuilder>().InstancePerHttpRequest();
 
             builder.RegisterType<ThemeContext>().As<IThemeContext>().InstancePerHttpRequest();
