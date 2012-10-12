@@ -8,6 +8,7 @@ using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Services.WcfClient;
 using eCommerce.Services.WcfClient.Entities;
+using System.ServiceModel;
 
 namespace eCommerce.Services.Users
 {
@@ -17,12 +18,25 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.MustBeNonNull(user).Return<bool>(() => 
             {
+                //bool isSucceed = false;
+                //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                //{
+                //    isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
+                //}
+                //return isSucceed;
+
                 bool isSucceed = false;
-                using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                try
                 {
                     isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
+                    return isSucceed;
                 }
-                return isSucceed;
+                finally
+                {
+                    if (null != proxy)
+                        (proxy as ICommunicationObject).Close();
+                }
             });
         }
 
@@ -31,9 +45,20 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
             {
-                using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                //{
+                //    return proxy.GetUserByName(userName);
+                //}
+
+                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                try
                 {
                     return proxy.GetUserByName(userName);
+                }
+                finally
+                {
+                    if (null != proxy)
+                        (proxy as ICommunicationObject).Close();
                 }
             });
         }
@@ -42,9 +67,20 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() =>
             {
-                using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+                //{
+                //    return proxy.GetUserByEmail(email);
+                //}
+
+                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                try
                 {
                     return proxy.GetUserByEmail(email);
+                }
+                finally
+                {
+                    if (null != proxy)
+                        (proxy as ICommunicationObject).Close();
                 }
             });
         }

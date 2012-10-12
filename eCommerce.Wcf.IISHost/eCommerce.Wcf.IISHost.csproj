@@ -56,6 +56,9 @@
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="ServiceModelEx">
+      <HintPath>..\..\..\..\OpenSourceProduct\WCF_Ex\PWSTE-Sources\ServiceModelEx (no service bus)\bin\Debug\ServiceModelEx.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Activation" />
@@ -84,6 +87,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutofacServiceHostDiscoveryFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
