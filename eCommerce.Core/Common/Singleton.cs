@@ -46,7 +46,7 @@ namespace eCommerce.Core.Common
             Singleton<Dictionary<TKey, TValue>>.Instance = new Dictionary<TKey, TValue>();
         }
 
-        public new static IDictionary<TKey, TValue> Instance
+        new public static IDictionary<TKey, TValue> Instance
         {
             get { return Singleton<Dictionary<TKey, TValue>>.Instance; }
         }
