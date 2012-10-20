@@ -49,7 +49,8 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
             }
 
             if (null != supportedModelTypes && supportedModelTypes.Contains(modelType))
-                result = (IModelBinder)Activator.CreateInstance(modelBinderType);
+                //result = (IModelBinder)Activator.CreateInstance(modelBinderType);
+                result = (IModelBinder)EmitHelper.FastGetInstance(modelBinderType)();
 
             return result;
         }

@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\CacheExtensions.cs" />
+    <Compile Include="Common\EmitHelper.cs" />
     <Compile Include="ICacheProvider.cs" />
     <Compile Include="Caching\MemoryCacheManager.cs" />
     <Compile Include="Caching\NullCache.cs" />

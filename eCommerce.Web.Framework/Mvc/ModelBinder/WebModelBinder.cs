@@ -1,4 +1,5 @@
-﻿using System;
+﻿using eCommerce.Core.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +29,8 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
                     instantiationType = attribute.DefaultSubType;
                 else
                     throw new Exception(string.Format("No set default sub type for base type {0}!", typeof(WebModelBase).FullName));
-                var obj = Activator.CreateInstance(instantiationType);
+                //var obj = Activator.CreateInstance(instantiationType);
+                var obj = EmitHelper.FastGetInstance(instantiationType)();
                 bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, instantiationType);
                 bindingContext.ModelMetadata.Model = obj;
                 return obj;

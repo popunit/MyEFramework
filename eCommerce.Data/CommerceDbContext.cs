@@ -39,8 +39,8 @@ namespace eCommerce.Data
                 type.IsInherit(typeof(IEmptyEntityMap<>))).
                 ForEach(type =>
                 {
-                    //var argTypes = type.BaseType.GetGenericArguments();
-                    dynamic instance = Activator.CreateInstance(type);
+                    //dynamic instance = Activator.CreateInstance(type);
+                    dynamic instance = EmitHelper.FastGetInstance(type)();
                     if (instance.IsValid() == true)
                     {
                         dic.Add(instance.EntityType, instance.Get());
@@ -77,7 +77,8 @@ namespace eCommerce.Data
                     type.IsInherit(configType))
                 .ForEach(type =>
                 {
-                    dynamic instance = Activator.CreateInstance(type);
+                    //dynamic instance = Activator.CreateInstance(type);
+                    dynamic instance = EmitHelper.FastGetInstance(type)();
                     modelBuilder.Configurations.Add(instance);
                 });
             });

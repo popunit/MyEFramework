@@ -19,7 +19,8 @@ namespace eCommerce.Core.Infrastructure
             var instances = new List<T>();
             types.ForEach(t =>
             {
-                instances.Add((T)Activator.CreateInstance(t));
+                //instances.Add((T)Activator.CreateInstance(t));
+                instances.Add((T)EmitHelper.FastGetInstance(t)());
             });
 
             // register object in order
@@ -72,7 +73,8 @@ namespace eCommerce.Core.Infrastructure
                 { obj = null; }
                 if (null != obj)
                 {
-                    instances.Add((IHandler)Activator.CreateInstance(t));
+                    //instances.Add((IHandler)Activator.CreateInstance(t));
+                    instances.Add((IHandler)EmitHelper.FastGetInstance(t)());
                     break;
                 }
             }
