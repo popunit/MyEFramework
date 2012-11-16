@@ -5,6 +5,7 @@ using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -153,6 +154,17 @@ namespace eCommerce.Core.Common
         public static bool IsNull<T>(this T obj) where T : class
         {
             return null == obj;
+        }
+
+        public static bool IsDataContract(this Type type)
+        {
+            var attr = type.GetCustomAttribute<DataContractAttribute>(false);
+            return null != attr;
+        }
+
+        public static bool IsSerializable(this Type type)
+        {
+            return type.IsSerializable();
         }
     }
 
