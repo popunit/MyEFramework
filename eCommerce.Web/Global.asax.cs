@@ -3,6 +3,7 @@ using eCommerce.Core.Infrastructure;
 using eCommerce.Services.Common;
 using eCommerce.Web.Framework.Mvc.DependencyResolvers;
 using eCommerce.Web.Framework.Mvc.ModelBinder;
+using eCommerce.Web.Framework.Mvc.RouteData;
 using eCommerce.Web.Framework.Mvc.View.ViewEngines;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -24,6 +25,9 @@ namespace eCommerce.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            var routeManager = DependencyResolver.Current.GetService<IRouteManager>();
+            routeManager.RegisterAllRoutes(routes);
 
             routes.MapHttpRoute(
                 name: "DefaultApi",
@@ -52,7 +56,7 @@ namespace eCommerce.Web
             ModelBinderProviders.BinderProviders.Add(new WebModelBinderProvider());
 
             //bool dbInstalled = DatabaseSettingHelper.FindDatabaseSettings; // TO-DO: the value has been checked before, should use ioc or cache to reduce execute times
-            bool dbInstalled = EngineContext.Current.Resolve<IDataInfoDataService>().DatabaseIsInstalled();
+            bool dbInstalled = DependencyResolver.Current.GetService<IDataInfoDataService>().DatabaseIsInstalled();
             if (dbInstalled)
             {
                 // Update view engines to new

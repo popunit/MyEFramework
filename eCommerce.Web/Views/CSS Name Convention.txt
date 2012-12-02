@@ -1,0 +1,7 @@
+﻿Common:
+page
+content
+
+Master Page:
+shared + wrapper
+

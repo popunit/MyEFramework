@@ -105,6 +105,7 @@
     <Compile Include="IContainerManager.cs" />
     <Compile Include="IDataProvider.cs" />
     <Compile Include="IDataProviderManager.cs" />
+    <Compile Include="IPluginDescriptor.cs" />
     <Compile Include="IEngine.cs" />
     <Compile Include="IHttpHelper.cs" />
     <Compile Include="IMobileDeviceCheck.cs" />
@@ -125,9 +126,12 @@
     <Compile Include="Infrastructure\RouteBase.cs" />
     <Compile Include="Infrastructure\RouteHelper.cs" />
     <Compile Include="Infrastructure\WebsiteRoute.cs" />
+    <Compile Include="IPlugin.cs" />
     <Compile Include="IRegistrar.cs" />
     <Compile Include="IRepository.cs" />
+    <Compile Include="ISingleton.cs" />
     <Compile Include="ITask.cs" />
+    <Compile Include="Plugins\PluginDescriptor.cs" />
     <Compile Include="WorkContextBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
