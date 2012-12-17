@@ -10,48 +10,82 @@ namespace eCommerce.Core.Infrastructure
 {
     public static class RouteHelper
     {
+        /// <summary>
+        /// Find instance of T and execute for the instance
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="searcher"></param>
+        /// <param name="executing"></param>
         public static void RoutingToExecute<T>(
-            IRoute routing,
+            this ISearcher searcher,
             Action<T> executing) where T : IOrderable
         {
-            //var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-            var types = routing.FindType<T>();
+            RoutingToExecute<T>(searcher, Order.ASC, executing);
+        }
+
+        public static void RoutingToExecute<T>(
+            this ISearcher searcher,
+            Order orderBy,
+            Action<T> executing) where T : IOrderable
+        {
+            if (null == searcher)
+                throw new NullReferenceException();
+            var types = searcher.FindType<T>();
             var instances = new List<T>();
             types.ForEach(t =>
             {
-                //instances.Add((T)Activator.CreateInstance(t));
                 instances.Add((T)EmitHelper.FastGetInstance(t)());
             });
 
-            // register object in order
-            instances.OrderBy(t => t.Order).ForEach(i => executing(i));
+            switch (orderBy)
+            {
+                case Order.ASC:
+                    instances.OrderBy(t => t.Order).ForEach(i => executing(i));
+                    break;
+                case Order.DESC:
+                    instances.OrderByDescending(t => t.Order).ForEach(i => executing(i));
+                    break;
+            }
+            
         }
 
-        public static void RoutingToType<T>(
-            IRoute routing,
+        /// <summary>
+        /// Find type of T and execute for type
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="searcher"></param>
+        /// <param name="executing"></param>
+        public static void RoutingToTypeExecute<T>(
+            this ISearcher searcher,
             Action<Type> executing)
         {
-            var types = routing.FindType<T>();
+            var types = searcher.FindType<T>();
             types.ForEach(t => executing(t));
         }
 
-        public static void RoutingToGenericType(
-            IRoute routing, 
+        /// <summary>
+        /// Find type of T and execute for type
+        /// </summary>
+        /// <param name="searcher"></param>
+        /// <param name="genericType"></param>
+        /// <param name="executing"></param>
+        public static void RoutingToTypeExecute(
+            this ISearcher searcher, 
             Type genericType, 
             Action<Type> executing)
         {
-            var types = routing.FindType(genericType); // IsGenericTypeDefinition?
+            var types = searcher.FindType(genericType); // IsGenericTypeDefinition?
             types.ForEach(t => executing(t));
         }
 
         internal static void FindExceptionToHandle(
-            IRoute routing,
+            this ISearcher searcher,
             Type targetExceptionType,
             System.Exception ex,
             bool throwIfNotFound = false)
         {
             // TO-DO: should cache here because here will be performed multi times.
-            var types = routing.FindType<IHandler>();
+            var types = searcher.FindType<IHandler>();
             var instances = new List<IHandler>();
             IEnumerable<Type> filters;
             if (targetExceptionType == null)

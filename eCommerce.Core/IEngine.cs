@@ -90,8 +90,8 @@ namespace eCommerce.Core
 
         protected virtual void RunTasks()
         {
-            var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-            RouteHelper.RoutingToExecute<ITask>(routing, i => i.Execute());
+            var searcher = containerManager.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
+            searcher.RoutingToExecute<ITask>(i => i.Execute());
         }
 
         public JobHandler JobService

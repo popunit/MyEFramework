@@ -33,7 +33,7 @@ namespace eCommerce.Core
             containerManager.AddComponentInstance<ContainerConfigBase>(this, this.GetType().Name);
 
             // register type
-            containerManager.AddComponent<IRoute, WebsiteRoute>(typeof(WebsiteRoute).Name);
+            containerManager.AddComponent<ISearcher, WebsiteSearcher>(typeof(WebsiteSearcher).Name);
 
             // register type: should remove in future (to use configuration provider to config and register)
             // TO-DO: Check if I register this time multi times (should not)
@@ -47,14 +47,20 @@ namespace eCommerce.Core
                     EnableMiniProfile = true
                 },
                 typeof(StoreStateSettings).Name);
+            containerManager.AddComponentInstance<UserSettings>(new UserSettings
+                {
+                    StoreLastVisitedPage = true,
+                    UsingUserEmail = true
+                },
+                typeof(UserSettings).Name);
             // TO-DO: Check if register it before and figure out how to set it 
             containerManager.AddComponentInstance<PageSettings>(new PageSettings { DefaultTitle = "HomePage" }, typeof(PageSettings).Name, Infrastructure.IoC.LifeStyle.Singleton);
            
             // register IRegistrar
             containerManager.UpdateContainer(build =>
             {
-                var routing = containerManager.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-                RouteHelper.RoutingToExecute<IRegistrar>(routing, i => i.Register(build, routing));
+                var searcher = containerManager.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
+                searcher.RoutingToExecute<IRegistrar>(i => i.Register(build, searcher));
             });
 
             // TO-DO

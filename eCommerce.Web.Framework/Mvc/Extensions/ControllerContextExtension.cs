@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using eCommerce.Core.Data;
+using eCommerce.Services.Common;
 
 namespace eCommerce.Web.Framework.Mvc.Extensions
 {
@@ -12,7 +13,8 @@ namespace eCommerce.Web.Framework.Mvc.Extensions
     {
         public static bool DBIsInstalled(this ControllerContext controllerContext)
         {
-            return DatabaseSettingHelper.FindDatabaseSettings;
+            //return DatabaseSettingHelper.FindDatabaseSettings;
+            return DependencyResolver.Current.GetService<IDataInfoDataService>().DatabaseIsInstalled();
         }
 
         public static bool IsValid(this ControllerContext controllerContext)

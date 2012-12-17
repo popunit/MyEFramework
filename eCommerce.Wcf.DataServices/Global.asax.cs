@@ -54,7 +54,7 @@ namespace eCommerce.Wcf.DataServices
             //builder.RegisterType<UserExtension>().InstancePerLifetimeScope();
 
             builder.RegisterType<Config>().InstancePerLifetimeScope();
-            builder.RegisterType<WebsiteRoute>().As<IRoute>().InstancePerLifetimeScope();
+            builder.RegisterType<WebsiteSearcher>().As<ISearcher>().InstancePerLifetimeScope();
 
             // database register
             //builder.RegisterType<CommerceDbContext>().As<IDatabase>().InstancePerLifetimeScope();

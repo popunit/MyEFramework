@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace eCommerce.Core.Infrastructure
 {
-    public abstract class RouteBase : IRoute
+    public abstract class SearcherBase : ISearcher
     {
         private readonly string assemblySkipLoadingPattern
             = "^System|^mscorlib|^Microsoft|^CppCodeProvider|^VJSharpCodeProvider|^WebDev|^Castle|^Iesi|^log4net|^NHibernate|^nunit|^TestDriven|^MbUnit|^Rhino|^QuickGraph|^TestFu|^Telerik|^ComponentArt|^MvcContrib|^AjaxControlToolkit|^Antlr3|^Remotion|^Recaptcha|^WebActivator|^Autofac.Integration.MVC";

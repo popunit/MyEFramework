@@ -18,7 +18,7 @@ namespace eCommerce.Core.Tests.Infrastructure
         {
             private int order;
 
-            public override void Register(ContainerBuilder builder, IRoute route)
+            public override void Register(ContainerBuilder builder, ISearcher route)
             {
             }
 
@@ -32,7 +32,7 @@ namespace eCommerce.Core.Tests.Infrastructure
         {
             private int order;
 
-            public void Register(dynamic builder, IRoute route)
+            public void Register(dynamic builder, ISearcher route)
             {
             }
 

@@ -10,12 +10,12 @@ using eCommerce.Core.Configuration;
 
 namespace eCommerce.Core.Infrastructure
 {
-    public class WebsiteRoute : AppDomainRoute
+    public class WebsiteSearcher : AppDomainSearcher
     {
         private bool ensureBinFolderAssembliesLoaded = true;
         private bool binFolderAssembliesLoaded = false;
 
-        public WebsiteRoute(Config config)
+        public WebsiteSearcher(Config config)
         {
             this.ensureBinFolderAssembliesLoaded = config.Automation.Enabled;
         }

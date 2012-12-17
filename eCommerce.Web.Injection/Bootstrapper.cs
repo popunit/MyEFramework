@@ -27,11 +27,11 @@ namespace eCommerce.Web.Injection
             EngineContext.Initialize(new AutofacContainerManager(builder), new ContainerConfig(), false);
 
             // dynamicly register IHttpModule
-            var routing = EngineContext.Current.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-            RouteHelper.RoutingToType<IHttpModule>(routing, type => DynamicModuleUtility.RegisterModule(type));
+            var routing = EngineContext.Current.Resolve<ISearcher>(typeof(WebsiteSearcher).Name); ;
+            routing.RoutingToTypeExecute<IHttpModule>(type => DynamicModuleUtility.RegisterModule(type));
 
             // dynamicly register as static
-            RouteHelper.RoutingToExecute<IDeploy>(routing, t => 
+            routing.RoutingToExecute<IDeploy>(t => 
             {
                 t.RegisterAsSingleton();
                 t.Initialize();

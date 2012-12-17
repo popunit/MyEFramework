@@ -23,6 +23,7 @@ using eCommerce.Services.Users;
 using eCommerce.Services.Common;
 using eCommerce.Web.Framework.Mvc.UI;
 using eCommerce.Web.Framework.Mvc.UI.CssParts;
+using eCommerce.Web.Framework.Mvc.RouteData;
 
 namespace eCommerce.Web.Injection
 {
@@ -34,7 +35,7 @@ namespace eCommerce.Web.Injection
         /// <param name="builder"></param>
         /// <param name="route"></param>
         /// <remarks>HttpContext is always available here</remarks>
-        public override void Register(ContainerBuilder builder, IRoute route)
+        public override void Register(ContainerBuilder builder, ISearcher route)
         {
             #region Http Context
             // register call back action (main for construction of type)
@@ -59,6 +60,7 @@ namespace eCommerce.Web.Injection
 
             builder.RegisterType<HttpHelper>().As<IHttpHelper>().InstancePerHttpRequest();
 
+            builder.RegisterType<RouteManager>().As<IRouteManager>().InstancePerHttpRequest();
             builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
 
             builder.RegisterType<WebWorkContext>().As<WorkContextServiceBase>().InstancePerHttpRequest();
@@ -76,8 +78,7 @@ namespace eCommerce.Web.Injection
 
             #region Events
             // register subscribers
-            RouteHelper.RoutingToGenericType(
-                route,
+            route.RoutingToTypeExecute(
                 typeof(ISubscriber<>),
                 i => 
                 {

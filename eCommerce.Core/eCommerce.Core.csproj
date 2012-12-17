@@ -45,9 +45,9 @@
     <Reference Include="C5">
       <HintPath>..\packages\Quartz.2.0.1\lib\net40\C5.dll</HintPath>
     </Reference>
-    <Reference Include="Common.Logging, Version=2.1.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Common.Logging.2.1.1\lib\net40\Common.Logging.dll</HintPath>
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Quartz">
       <HintPath>..\packages\Quartz.2.0.1\lib\net40\Quartz.dll</HintPath>
@@ -109,7 +109,7 @@
     <Compile Include="IEngine.cs" />
     <Compile Include="IHttpHelper.cs" />
     <Compile Include="IMobileDeviceCheck.cs" />
-    <Compile Include="Infrastructure\AppDomainRoute.cs" />
+    <Compile Include="Infrastructure\AppDomainSearcher.cs" />
     <Compile Include="Infrastructure\Engine.cs" />
     <Compile Include="Infrastructure\EngineContext.cs" />
     <Compile Include="Infrastructure\EventBroker.cs" />
@@ -117,15 +117,15 @@
     <Compile Include="Infrastructure\IoC\IoCExtension.cs" />
     <Compile Include="Infrastructure\IoC\LifeStyle.cs" />
     <Compile Include="Infrastructure\IoC\Web\AutofacLifetimeScopeHttpModule.cs" />
-    <Compile Include="Infrastructure\IRoute.cs" />
+    <Compile Include="Infrastructure\ISearcher.cs" />
     <Compile Include="Infrastructure\JobService\JobHandler.cs" />
     <Compile Include="Infrastructure\NoAOP\AspectF.cs" />
     <Compile Include="Infrastructure\NoAOP\ICache.cs" />
     <Compile Include="Infrastructure\NoAOP\ILogger.cs" />
     <Compile Include="Infrastructure\NoAOP\Logger.cs" />
-    <Compile Include="Infrastructure\RouteBase.cs" />
+    <Compile Include="Infrastructure\SearcherBase.cs" />
     <Compile Include="Infrastructure\RouteHelper.cs" />
-    <Compile Include="Infrastructure\WebsiteRoute.cs" />
+    <Compile Include="Infrastructure\WebsiteSearcher.cs" />
     <Compile Include="IPlugin.cs" />
     <Compile Include="IRegistrar.cs" />
     <Compile Include="IRepository.cs" />

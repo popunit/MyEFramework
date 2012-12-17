@@ -11,7 +11,7 @@ namespace eCommerce.Core.Infrastructure
     /// <summary>
     /// Implement it for setting how to find target
     /// </summary>
-    public interface IRoute
+    public interface ISearcher
     {
         IDictionary<string, Assembly> GetAllAssemblies();
         IEnumerable<Type> FindType<T>(bool onlyConcreteClasses = true);

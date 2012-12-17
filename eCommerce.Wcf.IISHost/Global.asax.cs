@@ -63,7 +63,7 @@ namespace eCommerce.Wcf.IISHost
             builder.RegisterType<DataInfoService>().InstancePerLifetimeScope();
 
             builder.RegisterType<Config>().InstancePerLifetimeScope();
-            builder.RegisterType<WebsiteRoute>().As<IRoute>().InstancePerLifetimeScope();
+            builder.RegisterType<WebsiteSearcher>().As<ISearcher>().InstancePerLifetimeScope();
 
             // database register
             //builder.RegisterType<CommerceDbContext>().As<IDatabase>().InstancePerLifetimeScope();

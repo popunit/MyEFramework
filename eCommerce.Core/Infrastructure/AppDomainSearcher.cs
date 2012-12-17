@@ -12,11 +12,11 @@ namespace eCommerce.Core.Infrastructure
     /// 
     /// </summary>
     /// <remarks>[Built-in Component]</remarks>
-    public class AppDomainRoute : RouteBase
+    public class AppDomainSearcher : SearcherBase
     {
         private IEnumerable<string> extraAssemblyNames;
 
-        public AppDomainRoute()
+        public AppDomainSearcher()
         {
             this.CheckLoadedAppDomainAssemblies = true;
         }

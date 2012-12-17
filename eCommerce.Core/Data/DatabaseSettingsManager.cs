@@ -21,6 +21,9 @@ namespace eCommerce.Core.Data
         Unknown
     }
 
+    /// <summary>
+    /// Manager for database setting, notice it is used for local db, if db is remote, need to implement another functions
+    /// </summary>
     public class DatabaseSettingsManager
     {
         protected readonly char Separator = ConfigHelper.ReadonlySection.DatabaseSetting.Separator;

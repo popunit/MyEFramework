@@ -426,8 +426,8 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 }
                 catch (System.Exception x)
                 {
-                    var routing = EngineContext.Current.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-                    RouteHelper.FindExceptionToHandle(routing, exceptionType, x, !anyCatch);
+                    var searcher = EngineContext.Current.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
+                    RouteHelper.FindExceptionToHandle(searcher, exceptionType, x, !anyCatch);
                 }
             });
         }
@@ -518,8 +518,8 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 }
                 catch (System.Exception x)
                 {
-                    var routing = EngineContext.Current.Resolve<IRoute>(typeof(WebsiteRoute).Name);
-                    RouteHelper.FindExceptionToHandle(routing, null, x);
+                    var searcher = EngineContext.Current.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
+                    RouteHelper.FindExceptionToHandle(searcher, null, x);
                 }
             });
         }
