@@ -24,6 +24,8 @@ using eCommerce.Services.Common;
 using eCommerce.Web.Framework.Mvc.UI;
 using eCommerce.Web.Framework.Mvc.UI.CssParts;
 using eCommerce.Web.Framework.Mvc.RouteData;
+using eCommerce.Web.Framework.Mvc.Authentication;
+using eCommerce.Services.Authentication;
 
 namespace eCommerce.Web.Injection
 {
@@ -63,7 +65,7 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<RouteManager>().As<IRouteManager>().InstancePerHttpRequest();
             builder.RegisterType<MobileDeviceCheck>().As<IMobileDeviceCheck>().InstancePerHttpRequest(); // Keyed<IMobileDeviceCheck>(typeof(MobileDeviceCheck));
 
-            builder.RegisterType<WebWorkContext>().As<WorkContextServiceBase>().InstancePerHttpRequest();
+            builder.RegisterType<WebWorkContext>().As<WebWorkContextBase>().InstancePerHttpRequest();
            
             builder.RegisterType<ViewPageTitleBuilder>().As<IViewPageTitleBuilder>().InstancePerHttpRequest();
             builder.RegisterType<ViewPageCssBuilder>().As<IViewPageCssBuilder>().InstancePerHttpRequest();
@@ -75,6 +77,7 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<UserDataService>().As<IUserDataService>().InstancePerHttpRequest();
             builder.RegisterType<GenericCharacteristicDataService>().As<IGenericCharacteristicDataService>().InstancePerHttpRequest();
             builder.RegisterType<DataInfoDataService>().As<IDataInfoDataService>().InstancePerHttpRequest();
+            builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>().InstancePerHttpRequest();
 
             #region Events
             // register subscribers

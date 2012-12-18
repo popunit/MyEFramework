@@ -26,9 +26,38 @@ namespace eCommerce.Web.Framework.Mvc
             return urlReferrer;
         }
 
-        public string GetCurrentRequestUrl(bool fullUrl)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="includeQueryString"></param>
+        /// <returns></returns>
+        /// <remarks>TO-DO: to support SSL</remarks>
+        public string GetCurrentRequestUrl(bool includeQueryString)
         {
-            throw new NotImplementedException();
+            string url = string.Empty;
+            if (httpContext.HasRequest())
+            {
+                if (includeQueryString)
+                {
+                    url = httpContext.Request.Url.ToString();
+                }
+                else
+                {
+                    url = httpContext.Request.Url.GetLeftPart(UriPartial.Path);
+                }
+                url.ToLowerInvariant();
+            }
+
+            return url;
+        }
+
+
+        public HttpCookie GetCookie(string name)
+        {
+            if (httpContext.HasRequest())
+                return httpContext.Request.Cookies[name];
+            else
+                return null;
         }
     }
 }

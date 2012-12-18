@@ -30,13 +30,13 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
             var requestUrl = httpHelper.GetCurrentRequestUrl(true);
             if (!string.IsNullOrEmpty(requestUrl)) // if has request url, store it
             {
-                var context = DependencyResolver.Current.GetService<WorkContextServiceBase>();
+                var context = DependencyResolver.Current.GetService<WebWorkContextBase>();
                 var userService = DependencyResolver.Current.GetService<IUserDataService>();
                 
                 var storedUrl = context.CurrentUser.GetCharacteristic<string>(UserCharacteristicResource.LastVisitedPage);
                 if (requestUrl != storedUrl)
                 {
-                    userService.SaveUserCharacteristic(context.CurrentUser, UserCharacteristicResource.LastVisitedPage, requestUrl); // update stored url
+                    //userService.SaveUserCharacteristic(context.CurrentUser, UserCharacteristicResource.LastVisitedPage, requestUrl); // update stored url
                 }
             }
         }

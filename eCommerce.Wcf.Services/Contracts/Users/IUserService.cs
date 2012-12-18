@@ -14,21 +14,14 @@ namespace eCommerce.Wcf.Services.Contracts.Users
     [ServiceContract]
     public interface IUserService
     {
-        /// <summary>
-        /// Update or insert user characteristic to database
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        //[OperationContract]
-        //bool SaveUserCharacteristic(long userId, string key, string value);
-
         [OperationContract]
         User GetUserByName(string userName);
 
         [OperationContract]
         User GetUserByEmail(string email);
+
+        [OperationContract]
+        User GetUserByGuid(Guid guid);
 
         [OperationContract]
         bool AddUserRole(UserRole userRole);

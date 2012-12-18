@@ -80,7 +80,7 @@
     <Compile Include="WcfClient\Entities\UserRole.cs" />
     <Compile Include="WcfClient\GenericCharacteristicService.cs" />
     <Compile Include="WcfClient\UserService.cs" />
-    <Compile Include="WorkContextServiceBase.cs" />
+    <Compile Include="WebWorkContextBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\eCommerce.Core\eCommerce.Core.csproj">

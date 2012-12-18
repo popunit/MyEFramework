@@ -49,6 +49,7 @@ namespace eCommerce.Data.Repositories
                 {
                     var state = this.db.GetEntityState<T>(entity);
                     this.Store.Add(entity);
+                    // commit transaction
                     return this.db.SaveChanges() > 0; // not successful or no item needs to be saved
                 });
         }
@@ -81,6 +82,7 @@ namespace eCommerce.Data.Repositories
                         }
                     }
 
+                    // commit transaction
                     return this.db.SaveChanges() > 0; // not successful or no item needs to be saved
                 });
         }
@@ -92,6 +94,8 @@ namespace eCommerce.Data.Repositories
                 Return<bool>(() =>
                 {
                     this.Store.Remove(entity);
+
+                    // commit transaction
                     return this.db.SaveChanges() > 0; // not successful or no item needs to be deleted
                 });
         }

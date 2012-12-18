@@ -32,6 +32,24 @@ namespace eCommerce.Services.WcfClient
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByEmail", ReplyAction = "http://tempuri.org/IUserService/GetUserByEmailResponse")]
         System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByEmailAsync(string email);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByGuid", ReplyAction = "http://tempuri.org/IUserService/GetUserByGuidResponse")]
+        eCommerce.Services.WcfClient.Entities.User GetUserByGuid(System.Guid guid);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByGuid", ReplyAction = "http://tempuri.org/IUserService/GetUserByGuidResponse")]
+        System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByGuidAsync(System.Guid guid);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/AddUserRole", ReplyAction = "http://tempuri.org/IUserService/AddUserRoleResponse")]
+        bool AddUserRole(eCommerce.Services.WcfClient.Entities.UserRole userRole);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/AddUserRole", ReplyAction = "http://tempuri.org/IUserService/AddUserRoleResponse")]
+        System.Threading.Tasks.Task<bool> AddUserRoleAsync(eCommerce.Services.WcfClient.Entities.UserRole userRole);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/UpdateCustomerRole", ReplyAction = "http://tempuri.org/IUserService/UpdateCustomerRoleResponse")]
+        bool UpdateCustomerRole(eCommerce.Services.WcfClient.Entities.UserRole userRole);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/UpdateCustomerRole", ReplyAction = "http://tempuri.org/IUserService/UpdateCustomerRoleResponse")]
+        System.Threading.Tasks.Task<bool> UpdateCustomerRoleAsync(eCommerce.Services.WcfClient.Entities.UserRole userRole);
     }
 
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -96,6 +114,36 @@ namespace eCommerce.Services.WcfClient
         public System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByEmailAsync(string email)
         {
             return base.Channel.GetUserByEmailAsync(email);
+        }
+
+        public eCommerce.Services.WcfClient.Entities.User GetUserByGuid(System.Guid guid)
+        {
+            return base.Channel.GetUserByGuid(guid);
+        }
+
+        public System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByGuidAsync(System.Guid guid)
+        {
+            return base.Channel.GetUserByGuidAsync(guid);
+        }
+
+        public bool AddUserRole(eCommerce.Services.WcfClient.Entities.UserRole userRole)
+        {
+            return base.Channel.AddUserRole(userRole);
+        }
+
+        public System.Threading.Tasks.Task<bool> AddUserRoleAsync(eCommerce.Services.WcfClient.Entities.UserRole userRole)
+        {
+            return base.Channel.AddUserRoleAsync(userRole);
+        }
+
+        public bool UpdateCustomerRole(eCommerce.Services.WcfClient.Entities.UserRole userRole)
+        {
+            return base.Channel.UpdateCustomerRole(userRole);
+        }
+
+        public System.Threading.Tasks.Task<bool> UpdateCustomerRoleAsync(eCommerce.Services.WcfClient.Entities.UserRole userRole)
+        {
+            return base.Channel.UpdateCustomerRoleAsync(userRole);
         }
     }
 }

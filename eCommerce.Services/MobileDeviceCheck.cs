@@ -8,9 +8,9 @@ namespace eCommerce.Services
     public class MobileDeviceCheck : IMobileDeviceCheck
     {
         private readonly StoreStateSettings storeStateSettings;
-        private readonly WorkContextServiceBase workContext;
+        private readonly WebWorkContextBase workContext;
 
-        public MobileDeviceCheck(StoreStateSettings settings, WorkContextServiceBase context)
+        public MobileDeviceCheck(StoreStateSettings settings, WebWorkContextBase context)
         {
             this.storeStateSettings = settings;
             this.workContext = context;

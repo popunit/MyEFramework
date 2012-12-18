@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace eCommerce.Core
 {
@@ -20,8 +21,15 @@ namespace eCommerce.Core
         /// <summary>
         /// Get request's url
         /// </summary>
-        /// <param name="fullUrl">true: the url will include query strings if have</param>
+        /// <param name="includeQueryString">true: the url will include query strings if have</param>
         /// <returns></returns>
-        string GetCurrentRequestUrl(bool fullUrl);
+        string GetCurrentRequestUrl(bool includeQueryString);
+
+        /// <summary>
+        /// Get cookie
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        HttpCookie GetCookie(string name);
     }
 }

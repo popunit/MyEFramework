@@ -14,7 +14,7 @@ namespace eCommerce.Web.Framework.Theme
     /// <remarks>Consider moving it to work context</remarks>
     public class ThemeContext : IThemeContext
     {
-        private readonly WorkContextServiceBase workContext;
+        private readonly WebWorkContextBase workContext;
         private readonly IGenericCharacteristicDataService genericCharacteristicService;
         private readonly StoreStateSettings storeStateSettings;
         private readonly IThemeProvider themeProvider;
@@ -23,7 +23,7 @@ namespace eCommerce.Web.Framework.Theme
         private string mobileThemeName;
 
         public ThemeContext(
-            WorkContextServiceBase workContext,
+            WebWorkContextBase workContext,
             IGenericCharacteristicDataService genericCharacteristicService,
             StoreStateSettings storeStateSettings,
             IThemeProvider themeProvider

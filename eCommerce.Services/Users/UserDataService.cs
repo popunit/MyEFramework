@@ -14,31 +14,31 @@ namespace eCommerce.Services.Users
 {
     public class UserDataService : IUserDataService
     {
-        public bool SaveUserCharacteristic(User user, string key, string value)
-        {
-            return AspectF.Define.MustBeNonNull(user).Return<bool>(() => 
-            {
-                //bool isSucceed = false;
-                //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
-                //{
-                //    isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
-                //}
-                //return isSucceed;
+        //public bool SaveUserCharacteristic(User user, string key, string value)
+        //{
+        //    return AspectF.Define.MustBeNonNull(user).Return<bool>(() => 
+        //    {
+        //        //bool isSucceed = false;
+        //        //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
+        //        //{
+        //        //    isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
+        //        //}
+        //        //return isSucceed;
 
-                bool isSucceed = false;
-                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
-                try
-                {
-                    isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
-                    return isSucceed;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
-            });
-        }
+        //        bool isSucceed = false;
+        //        var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+        //        try
+        //        {
+        //            isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
+        //            return isSucceed;
+        //        }
+        //        finally
+        //        {
+        //            if (null != proxy)
+        //                (proxy as ICommunicationObject).Close();
+        //        }
+        //    });
+        //}
 
 
         public User GetUserByName(string userName)
@@ -91,6 +91,21 @@ namespace eCommerce.Services.Users
             return userSettings.UsingUserEmail ?
                 GetUserByEmail(userNameOrEmail) :
                 GetUserByName(userNameOrEmail);
+        }
+
+        public User GetUserByGuid(Guid guid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool AddUserRole(UserRole userRole)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool UpdateCustomerRole(UserRole userRole)
+        {
+            throw new NotImplementedException();
         }
     }
 }

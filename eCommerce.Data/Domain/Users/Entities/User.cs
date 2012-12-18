@@ -16,7 +16,7 @@ namespace eCommerce.Data.Domain.Users.Entities
             PasswordKit = new PasswordKit();
         }
 
-        public Guid UserGuid { get; set; }
+        public Guid UserGuid { get; set; } // used for authenticated users and guest
         public string UserName { get; set; }
         public PasswordKit PasswordKit { get; set; }
         public string Email { get; set; }

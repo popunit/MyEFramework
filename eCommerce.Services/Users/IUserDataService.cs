@@ -9,12 +9,16 @@ namespace eCommerce.Services.Users
 {
     public interface IUserDataService
     {
-        bool SaveUserCharacteristic(User user, string key, string value);
-
         User GetUserByName(string userName);
 
         User GetUserByEmail(string email);
 
         User GetUserByNameOrEmail(string userNameOrEmail);
+
+        User GetUserByGuid(Guid guid);
+
+        bool AddUserRole(UserRole userRole);
+
+        bool UpdateCustomerRole(UserRole userRole);
     }
 }
