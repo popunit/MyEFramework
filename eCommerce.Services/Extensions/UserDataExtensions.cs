@@ -9,6 +9,7 @@ using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Data;
 using eCommerce.Services.WcfClient;
+using eCommerce.Data.Resources;
 
 namespace eCommerce.Services.Extensions
 {
@@ -80,6 +81,7 @@ namespace eCommerce.Services.Extensions
             return AspectF.Define.MustBeNonNull(user).MustBeNonNullOrEmpty(systemRoleName)
                 .Return<bool>(() =>
             {
+                // TO-DO: check if user.userroles is available or not
                 return user.UserRoles
                     .Where(role => disabledRoleIsIncluded || role.Actived) // if disabled role is not included, role must be actived
                     .Where(role => role.SystemName == systemRoleName) // equal to system name
@@ -89,7 +91,7 @@ namespace eCommerce.Services.Extensions
 
         public static bool HasRegisteredRole(this User user, bool includingDisabledRole = false)
         {
-            return HasRole(user, SystemUserRoleNameCollection.Registered, includingDisabledRole);
+            return HasRole(user, SystemUserRoleNameResource.Registered, includingDisabledRole);
         }
 
         public static bool IsValid(this User user)

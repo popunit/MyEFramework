@@ -11,7 +11,7 @@ namespace eCommerce.Data.Domain.Users.Entities
     public partial class UserRole : EntityBase
     {
         public string RoleName { get; set; } // role name
-        public string SystemName { get; set; } // the name in system [registered]
+        public string SystemName { get; set; } // the name in system role group [registered],[guest]
         public bool IsSystemRole { get; set; } // is system role or not
         public bool Actived { get; set; } // indicate if the user role is actived or disabled
     }

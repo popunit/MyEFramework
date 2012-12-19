@@ -59,16 +59,6 @@
     <Compile Include="ObserverService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyFactory.cs" />
-    <Compile Include="SystemUserRoleNameCollection.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>SystemUserRoleNameCollection.resx</DependentUpon>
-    </Compile>
-    <Compile Include="UserCharacteristicResource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>UserCharacteristicResource.resx</DependentUpon>
-    </Compile>
     <Compile Include="Users\IUserDataService.cs" />
     <Compile Include="Extensions\UserDataExtensions.cs" />
     <Compile Include="Users\UserDataService.cs" />
@@ -87,21 +77,15 @@
       <Project>{5895a87c-27f7-4e7a-b159-36e7f88e493b}</Project>
       <Name>eCommerce.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Data.Resources\eCommerce.Data.Resources.csproj">
+      <Project>{6b323a77-020f-43db-a9f6-04f845f6c52a}</Project>
+      <Name>eCommerce.Data.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="SystemUserRoleNameCollection.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SystemUserRoleNameCollection.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="UserCharacteristicResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>UserCharacteristicResource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

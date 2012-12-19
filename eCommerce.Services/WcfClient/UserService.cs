@@ -14,13 +14,6 @@ namespace eCommerce.Services.WcfClient
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName = "IUserService")]
     public interface IUserService
     {
-
-        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/SaveUserCharacteristic", ReplyAction = "http://tempuri.org/IUserService/SaveUserCharacteristicResponse")]
-        bool SaveUserCharacteristic(long userId, string key, string value);
-
-        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/SaveUserCharacteristic", ReplyAction = "http://tempuri.org/IUserService/SaveUserCharacteristicResponse")]
-        System.Threading.Tasks.Task<bool> SaveUserCharacteristicAsync(long userId, string key, string value);
-
         [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByName", ReplyAction = "http://tempuri.org/IUserService/GetUserByNameResponse")]
         eCommerce.Services.WcfClient.Entities.User GetUserByName(string userName);
 
@@ -39,11 +32,23 @@ namespace eCommerce.Services.WcfClient
         [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserByGuid", ReplyAction = "http://tempuri.org/IUserService/GetUserByGuidResponse")]
         System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> GetUserByGuidAsync(System.Guid guid);
 
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserRolesBySystemName", ReplyAction = "http://tempuri.org/IUserService/GetUserRolesBySystemNameResponse")]
+        eCommerce.Services.WcfClient.Entities.UserRole[] GetUserRolesBySystemName(string systemRoleName);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/GetUserRolesBySystemName", ReplyAction = "http://tempuri.org/IUserService/GetUserRolesBySystemNameResponse")]
+        System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.UserRole[]> GetUserRolesBySystemNameAsync(string systemRoleName);
+
         [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/AddUserRole", ReplyAction = "http://tempuri.org/IUserService/AddUserRoleResponse")]
         bool AddUserRole(eCommerce.Services.WcfClient.Entities.UserRole userRole);
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/AddUserRole", ReplyAction = "http://tempuri.org/IUserService/AddUserRoleResponse")]
         System.Threading.Tasks.Task<bool> AddUserRoleAsync(eCommerce.Services.WcfClient.Entities.UserRole userRole);
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/CreateGuest", ReplyAction = "http://tempuri.org/IUserService/CreateGuestResponse")]
+        eCommerce.Services.WcfClient.Entities.User CreateGuest();
+
+        [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/CreateGuest", ReplyAction = "http://tempuri.org/IUserService/CreateGuestResponse")]
+        System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> CreateGuestAsync();
 
         [System.ServiceModel.OperationContractAttribute(Action = "http://tempuri.org/IUserService/UpdateCustomerRole", ReplyAction = "http://tempuri.org/IUserService/UpdateCustomerRoleResponse")]
         bool UpdateCustomerRole(eCommerce.Services.WcfClient.Entities.UserRole userRole);
@@ -86,16 +91,6 @@ namespace eCommerce.Services.WcfClient
         {
         }
 
-        public bool SaveUserCharacteristic(long userId, string key, string value)
-        {
-            return base.Channel.SaveUserCharacteristic(userId, key, value);
-        }
-
-        public System.Threading.Tasks.Task<bool> SaveUserCharacteristicAsync(long userId, string key, string value)
-        {
-            return base.Channel.SaveUserCharacteristicAsync(userId, key, value);
-        }
-
         public eCommerce.Services.WcfClient.Entities.User GetUserByName(string userName)
         {
             return base.Channel.GetUserByName(userName);
@@ -126,6 +121,16 @@ namespace eCommerce.Services.WcfClient
             return base.Channel.GetUserByGuidAsync(guid);
         }
 
+        public eCommerce.Services.WcfClient.Entities.UserRole[] GetUserRolesBySystemName(string systemRoleName)
+        {
+            return base.Channel.GetUserRolesBySystemName(systemRoleName);
+        }
+
+        public System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.UserRole[]> GetUserRolesBySystemNameAsync(string systemRoleName)
+        {
+            return base.Channel.GetUserRolesBySystemNameAsync(systemRoleName);
+        }
+
         public bool AddUserRole(eCommerce.Services.WcfClient.Entities.UserRole userRole)
         {
             return base.Channel.AddUserRole(userRole);
@@ -134,6 +139,16 @@ namespace eCommerce.Services.WcfClient
         public System.Threading.Tasks.Task<bool> AddUserRoleAsync(eCommerce.Services.WcfClient.Entities.UserRole userRole)
         {
             return base.Channel.AddUserRoleAsync(userRole);
+        }
+
+        public eCommerce.Services.WcfClient.Entities.User CreateGuest()
+        {
+            return base.Channel.CreateGuest();
+        }
+
+        public System.Threading.Tasks.Task<eCommerce.Services.WcfClient.Entities.User> CreateGuestAsync()
+        {
+            return base.Channel.CreateGuestAsync();
         }
 
         public bool UpdateCustomerRole(eCommerce.Services.WcfClient.Entities.UserRole userRole)

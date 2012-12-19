@@ -25,6 +25,11 @@ namespace eCommerce.Data.Domain.Users.Entities
         public bool Actived { get; set; } // indicate if the user is actived or disabled
         public bool Deleted { get; set; } // indicate if the user is deleted
 
+        // time record
+        public DateTime CreateTime { get; set; }
+        public DateTime ActiveTime { get; set; }
+        public DateTime DeleteTime { get; set; }
+
         // Navigation properties : Nullable
         // many to many
         public virtual ICollection<UserRole> UserRoles { get; set; }

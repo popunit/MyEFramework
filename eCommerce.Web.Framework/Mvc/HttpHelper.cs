@@ -59,5 +59,23 @@ namespace eCommerce.Web.Framework.Mvc
             else
                 return null;
         }
+
+        public void SetCookie(string name, string value)
+        {
+            if (httpContext.HasRequest())
+            {
+                var cookie = new HttpCookie(name)
+                {
+                    HttpOnly = true,
+                    Value = value,
+                    Expires = string.IsNullOrWhiteSpace(value) ? 
+                                DateTime.Now.AddMonths(-1) : 
+                                DateTime.Now.AddMonths(3)
+                };
+
+                httpContext.Response.Cookies.Remove(name);
+                httpContext.Response.Cookies.Add(cookie);
+            }
+        }
     }
 }

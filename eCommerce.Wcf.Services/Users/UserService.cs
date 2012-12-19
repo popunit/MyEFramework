@@ -11,6 +11,9 @@ using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data;
 using eCommerce.Data.Domain.Users.Entities;
 using eCommerce.Wcf.Services.Contracts.Users;
+using eCommerce.Core.Caching;
+using eCommerce.Data.Resources;
+using System.ServiceModel;
 
 namespace eCommerce.Wcf.Services.Users
 {
@@ -29,9 +32,10 @@ namespace eCommerce.Wcf.Services.Users
             this.cacheManager = container.Resolve<ICacheManager>();
         }
 
+        #region GET
         public User GetUserByName(string userName)
         {
-            return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() => 
+            return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
             {
                 //return userRepository.Table.Where(u => u.UserName == userName)
                 //    .OrderBy(u => u.Id).FirstOrDefault();
@@ -64,6 +68,30 @@ namespace eCommerce.Wcf.Services.Users
             });
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="systemRoleName"></param>
+        /// <returns></returns>
+        /// <remarks>Should cache here because the data won't be changed frequently</remarks>
+        public UserRole[] GetUserRolesBySystemName(string systemRoleName)
+        {
+            return AspectF.Define.MustBeNonNullOrEmpty(systemRoleName).Return<UserRole[]>(() => 
+            {
+                string key = string.Format(Constants.CACHE_USERROLE_FORMAT,systemRoleName);
+                return cacheManager.GetOrAdd<UserRole[]>(key, () => 
+                {
+                    return (from ur in userRoleRepository.Table
+                           where ur.SystemName == systemRoleName
+                           orderby ur.Id
+                           select ur).ToArray();
+                });
+            });
+        }
+
+        #endregion
+
+        #region INSERT
         public bool AddUserRole(UserRole userRole)
         {
             return AspectF.Define.MustBeNonNull(userRole).Return<bool>(() =>
@@ -78,6 +106,31 @@ namespace eCommerce.Wcf.Services.Users
                 });
         }
 
+        public User CreateGuest()
+        {
+            return AspectF.Define.Return<User>(() => 
+            {
+                var user = new User 
+                {
+                    Actived = true,
+                    CreateTime = DateTime.UtcNow,
+                    ActiveTime = DateTime.UtcNow
+                };
+
+                var roles = GetUserRolesBySystemName(SystemUserRoleNameResource.Guest);
+                if (roles.IsNull())
+                    throw new FaultException(string.Format("Cannot find role according to system name '{0}'", 
+                        SystemUserRoleNameResource.Guest));
+
+                user.UserRoles.AddRange(roles);
+                userRepository.Insert(user);
+                return user;
+            });
+        }
+
+        #endregion
+
+        #region UPDATE
         public bool UpdateCustomerRole(UserRole userRole)
         {
             return AspectF.Define.MustBeNonNull(userRole).Return<bool>(() =>
@@ -91,5 +144,8 @@ namespace eCommerce.Wcf.Services.Users
                     return succeed;
                 });
         }
+
+        #endregion
+
     }
 }

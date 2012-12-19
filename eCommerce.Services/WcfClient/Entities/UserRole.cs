@@ -17,7 +17,9 @@ namespace eCommerce.Services.WcfClient.Entities
         private bool IsSystemRoleField;
 
         private string RoleNameField;
-
+        
+        private string SystemNameField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public bool Actived
         {
@@ -56,8 +58,18 @@ namespace eCommerce.Services.WcfClient.Entities
                 this.RoleNameField = value;
             }
         }
-
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SystemName { get; set; }
+        public string SystemName
+        {
+            get
+            {
+                return this.SystemNameField;
+            }
+            set
+            {
+                this.SystemNameField = value;
+            }
+        }
     }
 }

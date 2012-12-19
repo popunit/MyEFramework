@@ -12,11 +12,6 @@ namespace eCommerce.Services.Common
     {
         public bool DatabaseIsInstalled()
         {
-            //using (DataInfoServiceClient proxy = new DataInfoServiceClient())
-            //{
-            //    return proxy.DatabaseIsInstalled();
-            //}
-
             var proxy = ProxyFactory.Create<IDataInfoService, BasicHttpBinding>();
             try
             {

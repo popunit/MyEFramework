@@ -1,5 +1,6 @@
 ﻿using eCommerce.Core;
 using eCommerce.Core.Data;
+using eCommerce.Data.Resources;
 using eCommerce.Services.Extensions;
 using System.Web;
 

@@ -22,6 +22,7 @@ namespace eCommerce.Data.Mappings.Users
 
             #region Table Colume Settings
             this.Property(role => role.RoleName).HasMaxLength(255).IsRequired();
+            this.Property(role => role.SystemName).HasMaxLength(255);
             #endregion
         }
     }

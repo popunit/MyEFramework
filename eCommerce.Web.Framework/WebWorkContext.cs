@@ -80,10 +80,15 @@ namespace eCommerce.Web.Framework
                     if (userCookie.IsValid())
                     {
                         Guid guid;
-                        if (Guid.TryParse(userCookie.Value, out guid))
+                        if (Guid.TryParse(userCookie.Value, out guid)) // get user guid
                         {
-                            
+
                         }
+                    }
+
+                    if (!currentUser.IsValid())
+                    {
+                        currentUser = userService.CreateGuest();
                     }
                 }
             }

@@ -11,8 +11,9 @@ namespace eCommerce.Wcf.Services
         #region Cache Key Patterns for Entities
 
         internal const string CACHE_GENERICCHARACTERISTIC_FORMAT = "SERVICE.DATA.GENERICCHARACTERISTIC.{0}_{1}";
-
         internal const string CACHE_GENERICCHARACTERISTIC_PATTERN = "SERVICE.DATA.GENERICCHARACTERISTIC";
+
+        internal const string CACHE_USERROLE_FORMAT = "SERVICE.DATA.USERROLE.{0}";
         internal const string CACHE_USERROLE_PATTERN = "SERVICE.DATA.USERROLE";
 
         #endregion

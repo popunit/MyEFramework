@@ -19,6 +19,8 @@ namespace eCommerce.Services.Users
 
         bool AddUserRole(UserRole userRole);
 
+        User CreateGuest();
+
         bool UpdateCustomerRole(UserRole userRole);
     }
 }

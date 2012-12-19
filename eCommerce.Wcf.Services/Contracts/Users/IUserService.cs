@@ -23,8 +23,19 @@ namespace eCommerce.Wcf.Services.Contracts.Users
         [OperationContract]
         User GetUserByGuid(Guid guid);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="systemRoleName">Role Group Name</param>
+        /// <returns></returns>
+        [OperationContract]
+        UserRole[] GetUserRolesBySystemName(string systemRoleName);
+
         [OperationContract]
         bool AddUserRole(UserRole userRole);
+
+        [OperationContract]
+        User CreateGuest();
 
         [OperationContract]
         bool UpdateCustomerRole(UserRole userRole);

@@ -14,42 +14,10 @@ namespace eCommerce.Services.Users
 {
     public class UserDataService : IUserDataService
     {
-        //public bool SaveUserCharacteristic(User user, string key, string value)
-        //{
-        //    return AspectF.Define.MustBeNonNull(user).Return<bool>(() => 
-        //    {
-        //        //bool isSucceed = false;
-        //        //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
-        //        //{
-        //        //    isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
-        //        //}
-        //        //return isSucceed;
-
-        //        bool isSucceed = false;
-        //        var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
-        //        try
-        //        {
-        //            isSucceed = proxy.SaveUserCharacteristic(user.Id, key, value);
-        //            return isSucceed;
-        //        }
-        //        finally
-        //        {
-        //            if (null != proxy)
-        //                (proxy as ICommunicationObject).Close();
-        //        }
-        //    });
-        //}
-
-
         public User GetUserByName(string userName)
         {
             return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
             {
-                //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
-                //{
-                //    return proxy.GetUserByName(userName);
-                //}
-
                 var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
                 try
                 {
@@ -67,11 +35,6 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() =>
             {
-                //using (UserServiceClient proxy = new UserServiceClient("BasicHttpBinding_IUserService"))
-                //{
-                //    return proxy.GetUserByEmail(email);
-                //}
-
                 var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
                 try
                 {
@@ -101,6 +64,23 @@ namespace eCommerce.Services.Users
         public bool AddUserRole(UserRole userRole)
         {
             throw new NotImplementedException();
+        }
+
+        public User CreateGuest()
+        {
+            return AspectF.Define.Return<User>(() =>
+            {
+                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                try
+                {
+                    return proxy.CreateGuest();
+                }
+                finally
+                {
+                    if (null != proxy)
+                        (proxy as ICommunicationObject).Close();
+                }
+            });
         }
 
         public bool UpdateCustomerRole(UserRole userRole)

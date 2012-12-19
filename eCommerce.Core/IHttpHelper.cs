@@ -31,5 +31,12 @@ namespace eCommerce.Core
         /// <param name="name"></param>
         /// <returns></returns>
         HttpCookie GetCookie(string name);
+
+        /// <summary>
+        /// Set cookie
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        void SetCookie(string name, string value);
     }
 }

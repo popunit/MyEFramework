@@ -81,6 +81,18 @@ namespace eCommerce.Core.Common
             yield return item;
         }
 
+        public static ICollection<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> enumeration)
+        {
+            if (enumeration.IsNull() || collection.IsNull())
+                return null;
+            enumeration.ForEach(t => 
+            {
+                collection.Add(t);
+            });
+
+            return collection;
+        }
+
         public static T GetItem<T>(this IList<T> list, Predicate<T> predicate)
         {
             //if (null == list)

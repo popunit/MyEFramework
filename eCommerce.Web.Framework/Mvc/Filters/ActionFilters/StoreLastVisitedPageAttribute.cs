@@ -1,4 +1,5 @@
 ﻿using eCommerce.Core;
+using eCommerce.Data.Resources;
 using eCommerce.Services;
 using eCommerce.Services.Extensions;
 using eCommerce.Services.Users;

@@ -60,7 +60,7 @@ namespace eCommerce.Wcf.Services.Common
         public IEnumerable<GenericCharacteristic> GetCharacteristicForEntity(long entityId, string chGroup)
         {
             string key = string.Format(Constants.CACHE_GENERICCHARACTERISTIC_FORMAT, entityId, chGroup);
-            return cacheManager.GetOrInsert(
+            return cacheManager.GetOrAdd(
                 key,
                 () => 
                 {

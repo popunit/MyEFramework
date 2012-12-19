@@ -1,6 +1,7 @@
 ﻿using eCommerce.Core.Common;
 using eCommerce.Core.Data;
 using eCommerce.Core.Enums;
+using eCommerce.Data.Resources;
 using eCommerce.Services;
 using eCommerce.Services.Common;
 using eCommerce.Services.Extensions;

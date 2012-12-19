@@ -18,7 +18,13 @@ namespace eCommerce.Services.WcfClient.Entities
     {
 
         private bool ActivedField;
+        
+        private System.DateTime CreateTimeField;
 
+        private System.DateTime ActiveTimeField;
+        
+        private System.DateTime DeleteTimeField;
+        
         private bool DeletedField;
 
         private string EmailField;
@@ -30,6 +36,20 @@ namespace eCommerce.Services.WcfClient.Entities
         private string UserNameField;
 
         private UserRole[] UserRolesField;
+
+
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ActiveTime
+        {
+            get
+            {
+                return this.ActiveTimeField;
+            }
+            set
+            {
+                this.ActiveTimeField = value;
+            }
+        }
 
         [System.Runtime.Serialization.DataMemberAttribute()]
         public bool Actived
@@ -43,7 +63,33 @@ namespace eCommerce.Services.WcfClient.Entities
                 this.ActivedField = value;
             }
         }
-
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreateTime
+        {
+            get
+            {
+                return this.CreateTimeField;
+            }
+            set
+            {
+                this.CreateTimeField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime DeleteTime
+        {
+            get
+            {
+                return this.DeleteTimeField;
+            }
+            set
+            {
+                this.DeleteTimeField = value;
+            }
+        }
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public bool Deleted
         {

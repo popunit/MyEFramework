@@ -8,12 +8,12 @@ namespace eCommerce.Core.Caching
 {
     public static class CacheExtensions
     {
-        public static T GetOrInsert<T>(this ICacheManager cacheManager, string key, Func<T> callbackIfNotFound)
+        public static T GetOrAdd<T>(this ICacheManager cacheManager, string key, Func<T> callbackIfNotFound)
         {
-            return GetOrInsert<T>(cacheManager, key, TimeSpan.FromHours(1), callbackIfNotFound);
+            return GetOrAdd<T>(cacheManager, key, TimeSpan.FromHours(1), callbackIfNotFound);
         }
 
-        public static T GetOrInsert<T>(this ICacheManager cacheManager, string key, TimeSpan timeout, Func<T> callbackIfNotFound)
+        public static T GetOrAdd<T>(this ICacheManager cacheManager, string key, TimeSpan timeout, Func<T> callbackIfNotFound)
         {
             if (cacheManager.Contains(key))
                 return cacheManager.Get<T>(key);
