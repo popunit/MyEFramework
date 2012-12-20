@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ServiceModelEx">
-      <HintPath>..\..\..\..\OpenSourceProduct\WCF_Ex\PWSTE-Sources\ServiceModelEx (no service bus)\bin\Debug\ServiceModelEx.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Reactive.Core, Version=2.0.20304.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -81,11 +78,22 @@
       <Project>{6b323a77-020f-43db-a9f6-04f845f6c52a}</Project>
       <Name>eCommerce.Data.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Exception\eCommerce.Exception.csproj">
+      <Project>{0aaf2806-72c7-4212-8023-8843c2cd0de4}</Project>
+      <Name>eCommerce.Exception</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Wcf.Framework\eCommerce.Wcf.Framework.csproj">
+      <Project>{307408c5-ad57-4fcf-989a-aedca91c71fa}</Project>
+      <Name>eCommerce.Wcf.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

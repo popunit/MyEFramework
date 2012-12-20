@@ -45,6 +45,7 @@
     <Compile Include="Bindings\MEX\MexEndpointsExtensions.cs" />
     <Compile Include="Context\GenericContext.cs" />
     <Compile Include="Context\OperationContextExtensions.cs" />
+    <Compile Include="Metadata\MetadataHelper.cs" />
     <Compile Include="ServiceBehaviors\ErrorHandlers\GenericErrorHandlerBehavior.cs" />
     <Compile Include="Hostings\ServiceHost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

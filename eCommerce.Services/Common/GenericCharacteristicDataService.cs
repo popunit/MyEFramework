@@ -28,7 +28,7 @@ namespace eCommerce.Services.Common
 
                 bool isSucceed = false;
 
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
                 try
                 {
                     isSucceed = proxy.InsertCharacteristic(characteristic);
@@ -56,7 +56,7 @@ namespace eCommerce.Services.Common
                 //return result;
 
                 GenericCharacteristic result = null;
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
                 try
                 {
                     result = proxy.GetCharacteristicById(characteristicId);
@@ -84,7 +84,7 @@ namespace eCommerce.Services.Common
                 //return results;
 
                 IEnumerable<GenericCharacteristic> results = null;
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
                 try
                 {
                     results = proxy.GetCharacteristicForEntity(entityId, group);
@@ -113,7 +113,7 @@ namespace eCommerce.Services.Common
 
                 bool isSucceed = false;
 
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
                 try
                 {
                     isSucceed = proxy.UpdateCharacteristic(characteristic);
@@ -142,7 +142,7 @@ namespace eCommerce.Services.Common
 
                 bool isSucceed = false;
 
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
                 try
                 {
                     isSucceed = proxy.DeleteCharacteristic(characteristic);
@@ -171,7 +171,7 @@ namespace eCommerce.Services.Common
 
                 bool isSucceed = false;
 
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
                 try
                 {
                     isSucceed = proxy.SaveCharacteristic(entity, key, value);

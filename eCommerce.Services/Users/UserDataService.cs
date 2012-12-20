@@ -18,7 +18,7 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
             {
-                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IUserService>();
                 try
                 {
                     return proxy.GetUserByName(userName);
@@ -35,7 +35,7 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() =>
             {
-                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IUserService>();
                 try
                 {
                     return proxy.GetUserByEmail(email);
@@ -70,7 +70,7 @@ namespace eCommerce.Services.Users
         {
             return AspectF.Define.Return<User>(() =>
             {
-                var proxy = ProxyFactory.Create<IUserService, BasicHttpBinding>();
+                var proxy = ProxyFactory.Create<IUserService>();
                 try
                 {
                     return proxy.CreateGuest();

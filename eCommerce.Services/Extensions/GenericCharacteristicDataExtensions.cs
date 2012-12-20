@@ -2,6 +2,7 @@
 using eCommerce.Core.Common;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Exception;
 using eCommerce.Services.Common;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace eCommerce.Services.Extensions
 
                 // [TO-DO] Convert
                 if (typeof(T).GetTypeConverter().CanConvertFrom(typeof(string)))
-                    throw new Exception("Cannot get type converter");
+                    throw new CommonException("Cannot get type converter");
                 return (T)typeof(T).GetTypeConverter().ConvertFromInvariantString(result.Value);
             });
         }

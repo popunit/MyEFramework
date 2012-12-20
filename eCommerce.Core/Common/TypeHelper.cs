@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
@@ -177,6 +178,28 @@ namespace eCommerce.Core.Common
         public static bool IsSerializable(this Type type)
         {
             return type.IsSerializable();
+        }
+
+        public static Uri EnsureWsdl(this Uri uri)
+        {
+            string absoluteUri = uri.AbsoluteUri;
+            if (absoluteUri.EndsWith("?wsdl", true, CultureInfo.InvariantCulture) == false)
+            {
+                if (absoluteUri.Contains(".svc"))
+                {
+                    Regex reg = new Regex(@"([\w|\.]+://\S+\.svc)\S+");
+                    Match match = reg.Match(absoluteUri);
+                    if (!match.IsNull() && match.Groups.Count > 1)
+                    {
+                        string link = match.Groups[1].Value;
+                        return new Uri(link + "?wsdl");
+                    }
+                }
+
+                return new Uri(absoluteUri.TrimEnd('/','?') + "?wsdl");
+            }
+
+            return uri;
         }
     }
 
