@@ -17,6 +17,8 @@ using eCommerce.Data;
 using eCommerce.Data.Repositories;
 using Autofac;
 using System.IO;
+using System.Web.Routing;
+using System.ServiceModel.Activation;
 
 namespace eCommerce.Wcf.IISHost
 {
@@ -25,6 +27,7 @@ namespace eCommerce.Wcf.IISHost
         /// <summary>
         /// Initial container at the beginning of server activation
         /// </summary>
+        /// <remarks>http://www.eidias.com/Blog/2012/2/13/simple-wcf-hosting-wcf-service-by-autofac-in-aspnet-mvc-3</remarks>
         static AutofacServiceHostDiscoveryFactory()
         {            
             var builder = new ContainerBuilder();
