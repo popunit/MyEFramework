@@ -8,7 +8,7 @@ using eCommerce.Core.Common;
 
 namespace eCommerce.Data.Common
 {
-    internal interface IEmptyEntityMap<T>
+    public interface IEmptyEntityMap<T>
         where T : EntityBase
     {
         Type EntityType { get; }
@@ -16,7 +16,7 @@ namespace eCommerce.Data.Common
         bool IsValid();
     }
 
-    internal abstract class EmptyEntityMap<T> : IEmptyEntityMap<T>
+    public abstract class EmptyEntityMap<T> : IEmptyEntityMap<T>
         where T : EntityBase
     {
         private readonly Type entityType = typeof(T);
@@ -28,7 +28,7 @@ namespace eCommerce.Data.Common
         public bool IsValid()
         {
             Type t = Get().GetType();
-            if (t == typeof(T) || !t.IsInherit(typeof(T)))
+            if (t == typeof(T) || !t.IsInheritFrom(typeof(T)))
                 return false;
             return true;
         }

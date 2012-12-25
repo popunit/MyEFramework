@@ -33,7 +33,7 @@ namespace eCommerce.Core.Infrastructure
                 if (engineType == null)
                     throw new ConfigurationErrorsException("The type '" + engineType + "' could not be found. Please check the configuration at /configuration/nop/engine[@engineType] or check for missing assemblies.");
                 //if (!typeof(IEngine).IsAssignableFrom(engineType))
-                if(!engineType.IsInherit(typeof(IEngine)))
+                if(!engineType.IsInheritFrom(typeof(IEngine)))
                     throw new ConfigurationErrorsException("The type '" + engineType + "' doesn't implement 'Nop.Core.Infrastructure.IEngine' and cannot be configured in /configuration/nop/engine[@engineType] for that purpose.");
                 //return Activator.CreateInstance(engineType) as IEngine;
                 return EmitHelper.FastGetInstance(engineType)() as IEngine;

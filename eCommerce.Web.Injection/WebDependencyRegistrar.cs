@@ -75,8 +75,11 @@ namespace eCommerce.Web.Injection
             builder.RegisterType<ThemeProvider>().As<IThemeProvider>().InstancePerHttpRequest();
 
             builder.RegisterType<UserDataService>().As<IUserDataService>().InstancePerHttpRequest();
+            //builder.RegisterInstance<UserDataService>(new UserDataService()).As<IUserDataService>().InstancePerHttpRequest();
             builder.RegisterType<GenericCharacteristicDataService>().As<IGenericCharacteristicDataService>().InstancePerHttpRequest();
+            //builder.RegisterInstance<GenericCharacteristicDataService>(new GenericCharacteristicDataService()).As<IGenericCharacteristicDataService>().InstancePerHttpRequest();
             builder.RegisterType<DataInfoDataService>().As<IDataInfoDataService>().InstancePerHttpRequest();
+            //builder.RegisterInstance<DataInfoDataService>(new DataInfoDataService()).As<IDataInfoDataService>().InstancePerHttpRequest();
             builder.RegisterType<FormsAuthenticationService>().As<IAuthenticationService>().InstancePerHttpRequest();
 
             #region Events

@@ -25,7 +25,7 @@ namespace eCommerce.Data.Domain.Common
     {
     }
 
-    internal class EmptyGenericCharacteristicMap : EmptyEntityMap<GenericCharacteristic>
+    public class EmptyGenericCharacteristicMap : EmptyEntityMap<GenericCharacteristic>
     {
         public override GenericCharacteristic Get()
         {

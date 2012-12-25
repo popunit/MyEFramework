@@ -54,6 +54,7 @@
     <Compile Include="Extensions\GenericCharacteristicDataExtensions.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
     <Compile Include="ObserverService.cs" />
+    <Compile Include="ProbeServicesTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProxyFactory.cs" />
     <Compile Include="Users\IUserDataService.cs" />

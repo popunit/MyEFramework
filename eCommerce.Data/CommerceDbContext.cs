@@ -26,17 +26,16 @@ namespace eCommerce.Data
             //Database.SetInitializer<CommerceDbContext>(null);
 
             // TO-DO: Move to function method
-            Type t = typeof(CommerceDbContext);
-            var types = Assembly.GetAssembly(t).GetTypes();
+            var types = typeof(CommerceDbContext).GetTypesFromCurrentAssembly();
             types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                type.IsInherit(typeof(EntityBase)))
+                type.IsInheritFrom(typeof(EntityBase)))
                 .ForEach(type =>
                 {
                     Mapper.CreateMap(type, type);
                 });
 
             types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                type.IsInherit(typeof(IEmptyEntityMap<>))).
+                type.IsInheritFrom(typeof(IEmptyEntityMap<>))).
                 ForEach(type =>
                 {
                     //dynamic instance = Activator.CreateInstance(type);
@@ -65,7 +64,7 @@ namespace eCommerce.Data
             Type t = typeof(CommerceDbContext);
             Type[] types = Assembly.GetAssembly(t).GetTypes();
             var entityTypeConfigurationTypes = new List<Type>();
-            types.Where(type => type.IsInherit(typeof(EntityBase))).ForEach(type =>
+            types.Where(type => type.IsInheritFrom(typeof(EntityBase))).ForEach(type =>
             {
                 entityTypeConfigurationTypes.Add(typeof(EntityTypeConfiguration<>).MakeGenericType(type));
             });
@@ -74,7 +73,7 @@ namespace eCommerce.Data
             entityTypeConfigurationTypes.ForEach(configType =>
             {
                 types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                    type.IsInherit(configType))
+                    type.IsInheritFrom(configType))
                 .ForEach(type =>
                 {
                     //dynamic instance = Activator.CreateInstance(type);

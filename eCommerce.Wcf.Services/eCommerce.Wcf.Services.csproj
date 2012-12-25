@@ -102,6 +102,10 @@
       <Project>{e8f92f43-05ec-475c-8b57-fbbc3c1436fe}</Project>
       <Name>eCommerce.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Exception\eCommerce.Exception.csproj">
+      <Project>{0aaf2806-72c7-4212-8023-8843c2cd0de4}</Project>
+      <Name>eCommerce.Exception</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

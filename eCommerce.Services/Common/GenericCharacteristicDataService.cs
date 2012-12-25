@@ -1,5 +1,6 @@
 ﻿using eCommerce.Core;
 using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Exception;
 using eCommerce.Services.WcfClient;
 using eCommerce.Services.WcfClient.Entities;
 using System;
@@ -13,6 +14,16 @@ namespace eCommerce.Services.Common
 {
     public class GenericCharacteristicDataService : IGenericCharacteristicDataService
     {
+        ///// <summary>
+        ///// Execute it on registering
+        ///// </summary>
+        //public GenericCharacteristicDataService()
+        //{
+        //    bool isFound = ProxyFactory.Find<IGenericCharacteristicService>();
+        //    if (!isFound)
+        //        throw new CommonException("Invalid service for " + typeof(IGenericCharacteristicService));
+        //}
+
         public bool InsertCharacteristic(GenericCharacteristic characteristic)
         {
             return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() => 

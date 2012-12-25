@@ -9,11 +9,22 @@ using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Services.WcfClient;
 using eCommerce.Services.WcfClient.Entities;
 using System.ServiceModel;
+using eCommerce.Exception;
 
 namespace eCommerce.Services.Users
 {
     public class UserDataService : IUserDataService
     {
+        ///// <summary>
+        ///// Execute it on registering
+        ///// </summary>
+        //public UserDataService()
+        //{
+        //    bool isFound = ProxyFactory.Find<IUserService>();
+        //    if (!isFound)
+        //        throw new CommonException("Invalid service for " + typeof(IUserService));
+        //}
+
         public User GetUserByName(string userName)
         {
             return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
@@ -74,6 +85,14 @@ namespace eCommerce.Services.Users
                 try
                 {
                     return proxy.CreateGuest();
+                }
+                catch (FaultException<CommonException> ex)
+                {
+                    throw ex.Detail;
+                }
+                catch (FaultException ex)
+                {
+                    throw ex;
                 }
                 finally
                 {

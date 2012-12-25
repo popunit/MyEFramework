@@ -84,7 +84,7 @@ namespace eCommerce.Core
             }
             else
             {
-                // TO-DO: run task not refer to database
+                RunWarmupTasks();
             }
         }
 
@@ -92,6 +92,12 @@ namespace eCommerce.Core
         {
             var searcher = containerManager.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
             searcher.RoutingToExecute<ITask>(i => i.Execute());
+        }
+
+        protected virtual void RunWarmupTasks()
+        {
+            var searcher = containerManager.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
+            searcher.RoutingToExecute<IWarmupTask>(i => i.Execute());
         }
 
         public JobHandler JobService

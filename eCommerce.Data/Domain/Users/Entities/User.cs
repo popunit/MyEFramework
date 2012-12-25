@@ -39,7 +39,7 @@ namespace eCommerce.Data.Domain.Users.Entities
     { 
     }
 
-    internal class EmptyUserMap : EmptyEntityMap<User>
+    public class EmptyUserMap : EmptyEntityMap<User>
     {
         public override User Get()
         {

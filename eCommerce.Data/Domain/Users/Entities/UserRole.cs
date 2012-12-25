@@ -20,7 +20,7 @@ namespace eCommerce.Data.Domain.Users.Entities
     {
     }
 
-    internal class EmptyUserRoleMap : EmptyEntityMap<UserRole>
+    public class EmptyUserRoleMap : EmptyEntityMap<UserRole>
     {
         public override UserRole Get()
         {

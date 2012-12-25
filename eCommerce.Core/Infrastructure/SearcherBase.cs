@@ -58,7 +58,7 @@ namespace eCommerce.Core.Infrastructure
             {
                 foreach (var t in assembly.GetTypes())
                 {
-                    if (t.IsInherit(assignTypeFrom))
+                    if (t.IsInheritFrom(assignTypeFrom))
                     {
                         if (!t.IsInterface)
                         {

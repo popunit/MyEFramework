@@ -22,7 +22,7 @@ namespace eCommerce.Core.Common
         /// <param name="childConcreted">Type not abstract</param>
         /// <param name="parentInterface">Type is interface</param>
         /// <returns></returns>
-        public static bool IsInherit(this Type childConcreted, Type parentInterface)
+        public static bool IsInheritFrom(this Type childConcreted, Type parentInterface)
         {
             try
             {
@@ -53,6 +53,23 @@ namespace eCommerce.Core.Common
             {
                 return false;
             }
+        }
+
+        public static bool HasCustomAttribute(this Type type, Type attributeType)
+        {
+            var attribute = type.GetCustomAttribute(attributeType);
+            return !attribute.IsNull();
+        }
+
+        public static bool HasCustomAttribute<TAttribute>(this Type type)
+            where TAttribute : Attribute
+        {
+            return HasCustomAttribute(type, typeof(TAttribute));
+        }
+
+        public static Type[] GetTypesFromCurrentAssembly(this Type type)
+        {
+            return Assembly.GetAssembly(type).GetTypes();
         }
 
         public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> callback)

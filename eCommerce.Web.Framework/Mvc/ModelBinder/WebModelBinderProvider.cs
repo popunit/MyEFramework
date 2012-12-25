@@ -30,7 +30,7 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
                 var currentTypes = Assembly.GetAssembly(t)
                     .GetTypes()
                     .Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                        type.IsInherit(typeof(IModelBinder)));
+                        type.IsInheritFrom(typeof(IModelBinder)));
                 foreach (var type in currentTypes)
                 {
                     var attrList = type.GetCustomAttributes<EnabledAttribute>(false);

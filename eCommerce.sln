@@ -45,7 +45,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Web.Framework.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "eCommerce.Wcf.DataServices", "eCommerce.Wcf.DataServices\eCommerce.Wcf.DataServices.csproj", "{50F9AB07-41C7-4D8E-92EE-BB5C0B883A2F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServerServices", "ServerServices", "{FB54E0A0-768C-4E6E-B41D-D5D02CB61172}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LocalServices", "LocalServices", "{FB54E0A0-768C-4E6E-B41D-D5D02CB61172}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCF", "WCF", "{5F60302A-5BA5-4EAC-B72A-E092CFE0DF72}"
 EndProject

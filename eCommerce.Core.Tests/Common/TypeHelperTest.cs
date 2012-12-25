@@ -18,13 +18,13 @@ namespace eCommerce.Core.Tests.Common
         [Test]
         public void Type_Is_Inherit_From_Interface()
         {
-            Assert.IsTrue(typeof(TestClass).IsInherit(typeof(ITestClass)));
+            Assert.IsTrue(typeof(TestClass).IsInheritFrom(typeof(ITestClass)));
         }
 
         [Test]
         public void Type_Is_Inherit_From_GenericType()
         {
-            Assert.IsTrue(typeof(List<int>).IsInherit(typeof(IList<>)));
+            Assert.IsTrue(typeof(List<int>).IsInheritFrom(typeof(IList<>)));
         }
     }
 }

@@ -18,6 +18,8 @@ using Autofac;
 using System.IO;
 using System.Web.Routing;
 using System.ServiceModel.Activation;
+using eCommerce.Core.Diagnosis;
+using System.ServiceModel.Description;
 
 namespace eCommerce.Wcf.IISHost
 {
@@ -28,57 +30,35 @@ namespace eCommerce.Wcf.IISHost
         /// </summary>
         /// <remarks>http://www.eidias.com/Blog/2012/2/13/simple-wcf-hosting-wcf-service-by-autofac-in-aspnet-mvc-3</remarks>
         static AutofacServiceHostDiscoveryFactory()
-        {            
-            var builder = new ContainerBuilder();
-
-            //cache manager
-            builder.RegisterType<MemoryCacheManager>().As<ICacheManager>().Named<ICacheManager>("static_cache_manager").SingleInstance();
-            builder.RegisterType<PerRequestCacheManager>().As<ICacheManager>().Named<ICacheManager>("per_request_cache_manager").InstancePerLifetimeScope();
-
-            // Since WCF requests does not have an http context we can not use InstancePerHttpRequest(). Instead we can use InstancePerLifetimeScope() 
-            // which is resolvable for both WCF and http requests. Autofac Wiki says :
-            // The default ASP.NET and WCF integrations are set up so that InstancePerLifetimeScope() will attach a component to the current web request or service method call.
-            // Register WCF services
-            builder.RegisterType<UserService>().InstancePerLifetimeScope();
-            builder.RegisterType<GenericCharacteristicService>().InstancePerLifetimeScope();
-            builder.RegisterType<DataInfoService>().InstancePerLifetimeScope();
-
-            builder.RegisterType<Config>().InstancePerLifetimeScope();
-            builder.RegisterType<WebsiteSearcher>().As<ISearcher>().InstancePerLifetimeScope();
-
-            // database register
-            //builder.RegisterType<CommerceDbContext>().As<IDatabase>().InstancePerLifetimeScope();
-            var dbSettingsManager = new DatabaseSettingsManager();
-            var databaseSettings = dbSettingsManager.LoadSettings();
-            builder.Register(context => dbSettingsManager.LoadSettings()).As<DatabaseSettings>();
-            builder.Register(context => new EfDataProviderManager(context.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
-            // register for two types
-            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
-            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
-
-            if (databaseSettings != null && databaseSettings.IsValid())
-            {
-                var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
-                var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
-                dataProvider.Init();
-
-                builder.Register<IDatabase>(context => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerLifetimeScope();
-            }
-            else
-            {
-                builder.Register<IDatabase>(context => new CommerceDbContext(dbSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
-            }
-
-            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
-
-            //host.EnableDiscovery();
-            var container = builder.Build();
-            AutofacHostFactory.Container = container;
+        {
+            DependencyRegistrar.Register();
         }
 
         protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
         {
             var host = base.CreateServiceHost(serviceType, baseAddresses);
+
+            bool debugEnabled = AutofacHostFactory.Container.Resolve<IDebugHelper>().DebugEnabled;
+            if (debugEnabled)
+            {
+                ServiceDebugBehavior debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
+
+                // if not found - add behavior with setting turned on 
+                if (debug == null)
+                {
+                    host.Description.Behaviors.Add(
+                         new ServiceDebugBehavior() { IncludeExceptionDetailInFaults = true });
+                }
+                else
+                {
+                    // make sure setting is turned ON
+                    if (!debug.IncludeExceptionDetailInFaults)
+                    {
+                        debug.IncludeExceptionDetailInFaults = true;
+                    }
+                }
+            }
+
             return host;
         }
     }

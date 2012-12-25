@@ -10,4 +10,11 @@ namespace eCommerce.Core
     {
         void Execute();
     }
+
+    /// <summary>
+    /// the tasks have nothing to do with database
+    /// </summary>
+    public interface IWarmupTask : ITask
+    { 
+    }
 }

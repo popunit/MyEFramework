@@ -14,9 +14,12 @@ using eCommerce.Wcf.Services.Contracts.Users;
 using eCommerce.Core.Caching;
 using eCommerce.Data.Resources;
 using System.ServiceModel;
+using eCommerce.Core.Diagnosis;
+using eCommerce.Exception;
 
 namespace eCommerce.Wcf.Services.Users
 {
+    //[ServiceBehavior(IncludeExceptionDetailInFaults = true|false)]
     public class UserService : IUserService
     {
         private readonly IRepository<User> userRepository;
@@ -119,8 +122,11 @@ namespace eCommerce.Wcf.Services.Users
 
                 var roles = GetUserRolesBySystemName(SystemUserRoleNameResource.Guest);
                 if (roles.IsNull())
-                    throw new FaultException(string.Format("Cannot find role according to system name '{0}'", 
-                        SystemUserRoleNameResource.Guest));
+                {
+                    throw new FaultException<CommonException>(
+                        new CommonException(string.Format("Cannot find role according to system name '{0}'",
+                        SystemUserRoleNameResource.Guest)));
+                }
 
                 user.UserRoles.AddRange(roles);
                 userRepository.Insert(user);

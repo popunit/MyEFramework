@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace eCommerce.Core.Common
     internal class LookUp
     {
         private static readonly IDictionary<Type, object> dict
-            = new Dictionary<Type, object>();
+            = new ConcurrentDictionary<Type, object>();
 
         private LookUp()
         {
@@ -49,6 +50,24 @@ namespace eCommerce.Core.Common
         new public static IDictionary<TKey, TValue> Instance
         {
             get { return Singleton<Dictionary<TKey, TValue>>.Instance; }
+        }
+    }
+
+    /// <summary>
+    /// Thread-safe dictionary
+    /// </summary>
+    /// <typeparam name="TKey"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
+    public class SingletonConcurrentDictionary<TKey, TValue> : Singleton<IDictionary<TKey, TValue>>
+    {
+        static SingletonConcurrentDictionary()
+        {
+            Singleton<ConcurrentDictionary<TKey, TValue>>.Instance = new ConcurrentDictionary<TKey, TValue>();
+        }
+
+        new public static IDictionary<TKey, TValue> Instance
+        {
+            get { return Singleton<ConcurrentDictionary<TKey, TValue>>.Instance; }
         }
     }
 
