@@ -84,7 +84,7 @@ namespace eCommerce.Services.Extensions
                 // TO-DO: check if user.userroles is available or not
                 return user.UserRoles
                     .Where(role => disabledRoleIsIncluded || role.Actived) // if disabled role is not included, role must be actived
-                    .Where(role => role.SystemName == systemRoleName) // equal to system name
+                    .Where(role => role.SystemName.Equals(systemRoleName, StringComparison.InvariantCultureIgnoreCase)) // equal to system name
                     .Count() > 0;
             });
         }

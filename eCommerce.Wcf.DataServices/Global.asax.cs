@@ -15,6 +15,7 @@ using eCommerce.Data.DataProvider;
 using eCommerce.Data;
 using eCommerce.Data.Repositories;
 using Autofac.Integration.Wcf;
+using eCommerce.Core.Infrastructure.IoC;
 
 namespace eCommerce.Wcf.DataServices
 {
@@ -60,17 +61,18 @@ namespace eCommerce.Wcf.DataServices
             //builder.RegisterType<CommerceDbContext>().As<IDatabase>().InstancePerLifetimeScope();
             var dbSettingsManager = new DatabaseSettingsManager();
             var databaseSettings = dbSettingsManager.LoadSettings();
-            builder.Register(c => dbSettingsManager.LoadSettings()).As<DatabaseSettings>();
-            builder.Register(x => new EfDataProviderManager(x.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
+            builder.RegisterType<DatabaseSettingsManager>().InstancePerDependency();
+            builder.Register(context => context.Resolve<DatabaseSettingsManager>().LoadSettings()).As<DatabaseSettings>().InstancePerLifetimeScope();
+            builder.Register(context => new EfDataProviderManager(context.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
             // register for two types
-            builder.Register(x => (IEfDataProvider)x.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
-            builder.Register(x => (IEfDataProvider)x.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
+            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
+            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
 
             if (databaseSettings != null && databaseSettings.IsValid())
             {
-                var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
-                var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
-                dataProvider.Init();
+                //var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
+                //var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
+                //dataProvider.Init();
 
                 builder.Register<IDatabase>(c => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerDependency();
             }
@@ -82,7 +84,10 @@ namespace eCommerce.Wcf.DataServices
             builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
             var container = builder.Build();
+            // make AutofacHostFactory.Container equal to EngineContext.Current
+            // after it, should not set new container to AutofacHostFactory.Container or EngineContext.Current
             AutofacHostFactory.Container = container;
+            EngineContext.Initialize(new AutofacContainerManager(container), new ContainerConfig(), false);
         }
 
         protected void Session_Start(object sender, EventArgs e)

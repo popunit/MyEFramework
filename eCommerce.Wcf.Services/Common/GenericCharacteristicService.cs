@@ -1,8 +1,6 @@
-﻿using Autofac;
-using Autofac.Integration.Wcf;
-using eCommerce.Core;
+﻿using eCommerce.Core;
 using eCommerce.Core.Caching;
-using eCommerce.Core.Common;
+using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data.Common;
 using eCommerce.Data.Domain.Common;
@@ -10,8 +8,6 @@ using eCommerce.Wcf.Services.Contracts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Wcf.Services.Common
 {
@@ -19,14 +15,14 @@ namespace eCommerce.Wcf.Services.Common
     {
         private readonly IRepository<GenericCharacteristic> genericCharacteristicRepository;
         private readonly ICacheManager cacheManager;
-        private readonly ILifetimeScope container;
+        //private readonly ILifetimeScope container;
 
         public GenericCharacteristicService()
         {
-            this.container = AutofacHostFactory.Container;
+            //this.container = AutofacHostFactory.Container;
             this.genericCharacteristicRepository = 
-                this.container.Resolve<IRepository<GenericCharacteristic>>();
-            this.cacheManager = container.Resolve<ICacheManager>();
+                EngineContext.Current.Resolve<IRepository<GenericCharacteristic>>();
+            this.cacheManager = EngineContext.Current.Resolve<ICacheManager>();
         }
 
         public bool InsertCharacteristic(GenericCharacteristic characteristic)

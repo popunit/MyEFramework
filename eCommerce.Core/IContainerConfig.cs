@@ -37,7 +37,7 @@ namespace eCommerce.Core
 
             // register type: should remove in future (to use configuration provider to config and register)
             // TO-DO: Check if I register this time multi times (should not)
-            containerManager.AddComponent<DatabaseSettings>(typeof(DatabaseSettings).Name); // to remove because data dll has been decoupled
+            //containerManager.AddComponent<DatabaseSettings>(typeof(DatabaseSettings).Name); // to remove because data dll has been decoupled
             // TO-DO: Check if register it before and figure out how to set it
             containerManager.AddComponentInstance<StoreStateSettings>(
                 new StoreStateSettings

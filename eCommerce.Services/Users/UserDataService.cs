@@ -15,16 +15,6 @@ namespace eCommerce.Services.Users
 {
     public class UserDataService : IUserDataService
     {
-        ///// <summary>
-        ///// Execute it on registering
-        ///// </summary>
-        //public UserDataService()
-        //{
-        //    bool isFound = ProxyFactory.Find<IUserService>();
-        //    if (!isFound)
-        //        throw new CommonException("Invalid service for " + typeof(IUserService));
-        //}
-
         public User GetUserByName(string userName)
         {
             return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
@@ -86,9 +76,9 @@ namespace eCommerce.Services.Users
                 {
                     return proxy.CreateGuest();
                 }
-                catch (FaultException<CommonException> ex)
+                catch (FaultException<ExceptionDetail> ex)
                 {
-                    throw ex.Detail;
+                    throw new CommonException(ex.Detail.Message);
                 }
                 catch (FaultException ex)
                 {

@@ -22,6 +22,8 @@ namespace eCommerce.Data.DataProvider
 
         public override void SetDatabaseInitializer()
         {
+            // Database setinitializer will excute when dbcontext is initializing,
+            // this is a delay execution strategy
             Database.SetInitializer(new CreateTablesIfNotExist<CommerceDbContext>());
         }
     }

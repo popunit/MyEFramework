@@ -38,7 +38,8 @@ namespace eCommerce.Wcf.IISHost
         {
             var host = base.CreateServiceHost(serviceType, baseAddresses);
 
-            bool debugEnabled = AutofacHostFactory.Container.Resolve<IDebugHelper>().DebugEnabled;
+            //bool debugEnabled = AutofacHostFactory.Container.Resolve<IDebugHelper>().DebugEnabled;
+            bool debugEnabled = EngineContext.Current.Resolve<IDebugHelper>().DebugEnabled;
             if (debugEnabled)
             {
                 ServiceDebugBehavior debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();

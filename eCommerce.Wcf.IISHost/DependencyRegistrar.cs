@@ -6,6 +6,7 @@ using eCommerce.Core.Configuration;
 using eCommerce.Core.Data;
 using eCommerce.Core.Diagnosis;
 using eCommerce.Core.Infrastructure;
+using eCommerce.Core.Infrastructure.IoC;
 using eCommerce.Data;
 using eCommerce.Data.DataProvider;
 using eCommerce.Data.Repositories;
@@ -41,10 +42,10 @@ namespace eCommerce.Wcf.IISHost
             builder.RegisterType<DebugHelper>().As<IDebugHelper>().SingleInstance();
 
             // database register
-            //builder.RegisterType<CommerceDbContext>().As<IDatabase>().InstancePerLifetimeScope();
             var dbSettingsManager = new DatabaseSettingsManager();
             var databaseSettings = dbSettingsManager.LoadSettings();
-            builder.Register(context => dbSettingsManager.LoadSettings()).As<DatabaseSettings>();
+            builder.RegisterType<DatabaseSettingsManager>().InstancePerDependency();
+            builder.Register(context => context.Resolve<DatabaseSettingsManager>().LoadSettings()).As<DatabaseSettings>().InstancePerLifetimeScope();
             builder.Register(context => new EfDataProviderManager(context.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
             // register for two types
             builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
@@ -52,9 +53,9 @@ namespace eCommerce.Wcf.IISHost
 
             if (databaseSettings != null && databaseSettings.IsValid())
             {
-                var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
-                var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
-                dataProvider.Init();
+                //var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
+                //var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
+                //dataProvider.Init();
 
                 builder.Register<IDatabase>(context => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerLifetimeScope();
             }
@@ -67,7 +68,11 @@ namespace eCommerce.Wcf.IISHost
 
             //host.EnableDiscovery();
             var container = builder.Build();
+
+            // make AutofacHostFactory.Container equal to EngineContext.Current
+            // after it, should not set new container to AutofacHostFactory.Container or EngineContext.Current
             AutofacHostFactory.Container = container;
+            EngineContext.Initialize(new AutofacContainerManager(container), new ContainerConfig(), false);
         }
     }
 }

@@ -16,12 +16,12 @@ namespace eCommerce.Data
     {
         public void Execute()
         {
-            //var settings = EngineContext.Current.Resolve<DatabaseSettings>();
-            var settings = AutofacHostFactory.Container.Resolve<DatabaseSettings>();
+            var settings = EngineContext.Current.Resolve<DatabaseSettings>();
+            //var settings = AutofacHostFactory.Container.Resolve<DatabaseSettings>();
             if (null != settings && settings.IsValid())
             {
-                //var provider = EngineContext.Current.Resolve<IEfDataProvider>();
-                var provider = AutofacHostFactory.Container.Resolve<IEfDataProvider>();
+                var provider = EngineContext.Current.Resolve<IEfDataProvider>();
+                //var provider = AutofacHostFactory.Container.Resolve<IEfDataProvider>();
                 if (null == provider)
                     throw new CommonException("Cannot find Data Provider");
                 provider.SetDatabaseInitializer();

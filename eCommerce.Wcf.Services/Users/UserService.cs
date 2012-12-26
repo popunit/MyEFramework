@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using Autofac.Integration.Wcf;
-using eCommerce.Core;
-using eCommerce.Core.Common;
-using eCommerce.Core.Infrastructure.NoAOP;
-using eCommerce.Data;
-using eCommerce.Data.Domain.Users.Entities;
-using eCommerce.Wcf.Services.Contracts.Users;
+﻿using eCommerce.Core;
 using eCommerce.Core.Caching;
+using eCommerce.Core.Common;
+using eCommerce.Core.Infrastructure;
+using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Data.Domain.Users.Entities;
 using eCommerce.Data.Resources;
-using System.ServiceModel;
-using eCommerce.Core.Diagnosis;
 using eCommerce.Exception;
+using eCommerce.Wcf.Services.Contracts.Users;
+using System;
+using System.Linq;
 
 namespace eCommerce.Wcf.Services.Users
 {
@@ -24,15 +17,15 @@ namespace eCommerce.Wcf.Services.Users
     {
         private readonly IRepository<User> userRepository;
         private readonly IRepository<UserRole> userRoleRepository;
-        private readonly ILifetimeScope container;
+        //private readonly ILifetimeScope container;
         private readonly ICacheManager cacheManager;
 
         public UserService()
         {
-            container = AutofacHostFactory.Container;
-            this.userRepository = container.Resolve<IRepository<User>>();
-            this.userRoleRepository = container.Resolve<IRepository<UserRole>>();
-            this.cacheManager = container.Resolve<ICacheManager>();
+            //container = AutofacHostFactory.Container;
+            this.userRepository = EngineContext.Current.Resolve<IRepository<User>>();
+            this.userRoleRepository = EngineContext.Current.Resolve<IRepository<UserRole>>();
+            this.cacheManager = EngineContext.Current.Resolve<ICacheManager>();
         }
 
         #region GET
@@ -85,7 +78,7 @@ namespace eCommerce.Wcf.Services.Users
                 return cacheManager.GetOrAdd<UserRole[]>(key, () => 
                 {
                     return (from ur in userRoleRepository.Table
-                           where ur.SystemName == systemRoleName
+                           where ur.SystemName.Equals(systemRoleName, StringComparison.InvariantCultureIgnoreCase)
                            orderby ur.Id
                            select ur).ToArray();
                 });
@@ -121,11 +114,11 @@ namespace eCommerce.Wcf.Services.Users
                 };
 
                 var roles = GetUserRolesBySystemName(SystemUserRoleNameResource.Guest);
-                if (roles.IsNull())
+                if (roles.IsNullOrEmpty())
                 {
-                    throw new FaultException<CommonException>(
-                        new CommonException(string.Format("Cannot find role according to system name '{0}'",
-                        SystemUserRoleNameResource.Guest)));
+                    throw new CommonException(
+                        string.Format("Cannot find role according to system name '{0}'",
+                        SystemUserRoleNameResource.Guest));
                 }
 
                 user.UserRoles.AddRange(roles);

@@ -155,6 +155,13 @@ namespace eCommerce.Core.Common
             return items;
         }
 
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumeration)
+        {
+            if (enumeration.IsNull() || enumeration.Count() == 0)
+                return true;
+            return false;
+        }
+
         public static TypeConverter GetTypeConverter(this Type type)
         {
             if (type == typeof(List<int>))
