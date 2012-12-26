@@ -10,6 +10,7 @@ using eCommerce.Services.WcfClient;
 using eCommerce.Services.WcfClient.Entities;
 using System.ServiceModel;
 using eCommerce.Exception;
+using eCommerce.Services.Extensions.NoAOP;
 
 namespace eCommerce.Services.Users
 {
@@ -17,35 +18,19 @@ namespace eCommerce.Services.Users
     {
         public User GetUserByName(string userName)
         {
-            return AspectF.Define.MustBeNonNullOrEmpty(userName).Return<User>(() =>
+            return AspectF.Define.MustBeNonNullOrEmpty(userName).
+                WcfClient<IUserService>().Return<User>((aspect) =>
             {
-                var proxy = ProxyFactory.Create<IUserService>();
-                try
-                {
-                    return proxy.GetUserByName(userName);
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.GetUserByName(userName);
             });
         }
 
         public User GetUserByEmail(string email)
         {
-            return AspectF.Define.MustBeNonNullOrEmpty(email).Return<User>(() =>
+            return AspectF.Define.MustBeNonNullOrEmpty(email).
+                WcfClient<IUserService>().Return<User>((aspect) =>
             {
-                var proxy = ProxyFactory.Create<IUserService>();
-                try
-                {
-                    return proxy.GetUserByEmail(email);
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.GetUserByEmail(email);
             });
         }
 
@@ -69,26 +54,9 @@ namespace eCommerce.Services.Users
 
         public User CreateGuest()
         {
-            return AspectF.Define.Return<User>(() =>
+            return AspectF.Define.WcfClient<IUserService>().Return<User>((aspect) => 
             {
-                var proxy = ProxyFactory.Create<IUserService>();
-                try
-                {
-                    return proxy.CreateGuest();
-                }
-                catch (FaultException<ExceptionDetail> ex)
-                {
-                    throw new CommonException(ex.Detail.Message);
-                }
-                catch (FaultException ex)
-                {
-                    throw ex;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.CreateGuest();
             });
         }
 

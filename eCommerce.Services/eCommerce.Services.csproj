@@ -52,6 +52,7 @@
     <Compile Include="Common\IDataInfoDataService.cs" />
     <Compile Include="Common\IGenericCharacteristicDataService.cs" />
     <Compile Include="Extensions\GenericCharacteristicDataExtensions.cs" />
+    <Compile Include="Extensions\NoAOP\AspectFExtensions.cs" />
     <Compile Include="MobileDeviceCheck.cs" />
     <Compile Include="ObserverService.cs" />
     <Compile Include="ProbeServicesTask.cs" />

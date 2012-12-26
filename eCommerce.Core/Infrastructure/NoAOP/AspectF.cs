@@ -44,6 +44,8 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         /// </summary>
         internal Delegate WorkDelegate;
 
+        public dynamic Proxy { get; set; }
+
         /// <summary>
         /// Create a composition of function e.g. f(g(x))
         /// </summary>
@@ -83,6 +85,18 @@ namespace eCommerce.Core.Infrastructure.NoAOP
             }
         }
 
+        public void Do(Action<AspectF> work)
+        {
+            if (this.Chain == null)
+            {
+                work(this);
+            }
+            else
+            {
+                this.Chain(() => work(this));
+            }
+        }
+
         /// <summary>
         /// Execute your real code applying aspects over it.
         /// </summary>
@@ -108,6 +122,26 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 });
                 return returnValue;
             }            
+        }
+
+        public TReturnType Return<TReturnType>(Func<AspectF, TReturnType> work)
+        {
+            this.WorkDelegate = work;
+
+            if (this.Chain == null)
+            {
+                return work(this);
+            }
+            else
+            {
+                TReturnType returnValue = default(TReturnType);
+                this.Chain(() =>
+                {
+                    Func<AspectF, TReturnType> workDelegate = WorkDelegate as Func<AspectF, TReturnType>;
+                    returnValue = workDelegate(this);
+                });
+                return returnValue;
+            }
         }
         
         /// <summary>

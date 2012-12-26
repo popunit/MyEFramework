@@ -9,190 +9,63 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using eCommerce.Services.Extensions.NoAOP;
 
 namespace eCommerce.Services.Common
 {
     public class GenericCharacteristicDataService : IGenericCharacteristicDataService
     {
-        ///// <summary>
-        ///// Execute it on registering
-        ///// </summary>
-        //public GenericCharacteristicDataService()
-        //{
-        //    bool isFound = ProxyFactory.Find<IGenericCharacteristicService>();
-        //    if (!isFound)
-        //        throw new CommonException("Invalid service for " + typeof(IGenericCharacteristicService));
-        //}
-
         public bool InsertCharacteristic(GenericCharacteristic characteristic)
         {
-            return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() => 
+            return AspectF.Define.MustBeNonNull(characteristic).
+                WcfClient<IGenericCharacteristicService>().Return<bool>((aspect) =>
             {
-                //bool isSucceed = false;
-                //// [TO-DO] To use WCF discovery to substitude
-                //using (var proxy = new GenericCharacteristicServiceClient("BasicHttpBinding_IGenericCharacteristicService"))
-                //{
-                //    isSucceed = proxy.InsertCharacteristic(characteristic);
-                //}
-
-                //return isSucceed;
-
-                bool isSucceed = false;
-
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
-                try
-                {
-                    isSucceed = proxy.InsertCharacteristic(characteristic);
-                    return isSucceed;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.InsertCharacteristic(characteristic);
             });
         }
 
         public GenericCharacteristic GetCharacteristicById(long characteristicId)
         {
-            return AspectF.Define.MustBeNonDefault(characteristicId).Return<GenericCharacteristic>(() =>
+            return AspectF.Define.MustBeNonDefault(characteristicId).
+                WcfClient<IGenericCharacteristicService>().Return<GenericCharacteristic>((aspect) =>
             {
-                //GenericCharacteristic result = null;
-                //// [TO-DO] To use WCF discovery to substitude
-                //using (var proxy = new GenericCharacteristicServiceClient("BasicHttpBinding_IGenericCharacteristicService"))
-                //{
-                //    result = proxy.GetCharacteristicById(characteristicId);
-                //}
-
-                //return result;
-
-                GenericCharacteristic result = null;
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
-                try
-                {
-                    result = proxy.GetCharacteristicById(characteristicId);
-                    return result;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.GetCharacteristicById(characteristicId);
             });
         }
 
         public IEnumerable<GenericCharacteristic> GetCharacteristicForEntity(long entityId, string group)
         {
-            return AspectF.Define.MustBeNonDefault(entityId).Return<IEnumerable<GenericCharacteristic>>(() =>
+            return AspectF.Define.MustBeNonDefault(entityId).
+                WcfClient<IGenericCharacteristicService>().Return<IEnumerable<GenericCharacteristic>>((aspect) =>
             {
-                //IEnumerable<GenericCharacteristic> results = null;
-                //// [TO-DO] To use WCF discovery to substitude
-                //using (var proxy = new GenericCharacteristicServiceClient("BasicHttpBinding_IGenericCharacteristicService"))
-                //{
-                //    results = proxy.GetCharacteristicForEntity(entityId, group);
-                //}
-
-                //return results;
-
-                IEnumerable<GenericCharacteristic> results = null;
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
-                try
-                {
-                    results = proxy.GetCharacteristicForEntity(entityId, group);
-                    return results;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.GetCharacteristicForEntity(entityId, group);
             });
         }
 
         public bool UpdateCharacteristic(GenericCharacteristic characteristic)
         {
-            return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() =>
+            return AspectF.Define.MustBeNonNull(characteristic).
+                WcfClient<IGenericCharacteristicService>().Return<bool>((aspect) =>
             {
-                //bool isSucceed = false;
-                //// [TO-DO] To use WCF discovery to substitude
-                //using (var proxy = new GenericCharacteristicServiceClient("BasicHttpBinding_IGenericCharacteristicService"))
-                //{
-                //    isSucceed = proxy.UpdateCharacteristic(characteristic);
-                //}
-
-                //return isSucceed;
-
-                bool isSucceed = false;
-
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
-                try
-                {
-                    isSucceed = proxy.UpdateCharacteristic(characteristic);
-                    return isSucceed;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.UpdateCharacteristic(characteristic);
             });
         }
 
         public bool DeleteCharacteristic(GenericCharacteristic characteristic)
         {
-            return AspectF.Define.MustBeNonNull(characteristic).Return<bool>(() =>
+            return AspectF.Define.MustBeNonNull(characteristic).
+                WcfClient<IGenericCharacteristicService>().Return<bool>((aspect) =>
             {
-                //bool isSucceed = false;
-                //// [TO-DO] To use WCF discovery to substitude
-                //using (var proxy = new GenericCharacteristicServiceClient("BasicHttpBinding_IGenericCharacteristicService"))
-                //{
-                //    isSucceed = proxy.DeleteCharacteristic(characteristic);
-                //}
-
-                //return isSucceed;
-
-                bool isSucceed = false;
-
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
-                try
-                {
-                    isSucceed = proxy.DeleteCharacteristic(characteristic);
-                    return isSucceed;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.DeleteCharacteristic(characteristic);
             });
         }
 
         public bool SaveCharacteristic(EntityBase entity, string key, string value)
         {
-            return AspectF.Define.MustBeNonNull(entity).MustBeNonNullOrEmpty(key).Return<bool>(() =>
+            return AspectF.Define.MustBeNonNull(entity).MustBeNonNullOrEmpty(key).
+                WcfClient<IGenericCharacteristicService>().Return<bool>((aspect) =>
             {
-                //bool isSucceed = false;
-                //// [TO-DO] To use WCF discovery to substitude
-                //using (var proxy = new GenericCharacteristicServiceClient("BasicHttpBinding_IGenericCharacteristicService"))
-                //{
-                //    isSucceed = proxy.SaveCharacteristic(entity, key, value);
-                //}
-
-                //return isSucceed;
-
-                bool isSucceed = false;
-
-                var proxy = ProxyFactory.Create<IGenericCharacteristicService>();
-                try
-                {
-                    isSucceed = proxy.SaveCharacteristic(entity, key, value);
-                    return isSucceed;
-                }
-                finally
-                {
-                    if (null != proxy)
-                        (proxy as ICommunicationObject).Close();
-                }
+                return aspect.Proxy.SaveCharacteristic(entity, key, value);
             });
         }
     }
