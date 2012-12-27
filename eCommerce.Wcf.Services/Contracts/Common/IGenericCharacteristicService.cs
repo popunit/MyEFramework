@@ -1,11 +1,7 @@
 ﻿using eCommerce.Core;
-using eCommerce.Data.Domain.Common;
-using System;
+using eCommerce.Data.Domain.Common.Entities;
 using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Wcf.Services.Contracts.Common
 {

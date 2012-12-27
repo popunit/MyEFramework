@@ -75,7 +75,7 @@
     <Compile Include="DataProvider\EfDataProviderManager.cs" />
     <Compile Include="DataProvider\MSSQLServerCeDataProvider.cs" />
     <Compile Include="DataProvider\MSSQLServerDataProvider.cs" />
-    <Compile Include="Domain\Common\GenericCharacteristic.cs" />
+    <Compile Include="Domain\Common\Entities\GenericCharacteristic.cs" />
     <Compile Include="Domain\Users\Entities\User.cs" />
     <Compile Include="Domain\Users\Entities\UserRole.cs" />
     <Compile Include="Domain\Users\PasswordKit.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="EfDataProviderStartUpTask.cs" />
     <Compile Include="IDatabase.cs" />
     <Compile Include="IEfDataProvider.cs" />
+    <Compile Include="Mappings\Common\GenericCharacteristicMap.cs" />
     <Compile Include="Mappings\Users\UserMap.cs" />
     <Compile Include="Mappings\Users\UserRoleMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

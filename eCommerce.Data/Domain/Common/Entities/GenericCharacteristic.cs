@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eCommerce.Data.Domain.Common
+namespace eCommerce.Data.Domain.Common.Entities
 {
     /// <summary>
     /// Generic characteristic, different from user characteristic

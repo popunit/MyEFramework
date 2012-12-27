@@ -36,6 +36,7 @@ namespace eCommerce.Data.DatabaseInitializers
                     if (!context.Database.CompatibleWithModel(false))
                         context.Database.Delete(); // TO-DO: for debug, if release, should not delete directly
                 }
+                // the permission of iis user needs to have dbcreator role as server role
                 context.Database.CreateIfNotExists();
             }
             catch(System.Exception e)

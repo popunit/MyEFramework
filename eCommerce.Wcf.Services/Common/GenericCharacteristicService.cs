@@ -3,7 +3,7 @@ using eCommerce.Core.Caching;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Core.Infrastructure.NoAOP;
 using eCommerce.Data.Common;
-using eCommerce.Data.Domain.Common;
+using eCommerce.Data.Domain.Common.Entities;
 using eCommerce.Wcf.Services.Contracts.Common;
 using System;
 using System.Collections.Generic;
