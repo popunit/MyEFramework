@@ -8,6 +8,7 @@ using eCommerce.Data.Resources;
 using eCommerce.Exception;
 using eCommerce.Wcf.Services.Contracts.Users;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace eCommerce.Wcf.Services.Users
@@ -110,7 +111,8 @@ namespace eCommerce.Wcf.Services.Users
                 {
                     Actived = true,
                     CreateTime = DateTime.UtcNow,
-                    ActiveTime = DateTime.UtcNow
+                    ActiveTime = DateTime.UtcNow,
+                    UserRoles = new List<UserRole>() // initial user role
                 };
 
                 var roles = GetUserRolesBySystemName(SystemUserRoleNameResource.Guest);

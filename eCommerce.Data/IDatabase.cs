@@ -15,6 +15,7 @@ namespace eCommerce.Data
     /// </summary>
     public interface IDatabase
     {
+        // TO-DO: change IDbSet to common IQuery in order to avoid to using Entity framework in future
         IDbSet<TEntity> Store<TEntity>() where TEntity : EntityBase, new();
 
         EntityState GetEntityState<TEntity>(TEntity entity) where TEntity : EntityBase, new();

@@ -26,12 +26,22 @@ namespace eCommerce.Core.Data
     /// </summary>
     public class DatabaseSettingsManager
     {
-        protected readonly char Separator = ConfigHelper.ReadonlySection.DatabaseSetting.Separator;
+        public readonly char Separator;
 
         /// <summary>
         /// virtual path
         /// </summary>
-        protected readonly string FilePath = ConfigHelper.ReadonlySection.DatabaseSetting.AssociatedFile;
+        public readonly string FilePath;
+
+        public readonly bool IsFaked;
+
+        public DatabaseSettingsManager()
+        {
+            var dbsettings = ConfigHelper.ReadonlySection.DatabaseSetting;
+            Separator = dbsettings.Separator;
+            FilePath = dbsettings.AssociatedFile;
+            IsFaked = dbsettings.IsFaked;
+        }
 
         protected virtual string MapToPhysicalPath(string virtualPath)
         {

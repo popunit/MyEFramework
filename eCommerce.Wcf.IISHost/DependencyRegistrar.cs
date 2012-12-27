@@ -64,7 +64,14 @@ namespace eCommerce.Wcf.IISHost
                 builder.Register<IDatabase>(context => new CommerceDbContext(dbSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
             }
 
-            builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            if (!dbSettingsManager.IsFaked)
+            {
+                builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            }
+            else
+            {
+                builder.RegisterGeneric(typeof(FaskeRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            }
 
             //host.EnableDiscovery();
             var container = builder.Build();

@@ -12,7 +12,7 @@ namespace eCommerce.Data.Domain.Users.Entities
     {
         public User()
         {
-            this.UserGuid = new Guid();
+            this.UserGuid = Guid.NewGuid(); // set guid automatically
             PasswordKit = new PasswordKit();
         }
 

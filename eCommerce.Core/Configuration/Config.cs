@@ -129,6 +129,19 @@ namespace eCommerce.Core.Configuration
                 this["separator"] = value;
             }
         }
+
+        [ConfigurationProperty("isfaked", IsRequired = false, DefaultValue = false)]
+        public bool IsFaked
+        {
+            get
+            {
+                return (bool)this["isfaked"];
+            }
+            set
+            {
+                this["isfaked"] = value;
+            }
+        }
     }
 
     public class ThemesElement : ConfigurationElement
