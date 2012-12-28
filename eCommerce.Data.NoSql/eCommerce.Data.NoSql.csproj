@@ -38,9 +38,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\mongocsharpdriver.1.7\lib\net35\MongoDB.Driver.dll</HintPath>
     </Reference>
-    <Reference Include="MongoRepository">
-      <HintPath>..\packages\MongoRepository.1.4.1\lib\MongoRepository.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,9 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProvider\MongoDbDataProvider.cs" />
+    <Compile Include="DataProvider\NoSqlDataProviderManager.cs" />
     <Compile Include="Domain\Logs\Entities\Log.cs" />
-    <Compile Include="Domain\Logs\LogLevel.cs" />
+    <Compile Include="INoSqlDataProvider.cs" />
+    <Compile Include="NoSqlDataProviderStartUpTask.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\MongoDbRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -67,6 +68,18 @@
       <Project>{e8f92f43-05ec-475c-8b57-fbbc3c1436fe}</Project>
       <Name>eCommerce.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Exception\eCommerce.Exception.csproj">
+      <Project>{0aaf2806-72c7-4212-8023-8843c2cd0de4}</Project>
+      <Name>eCommerce.Exception</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\eCommerce.Extensions.Data.MongoRepository\eCommerce.Extensions.Data.MongoRepository.csproj">
+      <Project>{34158789-8981-4fe0-a446-34f18c5942af}</Project>
+      <Name>eCommerce.Extensions.Data.MongoRepository</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="nosqldbsettings.txt" />
+    <Content Include="ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

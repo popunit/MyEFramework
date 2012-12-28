@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Core
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <remarks>TO-DO: consider to change to interface in order to avoid to inheriting from class</remarks>
     [DataContract]
     public abstract class EntityBase
     {

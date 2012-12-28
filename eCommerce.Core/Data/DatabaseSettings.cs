@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 namespace eCommerce.Core.Data
 {
     /// <summary>
-    /// Database settings
+    /// Database settings (TO-DO: Need to support multiple databases)
     /// </summary>
     /// <remarks>Modified INotifyPropertyChanged pattern according to
     /// http://blogs.clariusconsulting.net/kzu/simplified-inotifypropertychanged-implementation-with-weakreference-support-and-typed-property-access-api/

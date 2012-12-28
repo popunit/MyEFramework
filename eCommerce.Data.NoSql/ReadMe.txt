@@ -1,0 +1,1 @@
+﻿Need to register nosql type to container with hardcode "NO_SQL" so far.

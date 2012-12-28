@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Caching\CacheExtensions.cs" />
+    <Compile Include="Common\CommandHelper.cs" />
     <Compile Include="Common\EmitHelper.cs" />
     <Compile Include="Common\Web\WebExtensions.cs" />
     <Compile Include="Diagnosis\DebugHelper.cs" />

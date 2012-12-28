@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace eCommerce.Data.NoSql.Domain.Logs
+namespace eCommerce.Data.Domain.Common
 {
     public enum LogLevel
     {

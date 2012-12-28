@@ -76,6 +76,8 @@
     <Compile Include="DataProvider\MSSQLServerCeDataProvider.cs" />
     <Compile Include="DataProvider\MSSQLServerDataProvider.cs" />
     <Compile Include="Domain\Common\Entities\GenericCharacteristic.cs" />
+    <Compile Include="Domain\Common\Entities\Log.cs" />
+    <Compile Include="Domain\Common\LogLevel.cs" />
     <Compile Include="Domain\Users\Entities\User.cs" />
     <Compile Include="Domain\Users\Entities\UserRole.cs" />
     <Compile Include="Domain\Users\PasswordKit.cs" />

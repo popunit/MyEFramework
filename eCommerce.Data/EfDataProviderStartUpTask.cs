@@ -24,7 +24,8 @@ namespace eCommerce.Data
                 //var provider = AutofacHostFactory.Container.Resolve<IEfDataProvider>();
                 if (null == provider)
                     throw new CommonException("Cannot find Data Provider");
-                provider.SetDatabaseInitializer();
+                //provider.SetDatabaseInitializer();
+                provider.Init();
             }
         }
 
