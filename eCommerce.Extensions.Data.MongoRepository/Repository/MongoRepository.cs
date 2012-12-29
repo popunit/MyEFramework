@@ -1,6 +1,8 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository.Repository
 {
+    using eCommerce.Core;
     using MongoDB.Bson;
+    using MongoDB.Bson.Serialization;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
@@ -13,13 +15,22 @@
     /// Deals with entities in MongoDb.
     /// </summary>
     /// <typeparam name="T">The type contained in the repository.</typeparam>
-    public class MongoRepository<T> : IRepository<T>
-        where T : IEntity
+    public class MongoRepository<T> : IMongoRepository<T>
+        where T : EntityBase, IEntity
     {
         /// <summary>
         /// MongoCollection field.
         /// </summary>
-        private MongoCollection<T> collection;
+        protected MongoCollection<T> collection;
+
+        static MongoRepository()
+        {
+            BsonClassMap.RegisterClassMap<EntityBase>(cm =>
+            {
+                cm.AutoMap();
+                cm.UnmapProperty(c => c.Id); // unmap EntityBase.Id
+            });
+        }
 
         /// <summary>
         /// Initializes a new instance of the MongoRepository class.
@@ -136,11 +147,10 @@
         /// </summary>
         /// <param name="entity">The entity.</param>
         /// <returns>The updated entity.</returns>
-        public T Update(T entity)
+        public bool Update(T entity)
         {
-            this.collection.Save<T>(entity);
-
-            return entity;
+            var wcResult = this.collection.Save<T>(entity);
+            return !wcResult.HasLastErrorMessage;
         }
 
         /// <summary>
@@ -159,25 +169,28 @@
         /// Deletes an entity from the repository by its id.
         /// </summary>
         /// <param name="id">The string representation of the entity's id.</param>
-        public void Delete(string id)
+        public bool Delete(string id)
         {
+            WriteConcernResult wcResult = null;
             if (typeof(T).IsSubclassOf(typeof(Entity)))
             {
-                this.collection.Remove(Query.EQ("_id", new ObjectId(id)));
+                wcResult = this.collection.Remove(Query.EQ("_id", new ObjectId(id)));
             }
             else
             {
-                this.collection.Remove(Query.EQ("_id", id));
+                wcResult = this.collection.Remove(Query.EQ("_id", id));
             }
+
+            return !wcResult.HasLastErrorMessage;
         }
 
         /// <summary>
         /// Deletes the given entity.
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
-        public void Delete(T entity)
+        public bool Delete(T entity)
         {
-            this.Delete(entity._Id);
+            return this.Delete(entity._Id);
         }
 
         /// <summary>
@@ -288,6 +301,24 @@
         public void RequestDone()
         {
             this.collection.Database.RequestDone();
+        }
+
+        public T GetByKeys(params object[] keys)
+        {
+            if (null == keys || keys.Count() != 1)
+                return default(T); // only support objectId
+            return GetById(keys[0].ToString());
+        }
+
+        public bool Insert(T entity)
+        {
+           var wcResult =  this.collection.Insert<T>(entity);
+           return !wcResult.HasLastErrorMessage;
+        }
+
+        public IQueryable<T> Table
+        {
+            get { return All(); }
         }
     }
 }

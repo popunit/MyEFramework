@@ -15,11 +15,6 @@ namespace eCommerce.Data.NoSql.DataProvider
         public void Init()
         {
             CommandHelper.ExecuteCmd("net start mongodb");
-            BsonClassMap.RegisterClassMap<EntityBase>(cm =>
-            {
-                cm.AutoMap();
-                cm.UnmapProperty(c => c.Id); // unmap EntityBase.Id
-            });
         }
     }
 }

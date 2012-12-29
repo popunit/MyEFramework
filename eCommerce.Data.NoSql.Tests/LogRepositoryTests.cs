@@ -1,17 +1,14 @@
-﻿using eCommerce.Data.Domain.Common;
+﻿using eCommerce.Core;
+using eCommerce.Core.Common.Web;
+using eCommerce.Core.Data;
+using eCommerce.Data.Domain.Common;
 using eCommerce.Data.Domain.Users.Entities;
+using eCommerce.Data.NoSql.DataProvider;
 using eCommerce.Data.NoSql.Domain.Logs.Entities;
 using eCommerce.Data.NoSql.Repositories;
-using eCommerce.Extensions.Data.MongoRepository.Repository;
 using NUnit.Framework;
 using System;
-using System.Net;
 using System.Linq;
-using MongoDB.Bson.Serialization;
-using eCommerce.Core;
-using eCommerce.Data.NoSql.DataProvider;
-using eCommerce.Core.Data;
-using eCommerce.Core.Common.Web;
 
 namespace eCommerce.Data.NoSql.Tests
 {
@@ -33,9 +30,8 @@ namespace eCommerce.Data.NoSql.Tests
             try
             {
                 MongoDbRepository<Log> logRepository = new MongoDbRepository<Log>();
-                logRepository.Clear();
+                logRepository.DeleteAll();
 
-                string guid = Guid.NewGuid().ToString();
                 User user = new User();
                 user.Id = 1;
                 user.UserGuid = Guid.NewGuid();

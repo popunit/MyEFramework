@@ -6,12 +6,14 @@
     using System.Linq.Expressions;
     using MongoDB.Bson;
     using MongoDB.Driver;
+    using eCommerce.Core;
 
     /// <summary>
     /// IRepository definition.
     /// </summary>
     /// <typeparam name="T">The type contained in the repository.</typeparam>
-    public interface IRepository<T> where T : IEntity
+    public interface IMongoRepository<T> : IRepository<T>
+        where T : EntityBase, IEntity
     {
         /// <summary>
         /// Gets the Mongo collection (to perform advanced operations).
@@ -64,12 +66,12 @@
         /// <param name="entities">The entities of type T.</param>
         void Add(IEnumerable<T> entities);
 
-        /// <summary>
-        /// Upserts an entity.
-        /// </summary>
-        /// <param name="entity">The entity.</param>
-        /// <returns>The updated entity.</returns>
-        T Update(T entity);
+        ///// <summary>
+        ///// Upserts an entity.
+        ///// </summary>
+        ///// <param name="entity">The entity.</param>
+        ///// <returns>The updated entity.</returns>
+        //bool Update(T entity);
 
         /// <summary>
         /// Upserts the entities.
@@ -81,13 +83,13 @@
         /// Deletes an entity from the repository by its id.
         /// </summary>
         /// <param name="id">The string representation of the entity's id.</param>
-        void Delete(string id);
+        bool Delete(string id);
 
-        /// <summary>
-        /// Deletes the given entity.
-        /// </summary>
-        /// <param name="entity">The entity to delete.</param>
-        void Delete(T entity);
+        ///// <summary>
+        ///// Deletes the given entity.
+        ///// </summary>
+        ///// <param name="entity">The entity to delete.</param>
+        //bool Delete(T entity);
 
         /// <summary>
         /// Deletes the entities matching the criteria.

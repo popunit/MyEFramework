@@ -64,6 +64,12 @@
     <None Include="packages.config" />
     <None Include="web.config.transform" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\eCommerce.Core\eCommerce.Core.csproj">
+      <Project>{5895a87c-27f7-4e7a-b159-36e7f88e493b}</Project>
+      <Name>eCommerce.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
