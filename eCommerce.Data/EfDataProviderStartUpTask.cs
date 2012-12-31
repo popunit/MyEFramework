@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autofac.Integration.Wcf;
-using Autofac;
 using eCommerce.Core;
 using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;

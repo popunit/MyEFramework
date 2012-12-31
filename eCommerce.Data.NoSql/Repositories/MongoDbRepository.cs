@@ -12,6 +12,6 @@ namespace eCommerce.Data.NoSql.Repositories
     public class MongoDbRepository<T> : MongoRepository<T>
         where T : EntityBase, IEntity
     {
-
+        
     }
 }

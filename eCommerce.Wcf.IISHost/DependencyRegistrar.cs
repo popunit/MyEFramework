@@ -41,37 +41,37 @@ namespace eCommerce.Wcf.IISHost
             builder.RegisterType<WebsiteSearcher>().As<ISearcher>().InstancePerLifetimeScope();
             builder.RegisterType<DebugHelper>().As<IDebugHelper>().SingleInstance();
 
-            // database register
-            var dbSettingsManager = new DatabaseSettingsManager();
-            var databaseSettings = dbSettingsManager.LoadSettings();
-            builder.RegisterType<DatabaseSettingsManager>().InstancePerDependency();
-            builder.Register(context => context.Resolve<DatabaseSettingsManager>().LoadSettings()).As<DatabaseSettings>().InstancePerLifetimeScope();
-            builder.Register(context => new EfDataProviderManager(context.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
-            // register for two types
-            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
-            builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
+            //// database register
+            //var dbSettingsManager = new DatabaseSettingsManager();
+            //var databaseSettings = dbSettingsManager.LoadSettings();
+            //builder.RegisterType<DatabaseSettingsManager>().InstancePerDependency();
+            //builder.Register(context => context.Resolve<DatabaseSettingsManager>().LoadSettings()).As<DatabaseSettings>().InstancePerLifetimeScope();
+            //builder.Register(context => new EfDataProviderManager(context.Resolve<DatabaseSettings>())).As<IDataProviderManager>().InstancePerDependency();
+            //// register for two types
+            //builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IDataProvider>().InstancePerDependency();
+            //builder.Register(context => (IEfDataProvider)context.Resolve<IDataProviderManager>().DataProvider()).As<IEfDataProvider>().InstancePerDependency();
 
-            if (databaseSettings != null && databaseSettings.IsValid())
-            {
-                //var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
-                //var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
-                //dataProvider.Init();
+            //if (databaseSettings != null && databaseSettings.IsValid())
+            //{
+            //    //var efDataProviderManager = new EfDataProviderManager(dbSettingsManager.LoadSettings());
+            //    //var dataProvider = (IEfDataProvider)efDataProviderManager.DataProvider();
+            //    //dataProvider.Init();
 
-                builder.Register<IDatabase>(context => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerLifetimeScope();
-            }
-            else
-            {
-                builder.Register<IDatabase>(context => new CommerceDbContext(dbSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
-            }
+            //    builder.Register<IDatabase>(context => new CommerceDbContext(databaseSettings.DataConnectionString)).InstancePerLifetimeScope();
+            //}
+            //else
+            //{
+            //    builder.Register<IDatabase>(context => new CommerceDbContext(dbSettingsManager.LoadSettings().DataConnectionString)).InstancePerLifetimeScope();
+            //}
 
-            if (!dbSettingsManager.IsFaked)
-            {
-                builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
-            }
-            else
-            {
-                builder.RegisterGeneric(typeof(FaskeRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
-            }
+            //if (!dbSettingsManager.IsFaked)
+            //{
+            //    builder.RegisterGeneric(typeof(EfRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            //}
+            //else
+            //{
+            //    builder.RegisterGeneric(typeof(FaskeRepository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+            //}
 
             //host.EnableDiscovery();
             var container = builder.Build();

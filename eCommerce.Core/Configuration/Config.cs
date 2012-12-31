@@ -66,6 +66,19 @@ namespace eCommerce.Core.Configuration
                 this["themes"] = value;
             }
         }
+
+        [ConfigurationProperty("log")]
+        public LogDbSettingElement Log
+        {
+            get
+            {
+                return (LogDbSettingElement)this["log"];
+            }
+            set
+            {
+                this["log"] = value;
+            }
+        }
     }
 
     #region Configuration Element
@@ -142,6 +155,10 @@ namespace eCommerce.Core.Configuration
                 this["isfaked"] = value;
             }
         }
+    }
+
+    public class LogDbSettingElement : DatabaseSettingElement
+    { 
     }
 
     public class ThemesElement : ConfigurationElement

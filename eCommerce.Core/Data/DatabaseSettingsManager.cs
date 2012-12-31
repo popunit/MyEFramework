@@ -75,11 +75,9 @@ namespace eCommerce.Core.Data
 
             foreach (var item in items)
             {
-                var keyPair = item.Split(Separator);
+                var keyPair = item.Split(new char[] { Separator }, 2, StringSplitOptions.RemoveEmptyEntries);
                 if (keyPair.Count() == 0)
                     continue;
-                if (keyPair.Count() != 2)
-                    throw new CommonException("Database setting is not correct.");
                 string key = keyPair[0];
                 string value = keyPair[1];
                 DatabaseEnum keyEnum;
