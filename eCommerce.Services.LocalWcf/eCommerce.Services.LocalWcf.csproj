@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\AnnouncementServices Publish.pubxml" />
+    <None Include="Properties\PublishProfiles\eCommerce Local Services.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

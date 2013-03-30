@@ -1,4 +1,5 @@
 ﻿using eCommerce.Core;
+using eCommerce.Data.Domain.Common.Entities;
 using eCommerce.Data.Domain.Users.Entities;
 using Moq;
 using System;
@@ -10,16 +11,18 @@ using System.Threading.Tasks;
 
 namespace eCommerce.Data
 {
-    public static class DatabaseMocker
+    internal static class DatabaseMocker
     {
         private readonly static IList<UserRole> userRoleTable = new List<UserRole> 
         {
-            new UserRole{ Actived = true, Id =1, IsSystemRole = true, RoleName = "GUEST", SystemName="Guest"}
+            new UserRole{ Actived = true, Id = 1, IsSystemRole = true, RoleName = "GUEST", SystemName="Guest"}
         };
 
         private readonly static IList<User> userTable = new List<User>();
 
-        public static IList<T> GetTable<T>()
+        private readonly static IList<GenericCharacteristic> genericCharacteristicTable = new List<GenericCharacteristic>();
+
+        internal static IList<T> GetTable<T>()
         {
             switch (typeof(T).Name.ToUpperInvariant())
             {
@@ -27,6 +30,8 @@ namespace eCommerce.Data
                     return userRoleTable as IList<T>;
                 case "USER":
                     return userTable as IList<T>;
+                case "GENERICCHARACTERISTIC":
+                    return genericCharacteristicTable as IList<T>;
                 default:
                     return null;
             }
@@ -49,22 +54,42 @@ namespace eCommerce.Data
         public bool Insert(T entity)
         {
             var table = DatabaseMocker.GetTable<T>();
-            var target = (from e in table
-                         where e.Id == entity.Id
-                         select e).FirstOrDefault();
-            if(null == target)
+            if (entity.Id != 0)
             {
-                table.Add(entity);
-                return true;
+                var target = (from e in table
+                              where e.Id == entity.Id
+                              select e).FirstOrDefault();
+                if (null == target)
+                {
+                    table.Add(entity);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
-                return false;
+                if (table.Count() == 0)
+                {
+                    entity.Id = 1; // first entity in table
+                }
+                else
+                {
+                    entity.Id = table.Last().Id + 1; // [bug] if deleted the last element, the next element added will be the id of the deleted one
+                }
+
+                table.Add(entity);
+                return true;
             }
         }
 
         public bool Update(T entity)
         {
+            // entity.Id is identity number, it should not be 0;
+            if (entity.Id == 0)
+                return false;
             var table = DatabaseMocker.GetTable<T>();
             var target = (from e in table
                          where e.Id == entity.Id
@@ -82,6 +107,9 @@ namespace eCommerce.Data
 
         public bool Delete(T entity)
         {
+            // entity.Id is identity number, it should not be 0;
+            if (entity.Id == 0)
+                return false;
             var table = DatabaseMocker.GetTable<T>();
             var target = (from e in table
                          where e.Id == entity.Id

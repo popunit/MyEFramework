@@ -1,11 +1,11 @@
-﻿using System;
+﻿using eCommerce.Core.Data;
+using eCommerce.Web.Framework.Mvc.Controllers;
+using eCommerce.Web.Models.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using eCommerce.Core.Data;
-using eCommerce.Web.Framework.Mvc.Controllers;
-using eCommerce.Web.Models.User;
 
 namespace eCommerce.Web.Controllers
 {
@@ -33,7 +33,7 @@ namespace eCommerce.Web.Controllers
         public ActionResult Login(bool isGuest = false)
         {
             // create new model without information to wait for customer to input
-            var model = new LoginViewModel 
+            var model = new LoginViewModel
             {
                 IsLoginAsGuest = isGuest,
                 UsingUserEmail = userSettings.UsingUserEmail,

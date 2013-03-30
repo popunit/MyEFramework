@@ -8,9 +8,11 @@ using eCommerce.Wcf.Services.Contracts.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Activation;
 
 namespace eCommerce.Wcf.Services.Common
 {
+    [AspNetCompatibilityRequirements(RequirementsMode=AspNetCompatibilityRequirementsMode.Required)]
     public class GenericCharacteristicService : IGenericCharacteristicService
     {
         private readonly IRepository<GenericCharacteristic> genericCharacteristicRepository;

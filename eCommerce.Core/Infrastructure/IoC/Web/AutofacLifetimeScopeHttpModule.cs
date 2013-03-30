@@ -14,7 +14,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
     /// </summary>
     public class AutofacLifetimeScopeHttpModule : IHttpModule
     {
-        private static readonly object tag = "httpRequest"; // it is fixed, required by autofac MVC pre-request instance
+        private static readonly object tag = "AutofacWebRequest"; // it is fixed, required by autofac MVC pre-request instance
 
 
         private static ILifetimeScope lifetimeScope

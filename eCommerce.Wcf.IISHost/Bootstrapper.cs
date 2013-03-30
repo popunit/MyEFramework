@@ -10,7 +10,7 @@ using System.Web.Routing;
 
 namespace eCommerce.Wcf.IISHost
 {
-    [assembly: WebActivator.PreApplicationStartMethod(typeof(Bootstrapper), "Initialize")]
+    [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Bootstrapper), "Initialize")]
     public class Bootstrapper
     {
         public static void Initialize()

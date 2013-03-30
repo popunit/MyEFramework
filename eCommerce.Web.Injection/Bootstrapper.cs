@@ -12,7 +12,7 @@ using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 using eCommerce.Core.Common;
 using eCommerce.Core;
 
-[assembly: WebActivator.PreApplicationStartMethod(typeof(eCommerce.Web.Injection.Bootstrapper), "Initialize")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(eCommerce.Web.Injection.Bootstrapper), "Initialize")]
 namespace eCommerce.Web.Injection
 {
     public class Bootstrapper

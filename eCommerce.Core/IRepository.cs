@@ -14,6 +14,7 @@ namespace eCommerce.Core
     [DataContract]
     public abstract class EntityBase
     {
+        [DataMember]
         public virtual long Id { get; set; }
     }
 

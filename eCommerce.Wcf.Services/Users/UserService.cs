@@ -10,10 +10,12 @@ using eCommerce.Wcf.Services.Contracts.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Activation;
 
 namespace eCommerce.Wcf.Services.Users
 {
     //[ServiceBehavior(IncludeExceptionDetailInFaults = true|false)]
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Required)]
     public class UserService : IUserService
     {
         private readonly IRepository<User> userRepository;

@@ -1,9 +1,6 @@
-﻿using eCommerce.Core.Data;
-using eCommerce.Core.Infrastructure;
-using eCommerce.Services.Common;
+﻿using eCommerce.Services.Common;
 using eCommerce.Web.Framework.Mvc.DependencyResolvers;
 using eCommerce.Web.Framework.Mvc.ModelBinder;
-using eCommerce.Web.Framework.Mvc.RouteData;
 using eCommerce.Web.Framework.Mvc.View.ViewEngines;
 using System.Web.Http;
 using System.Web.Mvc;
@@ -17,31 +14,6 @@ namespace eCommerce.Web
 
     public class MvcApplication : System.Web.HttpApplication
     {
-        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
-        {
-            filters.Add(new HandleErrorAttribute());
-        }
-
-        public static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
-            var routeManager = DependencyResolver.Current.GetService<IRouteManager>();
-            routeManager.RegisterAllRoutes(routes);
-
-            routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
-        }
-
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -64,10 +36,11 @@ namespace eCommerce.Web
                 ViewEngines.Engines.Add(new ThemeableRazorViewEngine());
             }
 
-            RegisterGlobalFilters(GlobalFilters.Filters);
-            RegisterRoutes(RouteTable.Routes);
-
-            BundleTable.Bundles.RegisterTemplateBundles();
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            AuthConfig.RegisterAuth();
         }
     }
 }
