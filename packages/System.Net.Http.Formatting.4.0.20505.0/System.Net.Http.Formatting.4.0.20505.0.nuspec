@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>System.Net.Http.Formatting</id>
+    <version>4.0.20505.0</version>
+    <title>System.Net.Http.Formatting (RC)</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <licenseUrl>http://www.microsoft.com/web/webpi/eula/MVC4_prerelease_eula.htm</licenseUrl>
+    <projectUrl>http://www.asp.net/web-api</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Legacy package, System.Net.Http.Formatting is now included in the 'Microsoft.AspNet.WebApi.Client' package.</description>
+    <summary>Legacy package, System.Net.Http.Formatting is now included in the 'Microsoft.AspNet.WebApi.Client' package.</summary>
+    <dependencies>
+      <dependency id="Microsoft.AspNet.WebApi.Client" version="2.0.20505.0" />
+    </dependencies>
+  </metadata>
+</package>

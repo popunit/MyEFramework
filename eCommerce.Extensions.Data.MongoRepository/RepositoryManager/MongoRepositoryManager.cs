@@ -225,7 +225,8 @@
         /// </remarks>
         public void ResetIndexCache()
         {
-            this.collection.ResetIndexCache();
+            //this.collection.ResetIndexCache();
+            this.collection.ReIndex();
 
             this.collection.GetIndexes();
         }
