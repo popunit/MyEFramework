@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using Autofac;
+﻿using Autofac;
 using eCommerce.Core.Common;
+using System.Web;
 
 namespace eCommerce.Core.Infrastructure.IoC.Web
 {
@@ -14,7 +9,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
     /// </summary>
     public class AutofacLifetimeScopeHttpModule : IHttpModule
     {
-        private static readonly object tag = "AutofacWebRequest"; // it is fixed, required by autofac MVC pre-request instance
+        private static readonly object Tag = "AutofacWebRequest"; // it is fixed, required by autofac MVC pre-request instance
 
 
         private static ILifetimeScope lifetimeScope
@@ -48,9 +43,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
         {
             if (IsValid())
             {
-                if (null == lifetimeScope)
-                    lifetimeScope = container.BeginLifetimeScope(tag);
-                return lifetimeScope;
+                return lifetimeScope ?? (lifetimeScope = container.BeginLifetimeScope(Tag));
             }
             else
                 return null;

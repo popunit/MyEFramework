@@ -1,25 +1,22 @@
-﻿using System;
+﻿using AutoMapper;
+using eCommerce.Core;
+using eCommerce.Core.Common;
+using eCommerce.Data.Common;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using AutoMapper;
-using eCommerce.Core;
-using eCommerce.Core.Common;
-using eCommerce.Data.Common;
 
 namespace eCommerce.Data
 {
     public class CommerceDbContext : DbContext, IDatabase
     {
         // TO-DO: should cache in shared
-        private readonly static Dictionary<Type, dynamic> dic = new Dictionary<Type,dynamic>();
+        private static readonly Dictionary<Type, object> Dic = new Dictionary<Type, object>();
 
         static CommerceDbContext()
         {
@@ -29,10 +26,7 @@ namespace eCommerce.Data
             var types = typeof(CommerceDbContext).GetTypesFromCurrentAssembly();
             types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
                 type.IsInheritFrom(typeof(EntityBase)))
-                .ForEach(type =>
-                {
-                    Mapper.CreateMap(type, type);
-                });
+                .ForEach(type => Mapper.CreateMap(type, type));
 
             types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
                 type.IsInheritFrom(typeof(IEmptyEntityMap<>))).
@@ -42,7 +36,7 @@ namespace eCommerce.Data
                     dynamic instance = EmitHelper.FastGetInstance(type)();
                     if (instance.IsValid() == true)
                     {
-                        dic.Add(instance.EntityType, instance.Get());
+                        Dic.Add(instance.EntityType, instance.Get());
                     }
                 });
         }
@@ -64,23 +58,18 @@ namespace eCommerce.Data
             Type t = typeof(CommerceDbContext);
             Type[] types = Assembly.GetAssembly(t).GetTypes();
             var entityTypeConfigurationTypes = new List<Type>();
-            types.Where(type => type.IsInheritFrom(typeof(EntityBase))).ForEach(type =>
-            {
-                entityTypeConfigurationTypes.Add(typeof(EntityTypeConfiguration<>).MakeGenericType(type));
-            });
+            types.Where(type => type.IsInheritFrom(typeof(EntityBase))).ForEach(type => 
+                entityTypeConfigurationTypes.Add(typeof(EntityTypeConfiguration<>).MakeGenericType(type)));
 
-            // TO-DO: to improve the performance
-            entityTypeConfigurationTypes.ForEach(configType =>
-            {
-                types.Where(type => !String.IsNullOrEmpty(type.Namespace) &&
-                    type.IsInheritFrom(configType))
+            entityTypeConfigurationTypes.ForEach(configType => types.Where(type => 
+                !String.IsNullOrEmpty(type.Namespace) && 
+                type.IsInheritFrom(configType))
                 .ForEach(type =>
                 {
                     //dynamic instance = Activator.CreateInstance(type);
                     dynamic instance = EmitHelper.FastGetInstance(type)();
                     modelBuilder.Configurations.Add(instance);
-                });
-            });
+                }));
             
 
             base.OnModelCreating(modelBuilder);
@@ -91,6 +80,14 @@ namespace eCommerce.Data
             return base.Set<TEntity>();
         }
 
+        /// <summary>
+        /// Execute sql command including stored procedure.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="command"></param>
+        /// <param name="parameters"></param>
+        /// <returns></returns>
+        /// <remarks>[TO-DO] consider simplifying code</remarks>
         public IList<TEntity> ExecuteCommand<TEntity>(string command, params DbParameter[] parameters) 
             where TEntity : EntityBase, new()
         {
@@ -140,9 +137,8 @@ namespace eCommerce.Data
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     // move parameters to command object
-                    if (parameters != null)
-                        foreach (var p in parameters)
-                            cmd.Parameters.Add(p);
+                    foreach (var p in parameters)
+                        cmd.Parameters.Add(p);
 
                     //database call
                     var reader = cmd.ExecuteReader();
@@ -158,36 +154,32 @@ namespace eCommerce.Data
             }
         }
 
+        /// <summary>
+        /// Attach entity into context.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="entity"></param>
+        /// <returns></returns>
         protected virtual TEntity AttachEntityToContext<TEntity>(TEntity entity) where TEntity : EntityBase, new()
         {
-            var alreadyAttached = this.Store<TEntity>().Local.Where(x => x.Id == entity.Id).FirstOrDefault();
-            if (alreadyAttached == null)
-            {
-                //attach new entity
+            if (this.GetEntityState(entity) != EntityState.Detached)
                 this.Store<TEntity>().Attach(entity);
-                return entity;
-            }
-            else
-            {
-                //entity is already loaded.
-                return alreadyAttached;
-            }
+            return entity;
         }
 
         public EntityState GetEntityState<TEntity>(TEntity entity) where TEntity : EntityBase, new()
         {
-            return this.Entry<TEntity>(entity).State;
+            return this.Entry(entity).State;
         }
 
         public void SetEntityState<TEntity>(TEntity entity, EntityState state) where TEntity : EntityBase, new()
         {
-            this.Entry<TEntity>(entity).State = state;
+            this.Entry(entity).State = state;
         }
-
 
         public TEntity GetEmptyEntity<TEntity>() where TEntity : EntityBase, new()
         {
-            return (TEntity)dic[typeof(TEntity)];
+            return (TEntity)Dic[typeof(TEntity)];
         }
     }
 }

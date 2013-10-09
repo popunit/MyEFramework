@@ -1,14 +1,6 @@
-﻿using eCommerce.Core;
-using eCommerce.Data.Domain.Common;
-using eCommerce.Data.Domain.Users.Entities;
-using eCommerce.Extensions.Data.MongoRepository;
+﻿using eCommerce.Extensions.Data.MongoRepository;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DataEntities = eCommerce.Data.Domain.Common.Entities;
 
 namespace eCommerce.Data.NoSql.Domain.Logs.Entities

@@ -1,12 +1,7 @@
-﻿using System;
+﻿using eCommerce.Core;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core;
 
 namespace eCommerce.Data
 {
@@ -34,6 +29,11 @@ namespace eCommerce.Data
         IList<TEntity> ExecuteCommand<TEntity>(string command, params DbParameter[] parameters)
             where TEntity : EntityBase, new();
 
+        /// <summary>
+        /// Return an entity as empty in order to avoid using null
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
         TEntity GetEmptyEntity<TEntity>() where TEntity : EntityBase, new();
     }
 }

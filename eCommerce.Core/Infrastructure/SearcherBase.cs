@@ -1,21 +1,18 @@
-﻿using System;
+﻿using eCommerce.Core.Common;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
-using System.IO;
 using System.Text.RegularExpressions;
 
 namespace eCommerce.Core.Infrastructure
 {
     public abstract class SearcherBase : ISearcher
     {
-        private readonly string assemblySkipLoadingPattern
-            = "^System|^mscorlib|^Microsoft|^CppCodeProvider|^VJSharpCodeProvider|^WebDev|^Castle|^Iesi|^log4net|^NHibernate|^nunit|^TestDriven|^MbUnit|^Rhino|^QuickGraph|^TestFu|^Telerik|^ComponentArt|^MvcContrib|^AjaxControlToolkit|^Antlr3|^Remotion|^Recaptcha|^WebActivator|^Autofac.Integration.MVC";
+        private const string AssemblySkipLoadingPattern = "^System|^mscorlib|^Microsoft|^CppCodeProvider|^VJSharpCodeProvider|^WebDev|^Castle|^Iesi|^log4net|^NHibernate|^nunit|^TestDriven|^MbUnit|^Rhino|^QuickGraph|^TestFu|^Telerik|^ComponentArt|^MvcContrib|^AjaxControlToolkit|^Antlr3|^Remotion|^Recaptcha|^WebActivator|^Autofac.Integration.MVC";
 
-        private readonly string assemblyRestrictToLoadingPattern = ".*";
+        private const string AssemblyRestrictToLoadingPattern = ".*";
 
         protected bool CheckLoadedAppDomainAssemblies
         {
@@ -118,29 +115,26 @@ namespace eCommerce.Core.Infrastructure
                     availablePaths.Add(path);
             });
 
-            if (availablePaths.Count() == 0)
+            if (!availablePaths.Any())
                 return;
 
             var loadedAssemblyNames = GetAllAssemblies().Keys; // get all the assemblies which is existed in current AppDomain
 
-            availablePaths.ForEach(path =>
+            availablePaths.ForEach(path => 
+                Directory.GetFiles(path, "*.dll").ForEach(dll =>
                 {
-                    Directory.GetFiles(path, "*.dll").ForEach(dll =>
+                    var assemblyName = AssemblyName.GetAssemblyName(dll);
+                    if (Matches(assemblyName.FullName) && !loadedAssemblyNames.Contains(assemblyName.FullName)) // if the assembly hasn't been upload, load it
                     {
-                        var assemblyName = AssemblyName.GetAssemblyName(dll);
-                        if (Matches(assemblyName.FullName) && !loadedAssemblyNames.Contains(assemblyName.FullName)) // if the assembly hasn't been upload, load it
-                        {
-                            AppDomain.CurrentDomain.Load(assemblyName);
-                        }
-                    });
-                }
-            );
+                        AppDomain.CurrentDomain.Load(assemblyName);
+                    }
+                }));
         }
 
         private bool Matches(string assemblyFullName)
         {
-            return !Matches(assemblyFullName, assemblySkipLoadingPattern)
-                   && Matches(assemblyFullName, assemblyRestrictToLoadingPattern);
+            return !Matches(assemblyFullName, AssemblySkipLoadingPattern)
+                   && Matches(assemblyFullName, AssemblyRestrictToLoadingPattern);
         }
 
         private bool Matches(string assemblyFullName, string pattern)

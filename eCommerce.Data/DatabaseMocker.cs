@@ -1,37 +1,33 @@
-﻿using eCommerce.Core;
+﻿using AutoMapper;
+using eCommerce.Core;
 using eCommerce.Data.Domain.Common.Entities;
 using eCommerce.Data.Domain.Users.Entities;
-using Moq;
-using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Data
 {
     internal static class DatabaseMocker
     {
-        private readonly static IList<UserRole> userRoleTable = new List<UserRole> 
+        private readonly static IList<UserRole> UserRoleTable = new List<UserRole> 
         {
             new UserRole{ Actived = true, Id = 1, IsSystemRole = true, RoleName = "GUEST", SystemName="Guest"}
         };
 
-        private readonly static IList<User> userTable = new List<User>();
+        private readonly static IList<User> UserTable = new List<User>();
 
-        private readonly static IList<GenericCharacteristic> genericCharacteristicTable = new List<GenericCharacteristic>();
+        private readonly static IList<GenericCharacteristic> GenericCharacteristicTable = new List<GenericCharacteristic>();
 
         internal static IList<T> GetTable<T>()
         {
             switch (typeof(T).Name.ToUpperInvariant())
             {
                 case "USERROLE":
-                    return userRoleTable as IList<T>;
+                    return UserRoleTable as IList<T>;
                 case "USER":
-                    return userTable as IList<T>;
+                    return UserTable as IList<T>;
                 case "GENERICCHARACTERISTIC":
-                    return genericCharacteristicTable as IList<T>;
+                    return GenericCharacteristicTable as IList<T>;
                 default:
                     return null;
             }
@@ -71,7 +67,7 @@ namespace eCommerce.Data
             }
             else
             {
-                if (table.Count() == 0)
+                if (!table.Any()) // empty list
                 {
                     entity.Id = 1; // first entity in table
                 }
@@ -100,7 +96,8 @@ namespace eCommerce.Data
             }
             else
             {
-                target = entity;
+                //target = entity;
+                Mapper.Map(entity, target);
                 return true;
             }
         }

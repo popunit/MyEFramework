@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿using eCommerce.Core.Configuration;
+using System;
 using System.Web;
 using System.Web.Hosting;
-using eCommerce.Core.Configuration;
 
 namespace eCommerce.Core.Infrastructure
 {
     public class WebsiteSearcher : AppDomainSearcher
     {
-        private bool ensureBinFolderAssembliesLoaded = true;
-        private bool binFolderAssembliesLoaded = false;
+        private readonly bool _ensureBinFolderAssembliesLoaded = true;
+        private bool _binFolderAssembliesLoaded;
 
         public WebsiteSearcher(Config config)
         {
-            this.ensureBinFolderAssembliesLoaded = config.Automation.Enabled;
+            this._ensureBinFolderAssembliesLoaded = config.Automation.Enabled;
         }
 
         public string GetBinDirectory()
@@ -38,9 +33,9 @@ namespace eCommerce.Core.Infrastructure
         {
             base.Init();
 
-            if (this.ensureBinFolderAssembliesLoaded && !this.binFolderAssembliesLoaded)
+            if (this._ensureBinFolderAssembliesLoaded && !this._binFolderAssembliesLoaded)
             {
-                binFolderAssembliesLoaded = true;
+                _binFolderAssembliesLoaded = true;
                 string binPath = GetBinDirectory();
                 this.UploadAssembliesToAppDomain(new string[] { binPath });
             }

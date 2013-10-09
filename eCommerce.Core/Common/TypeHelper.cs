@@ -6,11 +6,8 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace eCommerce.Core.Common
 {
@@ -87,7 +84,7 @@ namespace eCommerce.Core.Common
         /// use add like a collection. Should use IList or ICollection instead.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="collection"></param>
+        /// <param name="enumeration"></param>
         /// <param name="item"></param>
         /// <returns></returns>
         public static IEnumerable<T> Add<T>(this IEnumerable<T> enumeration, T item)
@@ -103,10 +100,7 @@ namespace eCommerce.Core.Common
         {
             if (enumeration.IsNull() || collection.IsNull())
                 return null;
-            enumeration.ForEach(t => 
-            {
-                collection.Add(t);
-            });
+            enumeration.ForEach(collection.Add);
 
             return collection;
         }
@@ -144,20 +138,20 @@ namespace eCommerce.Core.Common
         /// <returns></returns>
         public static Predicate<T> ToPredicate<T>(this Func<T, bool> source)
         {
-            Predicate<T> result = new Predicate<T>(source);
+            var result = new Predicate<T>(source);
             return result;
         }   
 
         public static string[] Trims(this IEnumerable<string> collection)
         {
             string[] items = collection.ToArray();
-            Array.ForEach(items, item => item.Trim());
+            Array.ForEach(items, item => item = item.Trim());
             return items;
         }
 
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumeration)
         {
-            if (enumeration.IsNull() || enumeration.Count() == 0)
+            if (enumeration.IsNull() || !enumeration.Any())
                 return true;
             return false;
         }
@@ -199,10 +193,10 @@ namespace eCommerce.Core.Common
             return null != attr;
         }
 
-        public static bool IsSerializable(this Type type)
-        {
-            return type.IsSerializable();
-        }
+        //public static bool IsSerializable1(this Type type)
+        //{
+        //    return type.IsSerializable;
+        //}
 
         public static Uri EnsureWsdl(this Uri uri)
         {
@@ -211,7 +205,7 @@ namespace eCommerce.Core.Common
             {
                 if (absoluteUri.Contains(".svc"))
                 {
-                    Regex reg = new Regex(@"([\w|\.]+://\S+\.svc)\S+");
+                    var reg = new Regex(@"([\w|\.]+://\S+\.svc)\S+");
                     Match match = reg.Match(absoluteUri);
                     if (!match.IsNull() && match.Groups.Count > 1)
                     {
@@ -249,7 +243,7 @@ namespace eCommerce.Core.Common
             string desc = value.ToString();
 
             FieldInfo info = value.GetType().GetField(desc);
-            var attrs = (DescriptionAttribute[])info.GetCustomAttributes(typeof(DescriptionAttribute), false);
+            var attrs = info.GetCustomAttributes(typeof(DescriptionAttribute), false) as DescriptionAttribute[];
 
             if (attrs != null && attrs.Length > 0)
             {
@@ -266,14 +260,14 @@ namespace eCommerce.Core.Common
     public class RequstTempData
     {
         // TO-DO: Check how many items do it have in multi threads
-        private static ThreadLocal<RequstTempData> __inc = new ThreadLocal<RequstTempData>();
+        private readonly static ThreadLocal<RequstTempData> Inc = new ThreadLocal<RequstTempData>();
 
         public RequstTempData()
         {
             try
             {
                 DataBag = new ExpandoObject();
-                __inc.Value = this;
+                Inc.Value = this;
             }
             catch
             {
@@ -289,7 +283,7 @@ namespace eCommerce.Core.Common
 
         public static RequstTempData Local
         {
-            get { return __inc.Value; }
+            get { return Inc.Value; }
         }
 
         //public void Dispose()
@@ -301,12 +295,12 @@ namespace eCommerce.Core.Common
 
     public class GenericListTypeConverter<T> : TypeConverter
     {
-        protected readonly TypeConverter typeConverter;
+        protected readonly TypeConverter Converter;
 
         public GenericListTypeConverter()
         {
-            typeConverter = TypeDescriptor.GetConverter(typeof(T));
-            if (typeConverter == null)
+            Converter = TypeDescriptor.GetConverter(typeof(T));
+            if (Converter == null)
                 throw new InvalidOperationException("No type converter exists for type " + typeof(T).FullName);
         }
 
@@ -326,7 +320,7 @@ namespace eCommerce.Core.Common
             if (sourceType == typeof(string))
             {
                 string[] items = this.GetStringArray(sourceType.ToString());
-                return items.Count() > 0;
+                return items.Any();
             }
 
             return base.CanConvertFrom(context, sourceType);
@@ -334,13 +328,14 @@ namespace eCommerce.Core.Common
 
         public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
         {
-            if (value is string)
+            var str = value as string;
+            if (str != null)
             {
-                string[] items = GetStringArray((string)value);
+                string[] items = GetStringArray(str);
                 var list = new List<T>();
                 items.ForEach(item => 
                 {
-                    object obj = typeConverter.ConvertFromInvariantString(item);
+                    object obj = Converter.ConvertFromInvariantString(item);
                     if (null != obj)
                         list.Add((T)obj);
                 });
@@ -364,7 +359,7 @@ namespace eCommerce.Core.Common
                         line += str;
                         line += ",";
                     });
-                    line.Trim(','); // remove the last comma
+                    line = line.Trim(','); // remove the last comma
                 }
 
                 return line;

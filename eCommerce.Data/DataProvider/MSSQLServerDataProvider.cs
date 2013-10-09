@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using eCommerce.Data.DatabaseInitializers;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Data.DatabaseInitializers;
 
 namespace eCommerce.Data.DataProvider
 {
     /// <summary>
     /// Data Provider for MS SQL Server depends on Entity Framework
     /// </summary>
-    public class MSSQLServerDataProvider : EfDataProviderBase
+    public class MssqlServerDataProvider : EfDataProviderBase
     {
         public override IDbConnectionFactory GetFactory()
         {

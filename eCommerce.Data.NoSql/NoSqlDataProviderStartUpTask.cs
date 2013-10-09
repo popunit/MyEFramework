@@ -2,11 +2,6 @@
 using eCommerce.Core.Data;
 using eCommerce.Core.Infrastructure;
 using eCommerce.Exception;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Data.NoSql
 {

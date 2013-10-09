@@ -21,7 +21,7 @@ namespace eCommerce.Wcf.Framework.Context
         static GenericContext()
         {
             Type t = typeof(T);
-            if (!t.IsSerializable() && !t.IsDataContract())
+            if (!t.IsSerializable && !t.IsDataContract())
                 throw new TypeAccessException();
             typeName = "GenericContext";
             nameSpace = "net.clr:" + t.FullName;

@@ -1,10 +1,6 @@
-﻿using System;
+﻿using eCommerce.Core.Common;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
 
 namespace eCommerce.Core.Infrastructure
 {
@@ -14,7 +10,7 @@ namespace eCommerce.Core.Infrastructure
     /// <remarks>[Built-in Component]</remarks>
     public class AppDomainSearcher : SearcherBase
     {
-        private IEnumerable<string> extraAssemblyNames;
+        private IEnumerable<string> _extraAssemblyNames;
 
         public AppDomainSearcher()
         {
@@ -32,12 +28,12 @@ namespace eCommerce.Core.Infrastructure
 
         public void SetAssemblyNamesToUpload(IEnumerable<string> assemblyNames)
         {
-            extraAssemblyNames = assemblyNames;
+            _extraAssemblyNames = assemblyNames;
         }
 
         private void AddConfiguredAssemblies(IDictionary<string, Assembly> assemblies)
         {
-            extraAssemblyNames.ForEach(assemblyName => 
+            _extraAssemblyNames.ForEach(assemblyName => 
             {
                 Assembly assembly = Assembly.Load(assemblyName);
                 if (!assemblies.Keys.Contains(assembly.FullName))

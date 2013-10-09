@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace eCommerce.Core.Configuration
 {
@@ -28,7 +23,7 @@ namespace eCommerce.Core.Configuration
             }
         }
 
-        private static readonly Config rdSection = 
+        private static readonly Config RdSection = 
             ConfigurationManager.GetSection(Constants.SectionName) as Config;
 
         /// <summary>
@@ -38,7 +33,7 @@ namespace eCommerce.Core.Configuration
         {
             get
             {
-                return rdSection;
+                return RdSection;
             }
         }
     }

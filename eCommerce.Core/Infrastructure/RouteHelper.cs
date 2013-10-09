@@ -1,10 +1,8 @@
-﻿using System;
+﻿using eCommerce.Core.Common;
+using eCommerce.Exception;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
-using eCommerce.Exception;
 
 namespace eCommerce.Core.Infrastructure
 {
@@ -20,7 +18,7 @@ namespace eCommerce.Core.Infrastructure
             this ISearcher searcher,
             Action<T> executing) where T : IOrderable
         {
-            RoutingToExecute<T>(searcher, Order.ASC, executing);
+            RoutingToExecute(searcher, Order.ASC, executing);
         }
 
         public static void RoutingToExecute<T>(
@@ -32,18 +30,15 @@ namespace eCommerce.Core.Infrastructure
                 throw new NullReferenceException();
             var types = searcher.FindType<T>();
             var instances = new List<T>();
-            types.ForEach(t =>
-            {
-                instances.Add((T)EmitHelper.FastGetInstance(t)());
-            });
+            types.ForEach(t => instances.Add((T)EmitHelper.FastGetInstance(t)()));
 
             switch (orderBy)
             {
                 case Order.ASC:
-                    instances.OrderBy(t => t.Order).ForEach(i => executing(i));
+                    instances.OrderBy(t => t.Order).ForEach(executing);
                     break;
                 case Order.DESC:
-                    instances.OrderByDescending(t => t.Order).ForEach(i => executing(i));
+                    instances.OrderByDescending(t => t.Order).ForEach(executing);
                     break;
             }
             
@@ -60,7 +55,7 @@ namespace eCommerce.Core.Infrastructure
             Action<Type> executing)
         {
             var types = searcher.FindType<T>();
-            types.ForEach(t => executing(t));
+            types.ForEach(executing);
         }
 
         /// <summary>
@@ -75,7 +70,7 @@ namespace eCommerce.Core.Infrastructure
             Action<Type> executing)
         {
             var types = searcher.FindType(genericType); // IsGenericTypeDefinition?
-            types.ForEach(t => executing(t));
+            types.ForEach(executing);
         }
 
         internal static void FindExceptionToHandle(
@@ -87,18 +82,15 @@ namespace eCommerce.Core.Infrastructure
             // TO-DO: should cache here because here will be performed multi times.
             var types = searcher.FindType<IHandler>();
             var instances = new List<IHandler>();
-            IEnumerable<Type> filters;
-            if (targetExceptionType == null)
-                filters = types.Where(t => t == targetExceptionType);
-            else
-                filters = types;
+            IEnumerable<Type> filters = 
+                targetExceptionType != null ? types.Where(t => t == targetExceptionType) : types;
             foreach (var t in filters)
             {
                 Type arg;
                 if (t.IsGenericType)
                     arg = t.GetGenericArguments()[0];
                 else
-                    arg = t.BaseType.GetGenericArguments()[0];
+                    arg = t.BaseType.GetGenericArguments()[0]; // [TO-DO] check if base type exists
 
                 object obj;
                 try

@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Diagnostics;
-using System.Collections;
-using eCommerce.Exception;
-using System.ComponentModel;
+using System.Linq;
 
 namespace eCommerce.Core.Infrastructure.NoAOP
 {
@@ -117,7 +112,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 TReturnType returnValue = default(TReturnType);
                 this.Chain(() =>
                 {
-                    Func<TReturnType> workDelegate = WorkDelegate as Func<TReturnType>;
+                    var workDelegate = WorkDelegate as Func<TReturnType>;
                     returnValue = workDelegate();
                 });
                 return returnValue;
@@ -137,7 +132,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 TReturnType returnValue = default(TReturnType);
                 this.Chain(() =>
                 {
-                    Func<AspectF, TReturnType> workDelegate = WorkDelegate as Func<AspectF, TReturnType>;
+                    var workDelegate = WorkDelegate as Func<AspectF, TReturnType>;
                     returnValue = workDelegate(this);
                 });
                 return returnValue;
@@ -259,7 +254,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 for (int i = 0; i < args.Length; i++)
                 {
                     T arg = args[i];
-                    if (arg == null || arg.Equals(defaultvalue))
+                    if (arg.Equals(defaultvalue))
                         throw new ArgumentException(
                             string.Format("Parameter at index {0} is null", i));
                 }
@@ -328,9 +323,10 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         {
             return aspect.Combine((work) =>
             {
-                foreach (Func<bool> condition in conditions)
-                    if (!condition())
-                        return;
+                if (conditions.Any(condition => !condition()))
+                {
+                    return;
+                }
 
                 work();
             });
@@ -447,6 +443,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         /// </summary>
         /// <param name="aspect"></param>
         /// <param name="exceptionType"></param>
+        /// <param name="anyCatch"></param>
         /// <returns></returns>
         /// <remarks>Added by Patrick Yu</remarks>
         [DebuggerStepThrough]
@@ -461,7 +458,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 catch (System.Exception x)
                 {
                     var searcher = EngineContext.Current.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
-                    RouteHelper.FindExceptionToHandle(searcher, exceptionType, x, !anyCatch);
+                    searcher.FindExceptionToHandle(exceptionType, x, !anyCatch);
                 }
             });
         }
@@ -496,7 +493,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                     }
                     else
                     {
-                        throw x;
+                        throw;
                     }
                 }
             });
@@ -529,7 +526,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                     }
                     else
                     {
-                        throw x;
+                        throw;
                     }
                 }
             });
@@ -553,7 +550,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                 catch (System.Exception x)
                 {
                     var searcher = EngineContext.Current.Resolve<ISearcher>(typeof(WebsiteSearcher).Name);
-                    RouteHelper.FindExceptionToHandle(searcher, null, x);
+                    searcher.FindExceptionToHandle(null, x);
                 }
             });
         }
@@ -570,10 +567,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         [DebuggerStepThrough]
         public static AspectF RunAsync(this AspectF aspect)
         {
-            return aspect.Combine((work) => work.BeginInvoke(asyncresult => 
-                { 
-                    work.EndInvoke(asyncresult); 
-                }, null));
+            return aspect.Combine((work) => work.BeginInvoke(work.EndInvoke, null));
         }
 
         [DebuggerStepThrough]
@@ -581,9 +575,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
             ICache cacheResolver, string key)
         {            
             return aspect.Combine((work) => 
-            {
-                Cache<TReturnType>(aspect, cacheResolver, key, work, cached => cached);
-            });
+                Cache<TReturnType>(aspect, cacheResolver, key, work, cached => cached));
         }
 
         [DebuggerStepThrough]
@@ -593,7 +585,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
         {
             return aspect.Combine((work) =>
             {
-                Func<TListType> workDelegate = aspect.WorkDelegate as Func<TListType>;
+                var workDelegate = aspect.WorkDelegate as Func<TListType>;
 
                 // Replace the actual work delegate with a new delegate so that
                 // when the actual work delegate returns a collection, each item
@@ -618,7 +610,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                         // Get each item from cache. If any of the item is not in cache
                         // then discard the whole collection from cache and reload the 
                         // collection from source.
-                        TListType itemList = new TListType();
+                        var itemList = new TListType();
                         foreach (TItemType item in cached)
                         {
                             object cachedItem = cacheResolver.Get(getItemKey(item));
@@ -664,7 +656,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
                     catch (System.Exception ex)
                     {
                         logger.LogException(ex);
-                        throw ex;
+                        throw;
                     }
                 }
             });
@@ -682,7 +674,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
             {
                 // Give caller a chance to shape the cached item before it is returned
                 TReturnType cachedType = foundInCache((TReturnType)cachedData);
-                if (cachedType == null)
+                if (cachedType.Equals(default(TReturnType)))
                 {
                     GetListFromSource<TReturnType>(aspect, cacheResolver, key);
                 }
@@ -697,7 +689,7 @@ namespace eCommerce.Core.Infrastructure.NoAOP
 
         private static void GetListFromSource<TReturnType>(AspectF aspect, ICache cacheResolver, string key)
         {
-            Func<TReturnType> workDelegate = aspect.WorkDelegate as Func<TReturnType>;
+            var workDelegate = aspect.WorkDelegate as Func<TReturnType>;
             TReturnType realObject = workDelegate();
             cacheResolver.Add(key, realObject);
             workDelegate = () => realObject;

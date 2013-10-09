@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Transactions;
+﻿using System.Data.Entity;
 
 namespace eCommerce.Data.DatabaseInitializers
 {
@@ -41,7 +34,8 @@ namespace eCommerce.Data.DatabaseInitializers
             }
             catch(System.Exception e)
             {
-                throw e;
+                // [TO-DO] further solving
+                throw;
             }
 
         }

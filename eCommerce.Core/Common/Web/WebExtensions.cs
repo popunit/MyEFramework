@@ -16,35 +16,35 @@ namespace eCommerce.Core.Common.Web
 
         public static string IPv4Address(this HttpContextBase httpContext)
         {
-            if (null == httpContext || null == httpContext.Request)
+            if (httpContext.IsNull() || httpContext.Request.IsNull())
                 return string.Empty;
-            string IP4Address = String.Empty;
+            string ip4Address = String.Empty;
 
-            foreach (IPAddress IPA in Dns.GetHostAddresses(httpContext.Request.UserHostAddress))
+            foreach (IPAddress ipa in Dns.GetHostAddresses(httpContext.Request.UserHostAddress))
             {
-                if (IPA.AddressFamily.ToString() == "InterNetwork")
+                if (ipa.AddressFamily.ToString() == "InterNetwork")
                 {
-                    IP4Address = IPA.ToString();
+                    ip4Address = ipa.ToString();
                     break;
                 }
             }
 
-            return IP4Address;
+            return ip4Address;
         }
 
         public static string CurrentMachineIPv4()
         {
-            string IP4Address = string.Empty;
-            foreach (IPAddress IPA in Dns.GetHostAddresses(Dns.GetHostName()))
+            string ip4Address = string.Empty;
+            foreach (IPAddress ipa in Dns.GetHostAddresses(Dns.GetHostName()))
             {
-                if (IPA.AddressFamily.ToString() == "InterNetwork")
+                if (ipa.AddressFamily.ToString() == "InterNetwork")
                 {
-                    IP4Address = IPA.ToString();
+                    ip4Address = ipa.ToString();
                     break;
                 }
             }
 
-            return IP4Address;
+            return ip4Address;
         }
     }
 }

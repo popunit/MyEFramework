@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using eCommerce.Core.Common;
+using System;
 using System.Web;
-using eCommerce.Core.Common;
 
 namespace eCommerce.Core.Infrastructure
 {
@@ -35,7 +31,7 @@ namespace eCommerce.Core.Infrastructure
 
         public virtual void Add(HttpApplication httpApplication)
         {
-            if (httpApplication == null || httpApplication.Request == null)
+            if (null == httpApplication ||  null == httpApplication.Request)
                 return;
 
             // according to HttpApplication process order

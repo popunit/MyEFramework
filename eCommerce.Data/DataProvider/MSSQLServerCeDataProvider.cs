@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data.Entity.Infrastructure;
 
 namespace eCommerce.Data.DataProvider
 {
@@ -13,7 +8,7 @@ namespace eCommerce.Data.DataProvider
     /// <remarks>
     /// Deploy doc: http://www.cnblogs.com/xiaoweiyu/archive/2011/06/24/2089137.html
     /// </remarks>
-    public class MSSQLServerCeDataProvider : EfDataProviderBase
+    public class MssqlServerCeDataProvider : EfDataProviderBase
     {
         public override IDbConnectionFactory GetFactory()
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Configuration;
-using eCommerce.Core.Enums;
+﻿using eCommerce.Core.Configuration;
 
 namespace eCommerce.Core.Data
 {
@@ -14,7 +8,7 @@ namespace eCommerce.Core.Data
     /// <remarks>Global Settings (impact all the users)</remarks>
     public class StoreStateSettings : ISettings
     {
-        private string defaultStoredThemeForMobile;
+        private string _defaultStoredThemeForMobile;
 
         public string StoreName { get; set; }
         public string StoreUrl { get; set; }
@@ -41,13 +35,13 @@ namespace eCommerce.Core.Data
             get 
             {
                 if (MobileDevicesSupported)
-                    return defaultStoredThemeForMobile;
+                    return _defaultStoredThemeForMobile;
                 else
                     return null; // if mobile devices cannot be supported, always return null
             }
             set 
             {
-                this.defaultStoredThemeForMobile = value;
+                this._defaultStoredThemeForMobile = value;
             }
         }
 

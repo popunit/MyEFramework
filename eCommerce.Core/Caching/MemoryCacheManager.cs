@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace eCommerce.Core.Caching
 {
@@ -24,8 +22,7 @@ namespace eCommerce.Core.Caching
         {
             if (null == data)
                 return false;
-            var policy = new CacheItemPolicy();
-            policy.AbsoluteExpiration = DateTime.Now + timeout;
+            var policy = new CacheItemPolicy {AbsoluteExpiration = DateTime.Now + timeout};
             return Cache.Add(new CacheItem(key, data), policy);
         }
 
@@ -58,11 +55,7 @@ namespace eCommerce.Core.Caching
         public void RemoveByPattern(string patternOfKeys)
         {
             var regex = new Regex(patternOfKeys, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var keysToRemove = new List<String>();
-
-            foreach (var item in Cache)
-                if (regex.IsMatch(item.Key))
-                    keysToRemove.Add(item.Key);
+            var keysToRemove = (from item in Cache where regex.IsMatch(item.Key) select item.Key).ToList();
 
             foreach (string key in keysToRemove)
             {

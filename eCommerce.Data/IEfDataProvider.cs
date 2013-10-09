@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using eCommerce.Core;
 using System.Data.Entity.Infrastructure;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core;
 
 namespace eCommerce.Data
 {

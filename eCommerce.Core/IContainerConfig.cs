@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Configuration;
-using eCommerce.Core.Infrastructure;
-using eCommerce.Core.Common;
+﻿using eCommerce.Core.Configuration;
 using eCommerce.Core.Data;
+using eCommerce.Core.Infrastructure;
 
 namespace eCommerce.Core
 {

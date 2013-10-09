@@ -1,10 +1,8 @@
-﻿using System;
+﻿using eCommerce.Exception;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Exception;
 
 namespace eCommerce.Core.Common
 {
@@ -24,7 +22,7 @@ namespace eCommerce.Core.Common
             using (var stream = File.OpenRead(filePath))
             using (var reader = new StreamReader(stream))
             {
-                var statement = "";
+                var statement = String.Empty;
                 while ((statement = ReadNextSection(reader, separator)) != null)
                 {
                     statements.Add(statement);

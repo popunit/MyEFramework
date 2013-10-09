@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core;
+﻿using eCommerce.Core;
 using eCommerce.Core.Common;
+using System;
 
 namespace eCommerce.Data.Common
 {
-    public interface IEmptyEntityMap<T>
-        where T : EntityBase
+    public interface IEmptyEntityMap<out T>
+        where T : EntityBase, new()
     {
         Type EntityType { get; }
         T Get();
@@ -17,12 +13,12 @@ namespace eCommerce.Data.Common
     }
 
     public abstract class EmptyEntityMap<T> : IEmptyEntityMap<T>
-        where T : EntityBase
+        where T : EntityBase, new()
     {
-        private readonly Type entityType = typeof(T);
+        private readonly Type _entityType = typeof(T);
         public Type EntityType
         {
-            get { return entityType; }
+            get { return _entityType; }
         }
         public abstract T Get();
         public bool IsValid()

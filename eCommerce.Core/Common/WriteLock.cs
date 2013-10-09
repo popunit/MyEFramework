@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace eCommerce.Core.Common
 {
     public class WriteLock : IDisposable
     {
-        private readonly ReaderWriterLockSlim rwLock;
+        private readonly ReaderWriterLockSlim _rwLock;
 
         public WriteLock(ReaderWriterLockSlim rwLock)
         {
-            this.rwLock = rwLock;
-            this.rwLock.EnterWriteLock();
+            this._rwLock = rwLock;
+            this._rwLock.EnterWriteLock();
         }
 
         public void Dispose()
         {
-            this.rwLock.ExitWriteLock();
+            this._rwLock.ExitWriteLock();
         }
     }
 }

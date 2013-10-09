@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using eCommerce.Core.Infrastructure.IoC;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Infrastructure.IoC;
 
 namespace eCommerce.Core
 {
@@ -52,7 +48,7 @@ namespace eCommerce.Core
         {
             if (null == actions)
                 return;
-            Action<T> newAct = new Action<T>(t => actions((T)t));
+            var newAct = new Action<T>(t => actions((T)t));
             UpdateContainer_T(newAct);
         }
 

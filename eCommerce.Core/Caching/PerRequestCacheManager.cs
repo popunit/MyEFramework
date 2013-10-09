@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace eCommerce.Core.Caching
@@ -15,7 +12,7 @@ namespace eCommerce.Core.Caching
     /// <remarks>Still cache data in memory, use http context base so that it can be tested</remarks>
     public class PerRequestCacheManager : ICacheManager
     {
-        private readonly HttpContextBase context;
+        private readonly HttpContextBase _context;
 
         /// <summary>
         /// 
@@ -23,13 +20,13 @@ namespace eCommerce.Core.Caching
         /// <param name="context">get the core registered data from container</param>
         public PerRequestCacheManager(HttpContextBase context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         protected virtual IDictionary GetItems()
         {
-            if (null != context)
-                return context.Items;
+            if (null != _context)
+                return _context.Items;
             return null;
         }
 

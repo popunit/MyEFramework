@@ -1,12 +1,10 @@
-﻿using System;
+﻿using eCommerce.Exception;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Exception;
 
 namespace eCommerce.Core.Common
 {
@@ -24,8 +22,8 @@ namespace eCommerce.Core.Common
     public class PropertyChangeManager<TSource>
         where TSource : INotifyPropertyChanged
     {
-        private List<Subscription> subscriptions = new List<Subscription>();
-        private TSource source;
+        private readonly List<Subscription> _subscriptions = new List<Subscription>();
+        private readonly TSource _source;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyChangeManager&lt;TSource&gt;"/> class.
@@ -33,7 +31,7 @@ namespace eCommerce.Core.Common
         /// <param name="source">The property changed source.</param>
         public PropertyChangeManager(TSource source)
         {
-            this.source = source;
+            this._source = source;
         }
 
         /// <summary>
@@ -76,7 +74,7 @@ namespace eCommerce.Core.Common
         {
             CleanupSubscribers();
 
-            subscriptions.RemoveAll(s => s.SubscriberReference.Target == handler.Target && s.MethodCallback == handler.Method);
+            _subscriptions.RemoveAll(s => s.SubscriberReference.Target == handler.Target && s.MethodCallback == handler.Method);
         }
 
         /// <summary>
@@ -90,11 +88,11 @@ namespace eCommerce.Core.Common
 
             var propertyName = Reflect<TSource>.GetProperty(propertyExpression).Name;
 
-            foreach (var subscription in subscriptions.Where(s => s.PropertyName == propertyName))
+            foreach (var subscription in _subscriptions.Where(s => s.PropertyName == propertyName))
             {
                 try
                 {
-                    subscription.MethodCallback.Invoke(subscription.SubscriberReference.Target, new object[] { this.source });
+                    subscription.MethodCallback.Invoke(subscription.SubscriberReference.Target, new object[] { this._source });
                 }
                 catch (TargetInvocationException tie)
                 {
@@ -103,11 +101,11 @@ namespace eCommerce.Core.Common
             }
 
             // Call "old-style" handlers with the right signature.
-            foreach (var subscription in subscriptions.Where(s => s.PropertyName == null))
+            foreach (var subscription in _subscriptions.Where(s => s.PropertyName == null))
             {
                 try
                 {
-                    subscription.MethodCallback.Invoke(subscription.SubscriberReference.Target, new object[] { this.source, new PropertyChangedEventArgs(propertyName) });
+                    subscription.MethodCallback.Invoke(subscription.SubscriberReference.Target, new object[] { this._source, new PropertyChangedEventArgs(propertyName) });
                 }
                 catch (TargetInvocationException tie)
                 {
@@ -120,14 +118,14 @@ namespace eCommerce.Core.Common
         {
             CleanupSubscribers();
 
-            subscriptions.Add(subscription);
+            _subscriptions.Add(subscription);
 
-            return new SubscriptionReference(this.subscriptions, subscription);
+            return new SubscriptionReference(this._subscriptions, subscription);
         }
 
         private void CleanupSubscribers()
         {
-            subscriptions.RemoveAll(s => !s.IsStatic && !s.SubscriberReference.IsAlive);
+            _subscriptions.RemoveAll(s => !s.IsStatic && !s.SubscriberReference.IsAlive);
         }
 
         /// <summary>
@@ -138,18 +136,18 @@ namespace eCommerce.Core.Common
         /// </summary>
         private sealed class SubscriptionReference : IDisposable
         {
-            private List<Subscription> subscriptions;
-            private Subscription entry;
+            private readonly List<Subscription> _subscriptions;
+            private readonly Subscription _entry;
 
             public SubscriptionReference(List<Subscription> subscriptions, Subscription entry)
             {
-                this.subscriptions = subscriptions;
-                this.entry = entry;
+                this._subscriptions = subscriptions;
+                this._entry = entry;
             }
 
             public void Dispose()
             {
-                this.subscriptions.Remove(this.entry);
+                this._subscriptions.Remove(this._entry);
             }
         }
 
@@ -229,12 +227,10 @@ namespace eCommerce.Core.Common
         /// Gets the property represented by the lambda expression.
         /// </summary>
         /// <param name="property">An expression that accesses a property.</param>
-        /// <exception cref="ArgumentNullException">The <paramref name="method"/> is null.</exception>
-        /// <exception cref="ArgumentException">The <paramref name="method"/> is not a lambda expression or it does not represent a property access.</exception>
         /// <returns>The property info.</returns>
         public static PropertyInfo GetProperty(Expression<Func<TTarget, object>> property)
         {
-            PropertyInfo info = GetMemberInfo(property) as PropertyInfo;
+            var info = GetMemberInfo(property) as PropertyInfo;
             if (info == null)
             {
                 throw new ArgumentException("Member is not a property");
@@ -247,12 +243,10 @@ namespace eCommerce.Core.Common
         /// Gets the field represented by the lambda expression.
         /// </summary>
         /// <param name="field">An expression that accesses a field.</param>
-        /// <exception cref="ArgumentNullException">The <paramref name="method"/> is null.</exception>
-        /// <exception cref="ArgumentException">The <paramref name="method"/> is not a lambda expression or it does not represent a field access.</exception>
         /// <returns>The field info.</returns>
         public static FieldInfo GetField(Expression<Func<TTarget, object>> field)
         {
-            FieldInfo info = GetMemberInfo(field) as FieldInfo;
+            var info = GetMemberInfo(field) as FieldInfo;
             if (info == null)
             {
                 throw new ArgumentException("Member is not a field");
@@ -268,7 +262,7 @@ namespace eCommerce.Core.Common
                 throw new ArgumentNullException("method");
             }
 
-            LambdaExpression lambda = method as LambdaExpression;
+            var lambda = method as LambdaExpression;
             if (lambda == null)
             {
                 throw new ArgumentException("Not a lambda expression", "method");
@@ -289,7 +283,7 @@ namespace eCommerce.Core.Common
                 throw new ArgumentNullException("member");
             }
 
-            LambdaExpression lambda = member as LambdaExpression;
+            var lambda = member as LambdaExpression;
             if (lambda == null)
             {
                 throw new ArgumentException("Not a lambda expression", "member");

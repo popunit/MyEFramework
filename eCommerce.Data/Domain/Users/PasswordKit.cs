@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Data.Common;
+﻿using eCommerce.Data.Common;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eCommerce.Data.Domain.Users

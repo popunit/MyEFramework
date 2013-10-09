@@ -1,16 +1,11 @@
-﻿using System;
+﻿using eCommerce.Core.Common.Web;
+using eCommerce.Core.Configuration;
+using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Exception;
+using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Hosting;
-using eCommerce.Core.Configuration;
-using eCommerce.Exception;
-using eCommerce.Core.Common;
-using eCommerce.Core.Infrastructure.NoAOP;
-using eCommerce.Core.Common.Web;
 
 namespace eCommerce.Core.Data
 {
@@ -48,10 +43,7 @@ namespace eCommerce.Core.Data
             return AspectF.Define.MustBeNonNull(virtualPath).
                 HandleException<ArgumentException>(
                 ex => { throw new CommonException(string.Format("The file {0} is not existed!", virtualPath), ex); }).
-                Return<string>(() =>
-            {
-                return WebsiteHelper.MapPath(virtualPath);
-            });
+                Return(() => WebsiteHelper.MapPath(virtualPath));
         }
 
         /// <summary>
@@ -61,7 +53,7 @@ namespace eCommerce.Core.Data
         /// <returns></returns>
         protected virtual DatabaseSettings ParseSettings(string text)
         {
-            DatabaseSettings settings = new DatabaseSettings();
+            var settings = new DatabaseSettings();
             if (String.IsNullOrEmpty(text))
                 return settings;
 
@@ -76,7 +68,7 @@ namespace eCommerce.Core.Data
             foreach (var item in items)
             {
                 var keyPair = item.Split(new char[] { Separator }, 2, StringSplitOptions.RemoveEmptyEntries);
-                if (keyPair.Count() == 0)
+                if (!keyPair.Any())
                     continue;
                 string key = keyPair[0];
                 string value = keyPair[1];

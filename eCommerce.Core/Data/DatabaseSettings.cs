@@ -1,12 +1,8 @@
-﻿using System;
+﻿using eCommerce.Core.Common;
+using eCommerce.Core.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Configuration;
-using eCommerce.Core.Common;
-using System.Linq.Expressions;
 
 namespace eCommerce.Core.Data
 {
@@ -18,9 +14,9 @@ namespace eCommerce.Core.Data
     /// </remarks>
     public class DatabaseSettings : INotifyPropertyChanged, ISettings
     {
-        private string dataProvider;
-        private string dataConnectionString;
-        private PropertyChangeManager<DatabaseSettings> propertyChanges;
+        private string _dataProvider;
+        private string _dataConnectionString;
+        private readonly PropertyChangeManager<DatabaseSettings> _propertyChanges;
 
         /// <summary>
         /// Database setting items
@@ -36,12 +32,12 @@ namespace eCommerce.Core.Data
         /// </summary>
         public string DataProvider 
         {
-            get { return this.dataProvider; }
+            get { return this._dataProvider; }
             set
             {
-                this.dataProvider = value;
+                this._dataProvider = value;
                 //OnPropertyChanged("DataProvider");
-                this.propertyChanges.NotifyChanged(x => x.DataProvider);
+                this._propertyChanges.NotifyChanged(x => x.DataProvider);
             }
         }
 
@@ -50,30 +46,30 @@ namespace eCommerce.Core.Data
         /// </summary>
         public string DataConnectionString 
         {
-            get { return this.dataConnectionString; }
+            get { return this._dataConnectionString; }
             set
             {
-                this.dataConnectionString = value;
-                this.propertyChanges.NotifyChanged(x => x.DataConnectionString);
+                this._dataConnectionString = value;
+                this._propertyChanges.NotifyChanged(x => x.DataConnectionString);
             }
         }
 
         public DatabaseSettings()
         {
             UnknownItems = new Dictionary<string, string>();
-            this.propertyChanges = new PropertyChangeManager<DatabaseSettings>(this);
+            this._propertyChanges = new PropertyChangeManager<DatabaseSettings>(this);
         }
 
         public bool IsValid()
         {
-            return !String.IsNullOrEmpty(dataProvider) && !String.IsNullOrEmpty(dataConnectionString);
+            return !String.IsNullOrEmpty(_dataProvider) && !String.IsNullOrEmpty(_dataConnectionString);
         }
 
         //public event PropertyChangedEventHandler PropertyChanged;
         public event PropertyChangedEventHandler PropertyChanged
         {
-            add { this.propertyChanges.AddHandler(value); }
-            remove { this.propertyChanges.RemoveHandler(value); }
+            add { this._propertyChanges.AddHandler(value); }
+            remove { this._propertyChanges.RemoveHandler(value); }
         }
 
 

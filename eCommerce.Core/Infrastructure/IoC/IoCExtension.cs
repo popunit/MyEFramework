@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
+﻿using Autofac.Builder;
 using Autofac.Integration.Mvc;
-using Autofac.Builder;
+using System.Web;
 
 namespace eCommerce.Core.Infrastructure.IoC
 {

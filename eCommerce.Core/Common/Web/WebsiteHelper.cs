@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 
@@ -11,7 +7,7 @@ namespace eCommerce.Core.Common.Web
 {
     public static class WebsiteHelper
     {
-        private static AspNetHostingPermissionLevel? currentTrustLevel;
+        private static AspNetHostingPermissionLevel? _currentTrustLevel;
 
         /// <summary>
         /// Get current website trust level
@@ -21,32 +17,33 @@ namespace eCommerce.Core.Common.Web
         /// </remarks>
         public static AspNetHostingPermissionLevel GetCurrentTrustLevel()
         {
-            if (currentTrustLevel.HasValue)
-                return currentTrustLevel.Value;
+            if (_currentTrustLevel.HasValue)
+                return _currentTrustLevel.Value;
             foreach (AspNetHostingPermissionLevel trustLevel in
-                    new AspNetHostingPermissionLevel[] {
-            AspNetHostingPermissionLevel.Unrestricted,
-            AspNetHostingPermissionLevel.High,
-            AspNetHostingPermissionLevel.Medium,
-            AspNetHostingPermissionLevel.Low,
-            AspNetHostingPermissionLevel.Minimal 
-        })
-            {
-                try
+                new AspNetHostingPermissionLevel[]
                 {
-                    new AspNetHostingPermission(trustLevel).Demand();
-                }
-                catch (System.Security.SecurityException)
+                    AspNetHostingPermissionLevel.Unrestricted,
+                    AspNetHostingPermissionLevel.High,
+                    AspNetHostingPermissionLevel.Medium,
+                    AspNetHostingPermissionLevel.Low,
+                    AspNetHostingPermissionLevel.Minimal
+                })
                 {
-                    continue;
+                    try
+                    {
+                        new AspNetHostingPermission(trustLevel).Demand();
+                    }
+                    catch (System.Security.SecurityException)
+                    {
+                        continue;
+                    }
+
+                    _currentTrustLevel = trustLevel;
+                    return _currentTrustLevel.Value;
                 }
 
-                currentTrustLevel =  trustLevel;
-                return currentTrustLevel.Value;
-            }
-
-            currentTrustLevel = AspNetHostingPermissionLevel.None;
-            return currentTrustLevel.Value;
+            _currentTrustLevel = AspNetHostingPermissionLevel.None;
+            return _currentTrustLevel.Value;
         }
 
         /// <summary>

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Core.Caching
 {
@@ -10,7 +6,7 @@ namespace eCommerce.Core.Caching
     {
         public static T GetOrAdd<T>(this ICacheManager cacheManager, string key, Func<T> callbackIfNotFound)
         {
-            return GetOrAdd<T>(cacheManager, key, TimeSpan.FromHours(1), callbackIfNotFound);
+            return GetOrAdd(cacheManager, key, TimeSpan.FromHours(1), callbackIfNotFound);
         }
 
         public static T GetOrAdd<T>(this ICacheManager cacheManager, string key, TimeSpan timeout, Func<T> callbackIfNotFound)

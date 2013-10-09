@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Autofac;
+using eCommerce.Core.Infrastructure.IoC.Web;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autofac;
-using eCommerce.Core.Infrastructure.IoC.Web;
 
 namespace eCommerce.Core.Infrastructure.IoC
 {
     public class AutofacContainerManager : ContainerManagerBase<ContainerBuilder>
     {
-        private readonly IContainer container;
+        private readonly IContainer _container;
 
         /// <summary>
         /// Container with life time
@@ -18,14 +16,14 @@ namespace eCommerce.Core.Infrastructure.IoC
         public ILifetimeScope GetContainer()
         {
             if (AutofacLifetimeScopeHttpModule.IsValid())
-                return AutofacLifetimeScopeHttpModule.GetLifetimeScope(container);
-            return container;
+                return AutofacLifetimeScopeHttpModule.GetLifetimeScope(_container);
+            return _container;
         }
 
         public AutofacContainerManager(IContainer container)
         {
             //this.builder = builder;
-            this.container = container;
+            this._container = container;
         }
 
         public override void AddComponent<T>(string key, LifeStyle lifeStyle = LifeStyle.Singleton)
@@ -50,8 +48,8 @@ namespace eCommerce.Core.Infrastructure.IoC
 
             UpdateContainer_T(build =>
             {
-                var currentBuild = build as ContainerBuilder;
-                var types = new List<Type> { tFrom };
+                var currentBuild = build;
+                //var types = new List<Type> { tFrom };
 
                 // check if the type is generic type
                 if (tFrom.IsGenericType && tTo.IsGenericType)
@@ -97,7 +95,7 @@ namespace eCommerce.Core.Infrastructure.IoC
                 return;
             UpdateContainer_T(build =>
             {
-                var currentBuild = build as ContainerBuilder;
+                var currentBuild = build;
                 var temp = currentBuild.RegisterType(tTo).As(tFrom).
                     WithParameters(parameters.Select(y => new NamedParameter(y.Key, y.Value)));
                 if (!string.IsNullOrEmpty(key))
@@ -153,7 +151,7 @@ namespace eCommerce.Core.Infrastructure.IoC
         {
             var builder = new ContainerBuilder();
             actions(builder);
-            builder.Update(container);
+            builder.Update(_container);
         }
     }
 }
