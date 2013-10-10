@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using eCommerce.Core.Common;
+using System;
 using System.Linq;
 using System.ServiceModel;
-using System.ServiceModel.Description;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
-using System.Globalization;
 using System.ServiceModel.Channels;
+using System.ServiceModel.Description;
 
 namespace eCommerce.Wcf.Framework.Metadata
 {
@@ -47,7 +43,7 @@ namespace eCommerce.Wcf.Framework.Metadata
 
                 try
                 {
-                    CustomBinding binding = new CustomBinding(bindingElement);
+                    var binding = new CustomBinding(bindingElement);
                     var mexClient = new MetadataExchangeClient(binding);
                     var metadata = mexClient.GetMetadata(address, MetadataExchangeClientMode.HttpGet);
                     serviceEndpoints = (new WsdlImporter(metadata)).ImportAllEndpoints();
@@ -91,9 +87,9 @@ namespace eCommerce.Wcf.Framework.Metadata
             dynamic element = bindingElement;
             element.MaxReceivedMessageSize *= 5;
 
-            CustomBinding binding = new CustomBinding(element);
+            var binding = new CustomBinding(element);
 
-            MetadataExchangeClient mexClient = new MetadataExchangeClient(binding);
+            var mexClient = new MetadataExchangeClient(binding);
             MetadataSet metadata = mexClient.GetMetadata(new EndpointAddress(mexAddress));
             MetadataImporter importer = new WsdlImporter(metadata);
             return importer.ImportAllEndpoints();

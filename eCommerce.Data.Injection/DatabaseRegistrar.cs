@@ -3,11 +3,6 @@ using eCommerce.Core;
 using eCommerce.Core.Data;
 using eCommerce.Data.DataProvider;
 using eCommerce.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Data.Injection
 {

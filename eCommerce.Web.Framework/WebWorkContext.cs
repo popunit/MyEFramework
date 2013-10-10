@@ -1,19 +1,14 @@
-﻿using eCommerce.Services;
+﻿using eCommerce.Core;
+using eCommerce.Core.Common;
+using eCommerce.Core.Common.Web;
+using eCommerce.Services;
 using eCommerce.Services.Authentication;
-using eCommerce.Services.WcfClient;
+using eCommerce.Services.Extensions;
+using eCommerce.Services.Users;
 using eCommerce.Services.WcfClient.Entities;
 using eCommerce.Web.Framework.Mvc;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
-using eCommerce.Services.Extensions;
-using eCommerce.Core.Common;
-using eCommerce.Services.Users;
-using eCommerce.Core;
-using eCommerce.Core.Common.Web;
 
 namespace eCommerce.Web.Framework
 {
@@ -24,10 +19,10 @@ namespace eCommerce.Web.Framework
     /// StoreStateSettings</remarks>
     public class WebWorkContext : WebWorkContextBase
     {
-        private readonly HttpContextBase httpContext;
-        private readonly IHttpHelper httpHelper;
-        private readonly IUserDataService userService;
-        private readonly IAuthenticationService authenticationService;
+        private readonly HttpContextBase _httpContext;
+        private readonly IHttpHelper _httpHelper;
+        private readonly IUserDataService _userService;
+        private readonly IAuthenticationService _authenticationService;
 
         public WebWorkContext(
             HttpContextBase httpContext,
@@ -35,10 +30,10 @@ namespace eCommerce.Web.Framework
             IUserDataService userService,
             IAuthenticationService authenticationService)
         {
-            this.httpContext = httpContext;
-            this.httpHelper = httpHelper;
-            this.userService = userService;
-            this.authenticationService = authenticationService;
+            this._httpContext = httpContext;
+            this._httpHelper = httpHelper;
+            this._userService = userService;
+            this._authenticationService = authenticationService;
         }
 
         public override User CurrentUser
@@ -66,17 +61,17 @@ namespace eCommerce.Web.Framework
             //    return this.CurrentUser;
 
             User currentUser = null;
-            if (httpContext.HasRequest())
+            if (_httpContext.HasRequest())
             { 
                 // TO-DO: to handle differnet situation
-                currentUser = authenticationService.GetAuthenticatedUser();
+                currentUser = _authenticationService.GetAuthenticatedUser();
                 if (currentUser.IsValid())
                 {
                     // TO-DO
                 }
                 else
                 {
-                    var userCookie = httpHelper.GetCookie(Const.USER_COOKIE);
+                    var userCookie = _httpHelper.GetCookie(Const.UserCookie);
                     if (userCookie.IsValid())
                     {
                         Guid guid;
@@ -88,7 +83,7 @@ namespace eCommerce.Web.Framework
 
                     if (!currentUser.IsValid())
                     {
-                        currentUser = userService.CreateGuest();
+                        currentUser = _userService.CreateGuest();
                     }
                 }
             }

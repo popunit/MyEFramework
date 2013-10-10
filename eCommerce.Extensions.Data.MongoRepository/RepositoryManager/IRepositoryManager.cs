@@ -1,7 +1,7 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository.RepositoryManager
 {
-    using System.Collections.Generic;
     using MongoDB.Driver;
+    using System.Collections.Generic;
 
     /// <summary>
     /// IRepositoryManager definition.

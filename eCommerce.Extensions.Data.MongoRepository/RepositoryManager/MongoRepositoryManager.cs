@@ -1,9 +1,9 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository.RepositoryManager
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+    using System.Collections.Generic;
+    using System.Linq;
 
     // TODO: Code coverage here is near-zero. A new RepoManagerTests.cs class needs to be created and we need to
     //      test these methods. Ofcourse we also need to update codeplex documentation on this entirely new object.
@@ -25,7 +25,7 @@
         /// <summary>
         /// MongoCollection field.
         /// </summary>
-        private MongoCollection<T> collection;
+        private readonly MongoCollection<T> _collection;
 
         /// <summary>
         /// Initializes a new instance of the MongoRepositoryManager class.
@@ -43,7 +43,7 @@
         /// <param name="connectionString">Connectionstring to use for connecting to MongoDB.</param>
         public MongoRepositoryManager(string connectionString)
         {
-            this.collection = Util.GetCollectionFromConnectionString<T>(connectionString);
+            this._collection = Util.GetCollectionFromConnectionString<T>(connectionString);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@
         /// <value>Returns true when the collection already exists, false otherwise.</value>
         public bool Exists
         {
-            get { return this.collection.Exists(); }
+            get { return this._collection.Exists(); }
         }
 
         /// <summary>
@@ -61,7 +61,7 @@
         /// <value>The name of the collection as Mongo uses.</value>
         public string Name
         {
-            get { return this.collection.Name; }
+            get { return this._collection.Name; }
         }
 
         /// <summary>
@@ -69,7 +69,7 @@
         /// </summary>
         public void Drop()
         {
-            this.collection.Drop();
+            this._collection.Drop();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@
         /// <returns>Returns true when the repository is capped, false otherwise.</returns>
         public bool IsCapped()
         {
-            return this.collection.IsCapped();
+            return this._collection.IsCapped();
         }
 
         /// <summary>
@@ -96,7 +96,7 @@
         /// <param name="keynames">The names of the indexed fields.</param>
         public void DropIndexes(IEnumerable<string> keynames)
         {
-            this.collection.DropIndex(keynames.ToArray());
+            this._collection.DropIndex(keynames.ToArray());
         }
 
         /// <summary>
@@ -104,7 +104,7 @@
         /// </summary>
         public void DropAllIndexes()
         {
-            this.collection.DropAllIndexes();
+            this._collection.DropAllIndexes();
         }
 
         /// <summary>
@@ -185,7 +185,7 @@
         /// </remarks>
         public void EnsureIndexes(IMongoIndexKeys keys, IMongoIndexOptions options)
         {
-            this.collection.EnsureIndex(keys, options);
+            this._collection.EnsureIndex(keys, options);
         }
 
         /// <summary>
@@ -205,7 +205,7 @@
         /// <returns>Returns true when the indexes exist, false otherwise.</returns>
         public bool IndexesExists(IEnumerable<string> keynames)
         {
-            return this.collection.IndexExists(keynames.ToArray());
+            return this._collection.IndexExists(keynames.ToArray());
         }
 
         /// <summary>
@@ -213,7 +213,7 @@
         /// </summary>
         public void ReIndex()
         {
-            this.collection.ReIndex();
+            this._collection.ReIndex();
         }
 
         /// <summary>
@@ -226,9 +226,9 @@
         public void ResetIndexCache()
         {
             //this.collection.ResetIndexCache();
-            this.collection.ReIndex();
+            this._collection.ReIndex();
 
-            this.collection.GetIndexes();
+            this._collection.GetIndexes();
         }
 
         /// <summary>
@@ -237,7 +237,7 @@
         /// <returns>Returns total size for the repository (data + indexes).</returns>
         public long GetTotalDataSize()
         {
-            return this.collection.GetTotalDataSize();
+            return this._collection.GetTotalDataSize();
         }
 
         /// <summary>
@@ -246,7 +246,7 @@
         /// <returns>Returns total storage size for the repository (data + indexes).</returns>
         public long GetTotalStorageSize()
         {
-            return this.collection.GetTotalStorageSize();
+            return this._collection.GetTotalStorageSize();
         }
 
         /// <summary>
@@ -256,7 +256,7 @@
         /// <remarks>You will need to reference MongoDb.Driver.</remarks>
         public ValidateCollectionResult Validate()
         {
-            return this.collection.Validate();
+            return this._collection.Validate();
         }
 
         /// <summary>
@@ -266,7 +266,7 @@
         /// <remarks>You will need to reference MongoDb.Driver.</remarks>
         public CollectionStatsResult GetStats()
         {
-            return this.collection.GetStats();
+            return this._collection.GetStats();
         }
 
         /// <summary>
@@ -275,7 +275,7 @@
         /// <returns>Returns the indexes for this repository.</returns>
         public GetIndexesResult GetIndexes()
         {
-            return this.collection.GetIndexes();
+            return this._collection.GetIndexes();
         }
     }
 }

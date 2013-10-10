@@ -1,11 +1,7 @@
-﻿using System;
+﻿using eCommerce.Core.Infrastructure;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using eCommerce.Core.Infrastructure;
-using eCommerce.Core.Infrastructure.NoAOP;
 
 namespace eCommerce.Web.Framework.Mvc.DependencyResolvers
 {

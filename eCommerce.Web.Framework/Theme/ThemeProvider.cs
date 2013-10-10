@@ -14,14 +14,14 @@ namespace eCommerce.Web.Framework.Theme
     /// <remarks>theme config file is associated with base config file</remarks>
     public class ThemeProvider : IThemeProvider
     {
-        private string themeConfigPath = string.Empty;
-        private readonly IList<ThemeConfig> themeConfigurations;
+        private readonly string _themeConfigPath;
+        private readonly IList<ThemeConfig> _themeConfigurations;
 
         public ThemeProvider(Config config)
         {
-            this.themeConfigurations = new List<ThemeConfig>(); // set empty
-            this.themeConfigPath = WebsiteHelper.MapPath(config.Themes.BasePath); // if Themes.BasePath is not set, will return empty
-            LoadConfiguration(this.themeConfigPath);
+            this._themeConfigurations = new List<ThemeConfig>(); // set empty
+            this._themeConfigPath = WebsiteHelper.MapPath(config.Themes.BasePath); // if Themes.BasePath is not set, will return empty
+            LoadConfiguration(this._themeConfigPath);
         }
 
         /// <summary>
@@ -35,7 +35,7 @@ namespace eCommerce.Web.Framework.Theme
             {
                 var config = LoadThemeConfig(themePath);
                 if (null != config) // find the config
-                    themeConfigurations.Add(config);
+                    _themeConfigurations.Add(config);
             }
         }
 
@@ -56,13 +56,13 @@ namespace eCommerce.Web.Framework.Theme
 
         public ThemeConfig GetThemeConfiguration(string themeName)
         {
-            return themeConfigurations.GetItem(i =>
+            return _themeConfigurations.GetItem(i =>
                 i.ThemeName.Equals(themeName, StringComparison.InvariantCultureIgnoreCase));
         }
 
         public IEnumerable<ThemeConfig> GetThemeConfigurations()
         {
-            return themeConfigurations;
+            return _themeConfigurations;
         }
     }
 }

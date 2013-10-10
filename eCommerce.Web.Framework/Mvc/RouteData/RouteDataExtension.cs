@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Routing;
 
@@ -31,6 +27,12 @@ namespace eCommerce.Web.Framework.Mvc.RouteData
             }
         }
 
+        /// <summary>
+        /// Gets the name of the action.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="identifierForAction">The identifier for action.</param>
+        /// <returns></returns>
         public static string GetActionName(this ControllerContext context, string identifierForAction = "action")
         {
             try
@@ -46,9 +48,9 @@ namespace eCommerce.Web.Framework.Mvc.RouteData
         }
 
         /// <summary>
-        /// 
+        /// Gets the name of the area.
         /// </summary>
-        /// <param name="routeData"></param>
+        /// <param name="context">The context.</param>
         /// <returns></returns>
         /// <remarks>http://stackoverflow.com/questions/6862403/get-area-name-from-actionexecutingcontext</remarks>
         public static string GetAreaName(this ControllerContext context)
@@ -65,6 +67,11 @@ namespace eCommerce.Web.Framework.Mvc.RouteData
             return GetAreaName(routeData.Route);
         }
 
+        /// <summary>
+        /// Gets the name of the area.
+        /// </summary>
+        /// <param name="route">The route.</param>
+        /// <returns></returns>
         public static string GetAreaName(RouteBase route)
         {
             // get area name from all the route including registered custom routes

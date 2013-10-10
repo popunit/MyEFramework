@@ -1,17 +1,13 @@
-﻿using System;
+﻿using eCommerce.Core;
+using eCommerce.Core.Enums;
+using eCommerce.Core.Infrastructure.NoAOP;
+using eCommerce.Web.Framework.Mvc.RouteData;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using eCommerce.Core.Infrastructure;
-using eCommerce.Core;
-using eCommerce.Core.Infrastructure.NoAOP;
-using eCommerce.Core.Enums;
-using eCommerce.Web.Framework.Mvc.RouteData;
-using System.Globalization;
-using System.Web.Routing;
 
 namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
 {
@@ -38,7 +34,7 @@ namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
         // To cache location API:
         // ViewLocationCache
 
-        private readonly string mobileViewSuffix = "_Mobile";  // consider configuring it
+        private const string MobileViewSuffix = "_Mobile"; // consider configuring it
 
         protected ThemeableVirtualPathProviderViewEngine()
         {
@@ -59,7 +55,7 @@ namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
             bool useMobileDevice = mobileDeviceChecker.MobileDeviceIsAvailable(controllerContext.HttpContext);
             var workType = useMobileDevice ? WorkType.Mobile : WorkType.Desktop; // extend it if more work type
 
-            string adjustedViewName = useMobileDevice ? string.Format("{0}{1}", viewName, mobileViewSuffix) : viewName; // it's very important
+            string adjustedViewName = useMobileDevice ? string.Format("{0}{1}", viewName, MobileViewSuffix) : viewName; // it's very important
             var result = this.FindThemeView(controllerContext, adjustedViewName, masterName, useCache, workType);
 
             // hack here. if cannot find mobile view for mobile mode, try again to find desktop view to render instead
@@ -84,7 +80,7 @@ namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
             bool useMobileDevice = mobileDeviceChecker.MobileDeviceIsAvailable(controllerContext.HttpContext);
             var workType = useMobileDevice ? WorkType.Mobile : WorkType.Desktop; // extend it if more work type
 
-            string adjustedPartialViewName = useMobileDevice ? string.Format("{0}{1}", partialViewName, mobileViewSuffix) : partialViewName; // it's very important
+            string adjustedPartialViewName = useMobileDevice ? string.Format("{0}{1}", partialViewName, MobileViewSuffix) : partialViewName; // it's very important
             var result = this.FindThemePartialView(controllerContext, adjustedPartialViewName, useCache, workType);
 
             // hack here. if cannot find mobile view for mobile mode, try again to find desktop view to render instead
@@ -331,7 +327,7 @@ namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
                 {
                     searchedLocationList.Add(virtualPath); // add searched location
                 }
-            };
+            }
 
             // if cannot find view page
             searchedLocations = searchedLocationList.ToArray();
@@ -348,7 +344,10 @@ namespace eCommerce.Web.Framework.Mvc.View.ViewEngines
             if (null == this.FileExtensions)
                 return true; // if file extension is null, any file's type is supported
 
-            string extensionOfFile = VirtualPathUtility.GetExtension(virtualPath).TrimStart('.');
+            string extensionOfFile = VirtualPathUtility.GetExtension(virtualPath);
+            if (String.IsNullOrEmpty(extensionOfFile))
+                return false;
+            extensionOfFile = extensionOfFile.TrimStart('.');
             return this.FileExtensions.Contains(extensionOfFile, StringComparer.OrdinalIgnoreCase);
         }
     }

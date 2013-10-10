@@ -1,9 +1,6 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
 
     /// <summary>
     /// Attribute used to annotate Enities with to override mongo collection name. By default, when this attribute

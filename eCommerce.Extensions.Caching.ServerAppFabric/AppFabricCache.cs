@@ -3,10 +3,7 @@ using eCommerce.Core.Common;
 using Microsoft.ApplicationServer.Caching;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace eCommerce.Extensions.Caching.ServerAppFabric
 {
@@ -15,19 +12,19 @@ namespace eCommerce.Extensions.Caching.ServerAppFabric
     /// </summary>
     public class AppFabricCache : ICacheManager, IDisposable
     {
-        private readonly DataCacheFactory factory;
-        private readonly DataCache cache;
-        private readonly string cacheName = "eCommerce"; // [TO-DO] to use config
-        private readonly string regionName = "DistributedCache"; // [TO-DO] to use config
+        private readonly DataCacheFactory _factory;
+        private readonly DataCache _cache;
+        private const string CacheName = "eCommerce"; // [TO-DO] to use config
+        private const string RegionName = "DistributedCache"; // [TO-DO] to use config
 
         public AppFabricCache()
         {
-            factory = new DataCacheFactory();
-            cache = factory.GetCache(cacheName);
+            _factory = new DataCacheFactory();
+            _cache = _factory.GetCache(CacheName);
 
             try
             {
-                cache.CreateRegion(regionName);
+                _cache.CreateRegion(RegionName);
             }
             catch
             {
@@ -40,7 +37,7 @@ namespace eCommerce.Extensions.Caching.ServerAppFabric
         {
             try
             {
-                return (T)cache.Get(key,regionName);
+                return (T)_cache.Get(key,RegionName);
             }
             catch
             {
@@ -50,19 +47,19 @@ namespace eCommerce.Extensions.Caching.ServerAppFabric
 
         public bool Set(string key, object data, TimeSpan timeout)
         {
-            var version = cache.Put(key, data, timeout, regionName);
+            var version = _cache.Put(key, data, timeout, RegionName);
             return null != version;
         }
 
         public bool Contains(string key)
         {
-            return null != cache.Get(key, regionName);
+            return null != _cache.Get(key, RegionName);
         }
 
         public bool Remove(string key)
         {
             if (this.Contains(key))
-                cache.Remove(key, regionName);
+                _cache.Remove(key, RegionName);
             return true;
         }
 
@@ -71,26 +68,23 @@ namespace eCommerce.Extensions.Caching.ServerAppFabric
             var regex = new Regex(patternOfKeys, RegexOptions.Singleline | RegexOptions.Compiled | RegexOptions.IgnoreCase);
             var keysToRemove = new List<String>();
 
-            cache.GetObjectsInRegion(regionName).ForEach(keyValuePair => 
+            _cache.GetObjectsInRegion(RegionName).ForEach(keyValuePair => 
             {
                 if (regex.IsMatch(keyValuePair.Key))
                     keysToRemove.Add(keyValuePair.Key);
             });
 
-            keysToRemove.ForEach(key => 
-            {
-                this.Remove(key);
-            });
+            keysToRemove.ForEach(key => this.Remove(key));
         }
 
         public void Flush()
         {
-            cache.ClearRegion(regionName);
+            _cache.ClearRegion(RegionName);
         }
 
         public void Dispose()
         {
-            factory.Dispose();
+            _factory.Dispose();
         }
     }
 }

@@ -1,12 +1,11 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository.Repository
 {
+    using eCommerce.Core;
+    using MongoDB.Driver;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
-    using MongoDB.Bson;
-    using MongoDB.Driver;
-    using eCommerce.Core;
 
     /// <summary>
     /// IRepository definition.

@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
-using eCommerce.Core.Configuration;
-
+﻿
 namespace eCommerce.Web.Framework.Mvc.UI
 {
     public class ViewPageHeaderBuilder : IViewPageHeaderBuilder
     {
-        private IViewPageTitleBuilder titleBuilder;
-        private IViewPageCssBuilder cssBuilder;
+        private readonly IViewPageTitleBuilder _titleBuilder;
+        private readonly IViewPageCssBuilder _cssBuilder;
 
         public ViewPageHeaderBuilder(
             //PageSettings pageSettings,
             IViewPageTitleBuilder titleBuilder,
             IViewPageCssBuilder cssBuilder)
         {
-            this.titleBuilder = titleBuilder;
-            this.cssBuilder = cssBuilder;
+            this._titleBuilder = titleBuilder;
+            this._cssBuilder = cssBuilder;
         }
 
         public IViewPageTitleBuilder Title
         {
-            get { return titleBuilder; }
+            get { return _titleBuilder; }
         }
 
         public IViewPageCssBuilder Css
         {
-            get { return cssBuilder; }
+            get { return _cssBuilder; }
         }
     }
 }

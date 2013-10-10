@@ -1,28 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using eCommerce.Core;
+﻿using eCommerce.Core;
 using eCommerce.Core.Common;
+using System;
+using System.Web;
 
 namespace eCommerce.Web.Framework.Mvc
 {
     public class HttpHelper : IHttpHelper
     {
-        private readonly HttpContextBase httpContext;
+        private readonly HttpContextBase _httpContext;
 
         public HttpHelper(HttpContextBase httpContext)
         {
-            this.httpContext = httpContext;
+            this._httpContext = httpContext;
         }
 
         public string GetUrlReferrer()
         {
             string urlReferrer = string.Empty;
-            if (httpContext.HasRequest())
-                urlReferrer = httpContext.Request.UrlReferrer.ToSafeString();
+            if (_httpContext.HasRequest())
+                urlReferrer = _httpContext.Request.UrlReferrer.ToSafeString();
             return urlReferrer;
         }
 
@@ -35,17 +31,17 @@ namespace eCommerce.Web.Framework.Mvc
         public string GetCurrentRequestUrl(bool includeQueryString)
         {
             string url = string.Empty;
-            if (httpContext.HasRequest())
+            if (_httpContext.HasRequest() && null != _httpContext.Request.Url)
             {
                 if (includeQueryString)
                 {
-                    url = httpContext.Request.Url.ToString();
+                    url = _httpContext.Request.Url.ToString();
                 }
                 else
                 {
-                    url = httpContext.Request.Url.GetLeftPart(UriPartial.Path);
+                    url = _httpContext.Request.Url.GetLeftPart(UriPartial.Path);
                 }
-                url.ToLowerInvariant();
+                url = url.ToLowerInvariant();
             }
 
             return url;
@@ -54,15 +50,15 @@ namespace eCommerce.Web.Framework.Mvc
 
         public HttpCookie GetCookie(string name)
         {
-            if (httpContext.HasRequest())
-                return httpContext.Request.Cookies[name];
+            if (_httpContext.HasRequest())
+                return _httpContext.Request.Cookies[name];
             else
                 return null;
         }
 
         public void SetCookie(string name, string value)
         {
-            if (httpContext.HasRequest())
+            if (_httpContext.HasRequest())
             {
                 var cookie = new HttpCookie(name)
                 {
@@ -73,8 +69,8 @@ namespace eCommerce.Web.Framework.Mvc
                                 DateTime.Now.AddMonths(3)
                 };
 
-                httpContext.Response.Cookies.Remove(name);
-                httpContext.Response.Cookies.Add(cookie);
+                _httpContext.Response.Cookies.Remove(name);
+                _httpContext.Response.Cookies.Add(cookie);
             }
         }
     }

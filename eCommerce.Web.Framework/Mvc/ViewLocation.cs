@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
+﻿using System.Globalization;
 
 namespace eCommerce.Web.Framework.Mvc
 {
@@ -13,10 +7,10 @@ namespace eCommerce.Web.Framework.Mvc
     /// </summary>
     public class ViewLocation
     {
-        protected readonly string virtualPathFormatString;
+        protected readonly string VirtualPathFormatString;
         public ViewLocation(string virtualPathFormatString)
         {
-            this.virtualPathFormatString = virtualPathFormatString;
+            this.VirtualPathFormatString = virtualPathFormatString;
         }
 
         /// <summary>
@@ -30,7 +24,7 @@ namespace eCommerce.Web.Framework.Mvc
         /// <remarks>Parameters' order must be fixed</remarks>
         public virtual string Format(string viewName, string controllerName, string areaName, string theme)
         {
-            return string.Format(CultureInfo.InvariantCulture, virtualPathFormatString, viewName, controllerName, theme);
+            return string.Format(CultureInfo.InvariantCulture, VirtualPathFormatString, viewName, controllerName, theme);
         }
     }
 
@@ -46,7 +40,7 @@ namespace eCommerce.Web.Framework.Mvc
 
         public override string Format(string viewName, string controllerName, string areaName, string theme)
         {
-            return string.Format(CultureInfo.InvariantCulture, virtualPathFormatString, viewName, controllerName, areaName, theme);
+            return string.Format(CultureInfo.InvariantCulture, VirtualPathFormatString, viewName, controllerName, areaName, theme);
         }
     }
 }

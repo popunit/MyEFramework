@@ -15,13 +15,13 @@ namespace eCommerce.Web.Framework.Theme
     /// <remarks>Consider moving it to work context</remarks>
     public class ThemeContext : IThemeContext
     {
-        private readonly WebWorkContextBase workContext;
-        private readonly IGenericCharacteristicDataService genericCharacteristicService;
-        private readonly StoreStateSettings storeStateSettings;
-        private readonly IThemeProvider themeProvider;
+        private readonly WebWorkContextBase _workContext;
+        private readonly IGenericCharacteristicDataService _genericCharacteristicService;
+        private readonly StoreStateSettings _storeStateSettings;
+        private readonly IThemeProvider _themeProvider;
 
-        private string desktopThemeName;
-        private string mobileThemeName;
+        private string _desktopThemeName;
+        private string _mobileThemeName;
 
         public ThemeContext(
             WebWorkContextBase workContext,
@@ -30,14 +30,14 @@ namespace eCommerce.Web.Framework.Theme
             IThemeProvider themeProvider
             )
         {
-            this.workContext = workContext;
-            this.genericCharacteristicService = genericCharacteristicService;
-            this.storeStateSettings = storeStateSettings;
-            this.themeProvider = themeProvider;
+            this._workContext = workContext;
+            this._genericCharacteristicService = genericCharacteristicService;
+            this._storeStateSettings = storeStateSettings;
+            this._themeProvider = themeProvider;
 
             // initial theme name using null, represent there is no theme name cached.
-            desktopThemeName = null;
-            mobileThemeName = null;
+            _desktopThemeName = null;
+            _mobileThemeName = null;
         }
 
         public string GetCurrentTheme(WorkType type)
@@ -46,27 +46,27 @@ namespace eCommerce.Web.Framework.Theme
             {
                 case WorkType.Mobile:
                     {
-                        if (!mobileThemeName.IsNull())
-                            return mobileThemeName;
-                        var themeName = storeStateSettings.DefaultStoredThemeForMobile;
-                        if (!themeProvider.ThemeConfigExists(themeName)) // if theme configuration doesn't exist, search all the desktop themes and select one among them
-                            themeName = themeProvider.GetThemeConfigurations()
+                        if (!_mobileThemeName.IsNull())
+                            return _mobileThemeName;
+                        var themeName = _storeStateSettings.DefaultStoredThemeForMobile;
+                        if (!_themeProvider.ThemeConfigExists(themeName)) // if theme configuration doesn't exist, search all the desktop themes and select one among them
+                            themeName = _themeProvider.GetThemeConfigurations()
                                 .Where(x => x.IsForMobile).FirstOrDefault().ThemeName; // only get the first theme matched, if there is no theme, should throw exception because shouldn't allow site without theme
 
-                        mobileThemeName = themeName;
+                        _mobileThemeName = themeName;
                         return themeName;
                     }
                 case WorkType.Desktop:
                 default:
                     {
-                        if (!desktopThemeName.IsNull())
-                            return desktopThemeName;
-                        var themeName = workContext.CurrentUser.GetWorkingDesktopThemeName(UserCharacteristicResource.DesktopThemeName);
-                        if (!themeProvider.ThemeConfigExists(themeName)) // if theme configuration doesn't exist, search all the desktop themes and select one among them
-                            themeName = themeProvider.GetThemeConfigurations()
+                        if (!_desktopThemeName.IsNull())
+                            return _desktopThemeName;
+                        var themeName = _workContext.CurrentUser.GetWorkingDesktopThemeName(UserCharacteristicResource.DesktopThemeName);
+                        if (!_themeProvider.ThemeConfigExists(themeName)) // if theme configuration doesn't exist, search all the desktop themes and select one among them
+                            themeName = _themeProvider.GetThemeConfigurations()
                                 .Where(x => !x.IsForMobile).FirstOrDefault().ThemeName; // only get the first theme matched, if there is no theme, should throw exception because shouldn't allow site without theme
 
-                        desktopThemeName = themeName;
+                        _desktopThemeName = themeName;
                         return themeName;
                     }
             }
@@ -83,13 +83,13 @@ namespace eCommerce.Web.Framework.Theme
                 case WorkType.Desktop:
                 default:
                     {
-                        if (!storeStateSettings.SelectThemeByUsersIsAllowed)
+                        if (!_storeStateSettings.SelectThemeByUsersIsAllowed)
                             return false;
-                        if (workContext.CurrentUser.IsNull())
+                        if (_workContext.CurrentUser.IsNull())
                             return false;
-                        bool succeed = genericCharacteristicService.SaveCharacteristic(workContext.CurrentUser, UserCharacteristicResource.DesktopThemeName, themeName);
+                        bool succeed = _genericCharacteristicService.SaveCharacteristic(_workContext.CurrentUser, UserCharacteristicResource.DesktopThemeName, themeName);
                         if(succeed)
-                            desktopThemeName = null; // clear
+                            _desktopThemeName = null; // clear
                         return succeed;
                     }
             }   

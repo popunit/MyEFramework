@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Discovery;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace eCommerce.Wcf.Framework.Discovery
@@ -42,11 +39,11 @@ namespace eCommerce.Wcf.Framework.Discovery
     public class DiscoveryProxyService : DiscoveryProxy
     {
         // Repository to store EndpointDiscoveryMetadata. A database or a flat file could also be used instead.
-        Dictionary<EndpointAddress, EndpointDiscoveryMetadata> onlineServices;
+        readonly Dictionary<EndpointAddress, EndpointDiscoveryMetadata> _onlineServices;
 
         public DiscoveryProxyService()
         {
-            this.onlineServices = new Dictionary<EndpointAddress, EndpointDiscoveryMetadata>();
+            this._onlineServices = new Dictionary<EndpointAddress, EndpointDiscoveryMetadata>();
         }
 
         // OnBeginOnlineAnnouncement method is called when a Hello message is received by the Proxy
@@ -99,9 +96,9 @@ namespace eCommerce.Wcf.Framework.Discovery
         // The following are helper methods required by the Proxy implementation
         void AddOnlineService(EndpointDiscoveryMetadata endpointDiscoveryMetadata)
         {
-            lock (this.onlineServices)
+            lock (this._onlineServices)
             {
-                this.onlineServices[endpointDiscoveryMetadata.Address] = endpointDiscoveryMetadata;
+                this._onlineServices[endpointDiscoveryMetadata.Address] = endpointDiscoveryMetadata;
             }
 
             PrintDiscoveryMetadata(endpointDiscoveryMetadata, "Adding");
@@ -111,9 +108,9 @@ namespace eCommerce.Wcf.Framework.Discovery
         {
             if (endpointDiscoveryMetadata != null)
             {
-                lock (this.onlineServices)
+                lock (this._onlineServices)
                 {
-                    this.onlineServices.Remove(endpointDiscoveryMetadata.Address);
+                    this._onlineServices.Remove(endpointDiscoveryMetadata.Address);
                 }
 
                 PrintDiscoveryMetadata(endpointDiscoveryMetadata, "Removing");
@@ -122,9 +119,9 @@ namespace eCommerce.Wcf.Framework.Discovery
 
         void MatchFromOnlineService(FindRequestContext findRequestContext)
         {
-            lock (this.onlineServices)
+            lock (this._onlineServices)
             {
-                foreach (EndpointDiscoveryMetadata endpointDiscoveryMetadata in this.onlineServices.Values)
+                foreach (EndpointDiscoveryMetadata endpointDiscoveryMetadata in this._onlineServices.Values)
                 {
                     if (findRequestContext.Criteria.IsMatch(endpointDiscoveryMetadata))
                     {
@@ -137,9 +134,9 @@ namespace eCommerce.Wcf.Framework.Discovery
         EndpointDiscoveryMetadata MatchFromOnlineService(ResolveCriteria criteria)
         {
             EndpointDiscoveryMetadata matchingEndpoint = null;
-            lock (this.onlineServices)
+            lock (this._onlineServices)
             {
-                foreach (EndpointDiscoveryMetadata endpointDiscoveryMetadata in this.onlineServices.Values)
+                foreach (EndpointDiscoveryMetadata endpointDiscoveryMetadata in this._onlineServices.Values)
                 {
                     if (criteria.Address == endpointDiscoveryMetadata.Address)
                     {
@@ -208,46 +205,46 @@ namespace eCommerce.Wcf.Framework.Discovery
 
         sealed class OnResolveAsyncResult : AsyncResult
         {
-            EndpointDiscoveryMetadata matchingEndpoint;
+            readonly EndpointDiscoveryMetadata _matchingEndpoint;
 
             public OnResolveAsyncResult(EndpointDiscoveryMetadata matchingEndpoint, AsyncCallback callback, object state)
                 : base(callback, state)
             {
-                this.matchingEndpoint = matchingEndpoint;
+                this._matchingEndpoint = matchingEndpoint;
                 this.Complete(true);
             }
 
             public static EndpointDiscoveryMetadata End(IAsyncResult result)
             {
-                OnResolveAsyncResult thisPtr = AsyncResult.End<OnResolveAsyncResult>(result);
-                return thisPtr.matchingEndpoint;
+                var thisPtr = AsyncResult.End<OnResolveAsyncResult>(result);
+                return thisPtr._matchingEndpoint;
             }
         }
     }
 
     abstract class AsyncResult : IAsyncResult
     {
-        AsyncCallback callback;
-        bool completedSynchronously;
-        bool endCalled;
-        Exception exception;
-        bool isCompleted;
-        ManualResetEvent manualResetEvent;
-        object state;
-        object thisLock;
+        readonly AsyncCallback _callback;
+        bool _completedSynchronously;
+        bool _endCalled;
+        Exception _exception;
+        bool _isCompleted;
+        volatile ManualResetEvent _manualResetEvent;
+        readonly object _state;
+        readonly object _thisLock;
 
         protected AsyncResult(AsyncCallback callback, object state)
         {
-            this.callback = callback;
-            this.state = state;
-            this.thisLock = new object();
+            this._callback = callback;
+            this._state = state;
+            this._thisLock = new object();
         }
 
         public object AsyncState
         {
             get
             {
-                return state;
+                return _state;
             }
         }
 
@@ -255,18 +252,18 @@ namespace eCommerce.Wcf.Framework.Discovery
         {
             get
             {
-                if (manualResetEvent != null)
+                if (_manualResetEvent != null)
                 {
-                    return manualResetEvent;
+                    return _manualResetEvent;
                 }
                 lock (ThisLock)
                 {
-                    if (manualResetEvent == null)
+                    if (_manualResetEvent == null)
                     {
-                        manualResetEvent = new ManualResetEvent(isCompleted);
+                        _manualResetEvent = new ManualResetEvent(_isCompleted);
                     }
                 }
-                return manualResetEvent;
+                return _manualResetEvent;
             }
         }
 
@@ -274,7 +271,7 @@ namespace eCommerce.Wcf.Framework.Discovery
         {
             get
             {
-                return completedSynchronously;
+                return _completedSynchronously;
             }
         }
 
@@ -282,7 +279,7 @@ namespace eCommerce.Wcf.Framework.Discovery
         {
             get
             {
-                return isCompleted;
+                return _isCompleted;
             }
         }
 
@@ -290,7 +287,7 @@ namespace eCommerce.Wcf.Framework.Discovery
         {
             get
             {
-                return this.thisLock;
+                return this._thisLock;
             }
         }
 
@@ -302,33 +299,33 @@ namespace eCommerce.Wcf.Framework.Discovery
                 throw new ArgumentNullException("result");
             }
 
-            TAsyncResult asyncResult = result as TAsyncResult;
+            var asyncResult = result as TAsyncResult;
 
             if (asyncResult == null)
             {
                 throw new ArgumentException("Invalid async result.", "result");
             }
 
-            if (asyncResult.endCalled)
+            if (asyncResult._endCalled)
             {
                 throw new InvalidOperationException("Async object already ended.");
             }
 
-            asyncResult.endCalled = true;
+            asyncResult._endCalled = true;
 
-            if (!asyncResult.isCompleted)
+            if (!asyncResult._isCompleted)
             {
                 asyncResult.AsyncWaitHandle.WaitOne();
             }
 
-            if (asyncResult.manualResetEvent != null)
+            if (asyncResult._manualResetEvent != null)
             {
-                asyncResult.manualResetEvent.Close();
+                asyncResult._manualResetEvent.Close();
             }
 
-            if (asyncResult.exception != null)
+            if (asyncResult._exception != null)
             {
-                throw asyncResult.exception;
+                throw asyncResult._exception;
             }
 
             return asyncResult;
@@ -336,38 +333,38 @@ namespace eCommerce.Wcf.Framework.Discovery
 
         protected void Complete(bool completedSynchronously)
         {
-            if (isCompleted)
+            if (_isCompleted)
             {
                 throw new InvalidOperationException("This async result is already completed.");
             }
 
-            this.completedSynchronously = completedSynchronously;
+            this._completedSynchronously = completedSynchronously;
 
             if (completedSynchronously)
             {
-                this.isCompleted = true;
+                this._isCompleted = true;
             }
             else
             {
                 lock (ThisLock)
                 {
-                    this.isCompleted = true;
-                    if (this.manualResetEvent != null)
+                    this._isCompleted = true;
+                    if (this._manualResetEvent != null)
                     {
-                        this.manualResetEvent.Set();
+                        this._manualResetEvent.Set();
                     }
                 }
             }
 
-            if (callback != null)
+            if (_callback != null)
             {
-                callback(this);
+                _callback(this);
             }
         }
 
         protected void Complete(bool completedSynchronously, Exception exception)
         {
-            this.exception = exception;
+            this._exception = exception;
             Complete(completedSynchronously);
         }
     }

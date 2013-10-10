@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Xml;
+using eCommerce.Core.Common;
 
 namespace eCommerce.Web.Framework.Theme
 {
@@ -17,7 +13,7 @@ namespace eCommerce.Web.Framework.Theme
             this.ThemeName = themeName;
             this.Path = path;
             var node = doc.SelectSingleNode("theme");
-            if (null != node)
+            if (!node.IsNull() && !node.Attributes.IsNull())
             {
                 this.Node = node;
                 var attribute = node.Attributes["title"];

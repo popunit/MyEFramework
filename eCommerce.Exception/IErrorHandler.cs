@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Exception
 {
@@ -11,7 +7,7 @@ namespace eCommerce.Exception
         void Handle(object obj);
     }
 
-    public interface IErrorHandler<T> : IHandler
+    public interface IErrorHandler<in T> : IHandler
         where T : System.Exception
     {
         Type GetExceptionType();

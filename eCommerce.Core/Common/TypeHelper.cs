@@ -5,9 +5,11 @@ using System.Dynamic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading;
+using eCommerce.Exception;
 
 namespace eCommerce.Core.Common
 {
@@ -71,7 +73,7 @@ namespace eCommerce.Core.Common
 
         public static void ForEach<T>(this IEnumerable<T> enumeration, Action<T> callback)
         {
-            if (null == enumeration || null == callback)
+            if (null == enumeration || callback.IsNull())
                 return;
             foreach (var item in enumeration)
             {
@@ -98,7 +100,7 @@ namespace eCommerce.Core.Common
 
         public static ICollection<T> AddRange<T>(this ICollection<T> collection, IEnumerable<T> enumeration)
         {
-            if (enumeration.IsNull() || collection.IsNull())
+            if (null == enumeration || collection.IsNull())
                 return null;
             enumeration.ForEach(collection.Add);
 
@@ -151,7 +153,7 @@ namespace eCommerce.Core.Common
 
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> enumeration)
         {
-            if (enumeration.IsNull() || !enumeration.Any())
+            if (null == enumeration || !enumeration.Any())
                 return true;
             return false;
         }
@@ -182,6 +184,7 @@ namespace eCommerce.Core.Common
                 return string.Empty;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool IsNull<T>(this T obj) where T : class
         {
             return null == obj;
@@ -192,11 +195,6 @@ namespace eCommerce.Core.Common
             var attr = type.GetCustomAttribute<DataContractAttribute>(false);
             return null != attr;
         }
-
-        //public static bool IsSerializable1(this Type type)
-        //{
-        //    return type.IsSerializable;
-        //}
 
         public static Uri EnsureWsdl(this Uri uri)
         {
@@ -271,7 +269,7 @@ namespace eCommerce.Core.Common
             }
             catch
             {
-                throw new System.Exception("Unknown exception");
+                throw new CommonException("Unknown exception");
             }
         }
 

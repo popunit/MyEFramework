@@ -14,12 +14,12 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
     /// </summary>
     public class FormsAuthenticationService : IAuthenticationService
     {
-        private readonly HttpContextBase httpContext;
-        private readonly IUserDataService userService;
-        private readonly UserSettings settings;
-        private readonly TimeSpan expiration;
+        private readonly HttpContextBase _httpContext;
+        private readonly IUserDataService _userService;
+        private readonly UserSettings _settings;
+        private readonly TimeSpan _expiration;
 
-        private User targetUser;
+        private User _targetUser;
 
         /// <summary>
         /// 
@@ -32,10 +32,10 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
             IUserDataService userService,
             UserSettings settings)
         {
-            this.httpContext = httpContext;
-            this.userService = userService;
-            this.settings = settings;
-            this.expiration = FormsAuthentication.Timeout; // require Minimal AspNetHostingPermission
+            this._httpContext = httpContext;
+            this._userService = userService;
+            this._settings = settings;
+            this._expiration = FormsAuthentication.Timeout; // require Minimal AspNetHostingPermission
         }
 
         /// <summary>
@@ -50,13 +50,15 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
                 1, // version
                 user.GetUserNameOrEmail(), // cookie's name
                 localTime,
-                localTime.Add(this.expiration),
+                localTime.Add(this._expiration),
                 isPersistentCookie,
                 user.GetUserNameOrEmail(), // cookie's content
                 FormsAuthentication.FormsCookiePath);
 
-            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket)); // create encrypted cookie
-            cookie.HttpOnly = true;
+            var cookie = new HttpCookie(FormsAuthentication.FormsCookieName, FormsAuthentication.Encrypt(ticket))
+            {
+                HttpOnly = true
+            }; // create encrypted cookie
             if (ticket.IsPersistent) // the cookie's expiration will not later than form authentication timeout even if the ticket is persistent
             {
                 cookie.Expires = ticket.Expiration; // in actual, the cookie's expires will be set as form authentication timeout default. Reference: http://stackoverflow.com/questions/10345817/what-is-the-purpose-of-formsauthenticationticket-ispersistent-property
@@ -65,31 +67,31 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
             cookie.Path = FormsAuthentication.FormsCookiePath;
             if (FormsAuthentication.CookieDomain != null)
                 cookie.Domain = FormsAuthentication.CookieDomain;
-            httpContext.Response.Cookies.Add(cookie);
-            targetUser = user;
+            _httpContext.Response.Cookies.Add(cookie);
+            _targetUser = user;
         }
 
         public void SignOut()
         {
-            targetUser = null; // dispose user
+            _targetUser = null; // dispose user
             FormsAuthentication.SignOut();
         }
 
         public User GetAuthenticatedUser()
         {
-            if (null != targetUser)
-                return targetUser;
-            if (!httpContext.HasRequest() ||                        // httpContext is not existed
-                !httpContext.Request.IsAuthenticated ||             // request is not authenticated
-                !(httpContext.User.Identity is FormsIdentity))      // identity is not forms identity (user other authentication mechanism)
+            if (null != _targetUser)
+                return _targetUser;
+            if (!_httpContext.HasRequest() ||                        // httpContext is not existed
+                !_httpContext.Request.IsAuthenticated ||             // request is not authenticated
+                !(_httpContext.User.Identity is FormsIdentity))      // identity is not forms identity (user other authentication mechanism)
                 return null;
 
-            var identity = httpContext.User.Identity as FormsIdentity;
+            var identity = _httpContext.User.Identity as FormsIdentity;
             var user = GetAuthenticatedUserFromTicket(identity.Ticket);
 
             if (user.IsValid() && user.HasRegisteredRole())
-                targetUser = user;
-            return targetUser;
+                _targetUser = user;
+            return _targetUser;
         }
 
         private User GetAuthenticatedUserFromTicket(FormsAuthenticationTicket ticket)
@@ -103,7 +105,7 @@ namespace eCommerce.Web.Framework.Mvc.Authentication
             }
             else
             {
-                return userService.GetUserByNameOrEmail(ticket.UserData);
+                return _userService.GetUserByNameOrEmail(ticket.UserData);
             }
         }
     }

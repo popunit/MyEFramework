@@ -1,18 +1,16 @@
-﻿using System;
+﻿using eCommerce.Core.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using eCommerce.Core.Common;
 
 namespace eCommerce.Web.Framework.Mvc.ModelBinder
 {
     public class WebModelBinderProvider : IModelBinderProvider
     {
         // null: for all types, count == 0: for none of types, count > 0: for specific types
-        private List<Type> supportedModelTypes;
+        private List<Type> _supportedModelTypes;
 
         /// <summary>
         /// According to the model type, select proper model binder type
@@ -25,7 +23,7 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
             IModelBinder result = null;
             Type modelBinderType = null;
 
-            if (null == supportedModelTypes)
+            if (null == _supportedModelTypes)
             {
                 var currentTypes = Assembly.GetAssembly(t)
                     .GetTypes()
@@ -40,15 +38,15 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
                         var modelTypes = attrList.First().ModelTypes;
                         if (null != modelTypes)
                         {
-                            supportedModelTypes = new List<Type>();
-                            supportedModelTypes.AddRange(modelTypes);
+                            _supportedModelTypes = new List<Type>();
+                            _supportedModelTypes.AddRange(modelTypes);
                             break;
                         }
                     }
                 }
             }
 
-            if (null != supportedModelTypes && supportedModelTypes.Contains(modelType))
+            if (null != _supportedModelTypes && _supportedModelTypes.Contains(modelType))
                 //result = (IModelBinder)Activator.CreateInstance(modelBinderType);
                 result = (IModelBinder)EmitHelper.FastGetInstance(modelBinderType)();
 

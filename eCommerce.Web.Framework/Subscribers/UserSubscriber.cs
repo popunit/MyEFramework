@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Events;
-using eCommerce.Services.WcfClient.Entities;
+﻿using eCommerce.Services.WcfClient.Entities;
+using System;
 
 namespace eCommerce.Web.Framework.Subscribers
 {

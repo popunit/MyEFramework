@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core;
+﻿using eCommerce.Core;
 using eCommerce.Core.Events;
 
 namespace eCommerce.Web.Framework.Subscribers

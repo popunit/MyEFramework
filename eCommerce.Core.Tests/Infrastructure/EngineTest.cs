@@ -16,7 +16,7 @@ namespace eCommerce.Core.Tests.Infrastructure
     {
         public class TestRegistrar1 : RegistrarBase<ContainerBuilder>
         {
-            private int order;
+            private int order = 0;
 
             public override void Register(ContainerBuilder builder, ISearcher route)
             {
@@ -30,7 +30,7 @@ namespace eCommerce.Core.Tests.Infrastructure
 
         public class TestRegistrar2 : IRegistrar
         {
-            private int order;
+            private int order = 0;
 
             public void Register(dynamic builder, ISearcher route)
             {

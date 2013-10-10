@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eCommerce.Core.Common;
-using System.ServiceModel;
+﻿using eCommerce.Core.Common;
+using System;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 
 namespace eCommerce.Wcf.Framework.Context
 {
@@ -53,7 +49,7 @@ namespace eCommerce.Wcf.Framework.Context
                 if (context.HasHeader<GenericContext<T>>(typeName, nameSpace, MessageHeaderScope.Outgoing))
                     throw new InvalidOperationException("A header with name " + typeName + " and namespace " + nameSpace + " already exists in the message.");
 
-                MessageHeader<GenericContext<T>> header = new MessageHeader<GenericContext<T>>(value);
+                var header = new MessageHeader<GenericContext<T>>(value);
                 context.OutgoingMessageHeaders.Add(header.GetUntypedHeader(typeName, nameSpace));
             }
         }

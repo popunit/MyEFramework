@@ -23,7 +23,7 @@ namespace eCommerce.Web.Framework.Mvc.Filters.ActionFilters
         /// <param name="filterContext"></param>
         public virtual void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!filterContext.DBIsInstalled())
+            if (!filterContext.DbIsInstalled())
                 return;
             if (!filterContext.HasRequest())
                 return;

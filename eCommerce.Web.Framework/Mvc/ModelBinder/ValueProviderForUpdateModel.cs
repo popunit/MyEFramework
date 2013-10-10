@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
-using eCommerce.Core.Common;
 
 namespace eCommerce.Web.Framework.Mvc.ModelBinder
 {
@@ -47,13 +42,13 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
     /// <remarks>Cannot be registered for entire application</remarks>
     public class DateTimeValueProvider<TModel> : IValueProvider
     {
-        private TModel model;
-        private PropertyInfo propertyInfo;
-        private string cultureString;
+        private readonly TModel _model;
+        private PropertyInfo _propertyInfo;
+        private readonly string _cultureString;
         public DateTimeValueProvider(TModel model, string cultureString)
         {
-            this.model = model;
-            this.cultureString = cultureString;
+            this._model = model;
+            this._cultureString = cultureString;
         }
 
         public bool ContainsPrefix(string prefix)
@@ -66,7 +61,7 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
             {
                 if (typeof(DateTime).IsAssignableFrom(prop.PropertyType)) // get datatime type properties
                 {
-                    propertyInfo = prop;
+                    _propertyInfo = prop;
                     return true;
                 }
             }
@@ -78,8 +73,8 @@ namespace eCommerce.Web.Framework.Mvc.ModelBinder
         {
             if (ContainsPrefix(key))
             {
-                var dt = (DateTime)propertyInfo.GetValue(model);
-                return new ValueProviderResult(dt, null, new CultureInfo(cultureString));
+                var dt = (DateTime)_propertyInfo.GetValue(_model);
+                return new ValueProviderResult(dt, null, new CultureInfo(_cultureString));
             }
 
             return null;

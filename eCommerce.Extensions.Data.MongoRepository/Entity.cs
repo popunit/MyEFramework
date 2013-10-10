@@ -1,8 +1,8 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository
 {
-    using System.Runtime.Serialization;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Abstract Entity for all the BusinessEntities.

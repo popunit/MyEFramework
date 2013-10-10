@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Wcf.Framework.ServiceBehaviors.ErrorHandlers
 {
@@ -18,7 +14,7 @@ namespace eCommerce.Wcf.Framework.ServiceBehaviors.ErrorHandlers
     /// <remarks>http://msdn.microsoft.com/en-us/library/system.servicemodel.description.iservicebehavior.aspx</remarks>
     public class GenericErrorHandlerBehavior : IServiceBehavior, IErrorHandler
     {
-        private IErrorHandler errorHandler;
+        private readonly IErrorHandler errorHandler;
         public GenericErrorHandlerBehavior(IErrorHandler errorHandler)
         {
             this.errorHandler = errorHandler;

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using eCommerce.Services.Common;
 using System.Web.Mvc;
-using eCommerce.Core.Data;
-using eCommerce.Services.Common;
 
 namespace eCommerce.Web.Framework.Mvc.Extensions
 {
     public static class ControllerContextExtension
     {
-        public static bool DBIsInstalled(this ControllerContext controllerContext)
+        public static bool DbIsInstalled(this ControllerContext controllerContext)
         {
             //return DatabaseSettingHelper.FindDatabaseSettings;
             return DependencyResolver.Current.GetService<IDataInfoDataService>().DatabaseIsInstalled();

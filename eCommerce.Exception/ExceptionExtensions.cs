@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Exception
 {
@@ -12,7 +8,7 @@ namespace eCommerce.Exception
     /// </summary>
     public static class ExceptionExtensions
     {
-        private static readonly FieldInfo remoteStackTraceString =
+        private static readonly FieldInfo RemoteStackTraceString =
             typeof(System.Exception).GetField("_remoteStackTraceString", BindingFlags.Instance | BindingFlags.NonPublic) ??
             typeof(System.Exception).GetField("remote_stack_trace", BindingFlags.Instance | BindingFlags.NonPublic);
 
@@ -26,7 +22,7 @@ namespace eCommerce.Exception
         /// </remarks>
         public static void RethrowWithNoStackTraceLoss(this System.Exception ex)
         {
-            remoteStackTraceString.SetValue(ex, ex.StackTrace + Environment.NewLine);
+            RemoteStackTraceString.SetValue(ex, ex.StackTrace + Environment.NewLine);
 
             throw ex;
         }

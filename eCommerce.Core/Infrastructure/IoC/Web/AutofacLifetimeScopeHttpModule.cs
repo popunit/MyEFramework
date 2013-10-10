@@ -27,7 +27,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
         /// <summary>
         /// [TO-DO] Try to figure out how to use it and test the performance
         /// </summary>
-        private static RequstTempData tempData
+        public static RequstTempData TempData
         {
             get
             {
@@ -56,7 +56,7 @@ namespace eCommerce.Core.Infrastructure.IoC.Web
 
         public void Init(HttpApplication context)
         {
-            tempData = new RequstTempData();
+            TempData = new RequstTempData();
             context.EndRequest += (o, e) => 
             {
                 if (lifetimeScope != null)

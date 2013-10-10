@@ -2,20 +2,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace eCommerce.Web.Framework.Mvc.UI.TitleParts
 {
     public partial class ViewPageTitleBuilder : IViewPageTitleBuilder
     {
-        private readonly PageSettings pageSettings;
-        private readonly List<string> allPartialTitles;
+        private readonly PageSettings _pageSettings;
+        private readonly List<string> _allPartialTitles;
 
         public ViewPageTitleBuilder(PageSettings pageSettings)
         {
-            this.pageSettings = pageSettings;
-            this.allPartialTitles = new List<string>();
+            this._pageSettings = pageSettings;
+            this._allPartialTitles = new List<string>();
         }
 
         public void AppendPartialTitles(params string[] partialTitles)
@@ -25,7 +23,7 @@ namespace eCommerce.Web.Framework.Mvc.UI.TitleParts
                 var titles = from pt in partialTitles
                              where !String.IsNullOrEmpty(pt)
                              select pt;
-                allPartialTitles.AddRange(titles);
+                _allPartialTitles.AddRange(titles);
             }
         }
 
@@ -36,7 +34,7 @@ namespace eCommerce.Web.Framework.Mvc.UI.TitleParts
                 var titles = from pt in partialTitles
                              where !String.IsNullOrEmpty(pt)
                              select pt;
-                allPartialTitles.InsertRange(0, partialTitles);
+                _allPartialTitles.InsertRange(0, partialTitles);
             }
         }
 
@@ -44,11 +42,11 @@ namespace eCommerce.Web.Framework.Mvc.UI.TitleParts
         {
             if (hasDefaultTitle)
             {
-                return pageSettings.DefaultTitle + (allPartialTitles.Count() > 0 ? ": " + string.Join("", allPartialTitles) : "");
+                return _pageSettings.DefaultTitle + (_allPartialTitles.Any() ? ": " + string.Join("", _allPartialTitles) : "");
             }
             else
             {
-                return string.Join("", allPartialTitles);
+                return string.Join("", _allPartialTitles);
             }
         }
     }

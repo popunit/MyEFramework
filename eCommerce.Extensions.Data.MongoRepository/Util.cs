@@ -1,8 +1,8 @@
 ﻿namespace eCommerce.Extensions.Data.MongoRepository
 {
+    using MongoDB.Driver;
     using System;
     using System.Configuration;
-    using MongoDB.Driver;
 
     /// <summary>
     /// Internal miscellaneous utility functions.
